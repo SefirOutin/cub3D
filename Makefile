@@ -6,7 +6,7 @@
 #    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/02/21 19:19:16 by soutin           ###   ########.fr        #
+#    Updated: 2024/02/22 21:17:02 by bmoudach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ OBJ_DIR		:=		objs
 LIBFT_DIR	=		libft
 
 NAME		=		cub3D
-SRC			=		srcs/main.c
+SRC			=		srcs/main.c \
+					srcs/exit_free.c
 OBJ			=		$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT		=		libft/libft.a
 
@@ -26,6 +27,7 @@ MLXFLAGS	=		-lmlx -lX11 -lXext
 CFLAGS		=		-Wall -Werror -Werror -g3
 
 $(NAME):			$(OBJ) 
+						$(MAKE) -C minilibx-linux
 						$(MAKE) -C $(LIBFT_DIR)
 						$(CC) $(CFLAGS) $(CPPFLAGS) $(MLX) -lm $(OBJ) $(MLXFLAGS) -o $(NAME) $(LIBFT)
 

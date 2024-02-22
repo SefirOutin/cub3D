@@ -1,8 +1,14 @@
 #include "cub3d.h"
 
+void	mlx_destroy_image_if_exists(void *mlx_ptr, void *img)
+{
+	if (img)
+		mlx_destroy_image(mlx_ptr, img);
+}
+
 int	exit_and_free(t_data *data)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (data->map[i])
