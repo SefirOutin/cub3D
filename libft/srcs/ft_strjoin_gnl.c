@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:46:52 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/08 15:55:20 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/22 20:00:33 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 			return (NULL);
 		ft_strlcpy(str, s1, ft_strlen(s1) + 1);
 		ft_strlcat(str, s2, size + 1);
-		ft_collector(s1, true);
+		free(s1);
 	}
 	return (str);
 }

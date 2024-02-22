@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:46:39 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/08 16:33:24 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/22 20:09:26 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_mouv(char *buf, int byte)
 	buf[j] = '\0';
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int *err)
 {
 	static char	buf[BUFFER_SIZE + 1];
 	char		*line;
@@ -47,7 +47,9 @@ char	*get_next_line(int fd)
 	byte = 1;
 	if (fd < 0 || read(fd, buf, 0))
 		return (NULL);
-	line = (char *)ft_collector(ft_strjoin_gnl(NULL, buf), false);
+	line = (char *)ft_strjoin_gnl(NULL, buf);
+	if (!line)
+		return (*err = 1, NULL);
 	while (!ft_strchr(line, '\n'))
 	{
 		byte = read(fd, buf, BUFFER_SIZE);
@@ -55,13 +57,13 @@ char	*get_next_line(int fd)
 		if (byte == 0)
 			break ;
 		if (byte < 0)
-			return (ft_collector(line, true), NULL);
-		line = (char *)ft_collector(ft_strjoin_gnl(line, buf), false);
+			return (*err = 1, free(line), NULL);
+		line = (char *)ft_strjoin_gnl(line, buf);
 		if (!line)
-			return (NULL);
+			return (*err = 1, NULL);
 	}
 	if (!line[0])
-		return (ft_collector(line, true), NULL);
+		return (free(line), NULL);
 	return (ft_trim(line), ft_mouv(buf, byte), line);
 }
 

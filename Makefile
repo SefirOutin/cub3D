@@ -6,7 +6,7 @@
 #    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/02/22 19:38:28 by bmoudach         ###   ########.fr        #
+#    Updated: 2024/02/21 19:19:16 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ MLXFLAGS	=		-lmlx -lX11 -lXext
 CFLAGS		=		-Wall -Werror -Werror -g3
 
 $(NAME):			$(OBJ) 
-						$(MAKE) -C minilibx-linux
 						$(MAKE) -C $(LIBFT_DIR)
 						$(CC) $(CFLAGS) $(CPPFLAGS) $(MLX) -lm $(OBJ) $(MLXFLAGS) -o $(NAME) $(LIBFT)
 
@@ -40,7 +39,7 @@ all:				$(NAME)
 
 clean:
 					rm -rf $(OBJ_DIR)
-					# $(MAKE) clean -C $(LIBFT_DIR)
+					# $(MAKE) clean -C minilibx
 
 fclean:				clean
 						rm -f $(NAME)

@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/22 20:15:23 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:12:05 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <stdlib.h>
+
+typedef struct s_vars
+{
+    char	*north_texture;
+    char	*south_texture;
+    char	*west_texture;
+    char	*east_texture;
+	char	*floor_color;
+	char	*ceilling_color;
+    char    **map;
+}			t_vars;
+
 
 typedef struct s_data
 {
