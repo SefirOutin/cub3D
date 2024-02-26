@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 16:27:21 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:54:45 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_vars
 	char	*textures[5];
 	int		floor_color[3];
 	int		ceilling_color[3];
+	int		x_max;
+	int		y_max;
 	char	**map;
 }			t_vars;
 

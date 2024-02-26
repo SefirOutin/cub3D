@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:39:40 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 16:36:36 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:57:07 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ int	check_map(t_vars *vars)
 				player++;
 			x++;
 		}
+		if (x > vars->x_max)
+			vars->x_max = x - 1;
 		y++;
 	}
 	if (player != 1)
 		return (print_err("too many players"), 1);
+	vars->y_max = y - 1;
 	return (0);
 }
