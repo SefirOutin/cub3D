@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:09:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 19:55:28 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 22:12:18 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,18 +147,42 @@ void	display_map(t_data *data)
 
 void	move(t_data *data, int x, int y)
 {
-	int	coef_ref = 0;
+	int	coef_1[2];
+	int	coef_2[2];
 
 	if (x > 0)
-		coef_ref = 9;
-	else if (x < 0)
-		coef_ref = 0;
+	{
+		coef_1[0] = 0;
+		coef_1[1] = 9;
+		coef_2[0] = -9;
+		coef_2[1] = 9;
+	}
 	else if (y > 0)
-		coef_ref = 9;
-	else
-		coef_ref = 0;
-	if (data->map[(data->pos_py + y + coef_ref) / 50][(data->pos_px + x
-			+ coef_ref) / 50] == '1')
+	{
+		coef_1[0] = 0;
+		coef_1[1] = 0;
+		coef_2[0] = 0;
+		coef_2[1] = 9;
+	}
+	else if (x < 0)
+	{
+		coef_1[0] = 0;
+		coef_1[1] = 0;
+		coef_2[0] = -9;
+		coef_2[1] = 0;
+	}
+	else if (y < 0)
+	{
+		coef_1[0] = -9;
+		coef_1[1] = 0;
+		coef_2[0] = -9;
+		coef_2[1] = 9;
+	}
+	if (data->map[(data->pos_py + y) / 50][(data->pos_px + x) / 50
+		] == '1')
+		return ;
+	if (data->map[(data->pos_py + y) / 50 ][(data->pos_px + x) / 50
+		] == '1')
 		return ;
 	erase_square(data, data->pos_px, data->pos_py);
 	data->pos_px += x;
@@ -168,18 +192,45 @@ void	move(t_data *data, int x, int y)
 }
 int	on_keypress(int keysym, t_data *data)
 {
-	if (keysym == 65307)
-		exit_and_free(data);
-	if (keysym == 119 || keysym == 65362)
+	if (data->tab[S][1])
 		move(data, 0, -2);
-	if (keysym == 115 || keysym == 65364)
+	if (data->tab[W][1])
 		move(data, 0, 2);
-	if (keysym == 97 || keysym == 65361)
+	if (data->tab[A][1])
 		move(data, -2, 0);
-	if (keysym == 100 || keysym == 65363)
+	if (data->tab[D][1])
 		move(data, 2, 0);
 	return (0);
 }
+
+int	release_inputs(int keysym, t_data *data)
+{
+	if (keysym == 119)
+		data->tab[S][1] = 0;
+	if (keysym == 115)
+		data->tab[W][1] = 0;
+	if (keysym == 97)
+		data->tab[A][1] = 0;
+	if (keysym == 100)
+		data->tab[D][1] = 0;
+	return (0);
+}
+
+int	get_inputs(int keysym, t_data *data)
+{
+	if (keysym == 65307)
+		exit_and_free(data);
+	if (keysym == 119)
+		data->tab[S][1] = 1;
+	if (keysym == 115)
+		data->tab[W][1] = 1;
+	if (keysym == 97)
+		data->tab[A][1] = 1;
+	if (keysym == 100)
+		data->tab[D][1] = 1;
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -195,12 +246,14 @@ int	main(int argc, char **argv)
 			ft_arraylen(data.map) * 50, "MazeCub3D");
 	if (!data.win_ptr)
 		return (free(data.win_ptr), -1);
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &on_keypress, &data);
 	init_img(&data);
 	display_map(&data);
 	dislay_player(&data);
-	mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &exit_and_free,
-			&data);
+	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &get_inputs, &data);
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &release_inputs, &data);
+	mlx_loop_hook(data.mlx_ptr, &on_keypress, &data);
+	// mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &exit_and_free,
+	// 		&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

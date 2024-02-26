@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 18:17:56 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/02/26 22:03:17 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,18 @@ typedef struct s_data
 	int		size_yimg;
 	int		pos_px;
 	int		pos_py;
+	int		tab[6][2];
 }			t_data;
+
+typedef enum e_key
+{
+	W,
+	A,
+	S,
+	D,
+	LEFT,
+	RIGHT,
+}			t_key;
 
 int			get_map_data(t_data *vars, char *path);
 int			get_textures(t_data *vars, int fd, int *error);
