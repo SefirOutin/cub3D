@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/22 19:58:51 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:43:33 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <bsd/string.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdarg.h>
@@ -112,7 +113,6 @@ int					ft_change_string_array(int str_to_change, char *str,
 						char **array);
 char				**ft_ad_case_to_array(char **array);
 char				**ft_del_string_array(int i_of_del_str, char **array);
-
 
 void				*ft_collector(void *ptr, bool clean);
 
