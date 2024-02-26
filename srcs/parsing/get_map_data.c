@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_map_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:52:16 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 16:34:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:15:55 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_map_data(t_vars *vars, char *path)
+int	get_map_data(t_data *vars, char *path)
 {
 	int		fd;
 	int		error;
@@ -40,7 +40,7 @@ int	get_map_data(t_vars *vars, char *path)
 	return (0);
 }
 
-int	get_textures(t_vars *vars, int fd, int *error)
+int	get_textures(t_data *vars, int fd, int *error)
 {
 	int		nb_textures;
 	char	*tmp;
@@ -66,7 +66,7 @@ int	get_textures(t_vars *vars, int fd, int *error)
 	return (skip);
 }
 
-int	fill_textures_vars2(t_vars *vars, char *tmp, int *nb_textures)
+int	fill_textures_vars2(t_data *vars, char *tmp, int *nb_textures)
 {
 	if (!ft_strncmp("WE ", tmp, 3) && ++(*nb_textures))
 	{
@@ -91,7 +91,7 @@ int	fill_textures_vars2(t_vars *vars, char *tmp, int *nb_textures)
 	return (0);
 }
 
-int	fill_textures_vars(t_vars *vars, char *tmp, int *nb_textures)
+int	fill_textures_vars(t_data *vars, char *tmp, int *nb_textures)
 {
 	if (!ft_strncmp("NO ", tmp, 3) && ++(*nb_textures))
 	{
@@ -116,7 +116,7 @@ int	fill_textures_vars(t_vars *vars, char *tmp, int *nb_textures)
 	return (0);
 }
 
-int	fill_map(t_vars *vars, int fd, long size, int skip)
+int	fill_map(t_data *vars, int fd, long size, int skip)
 {
 	char	*tmp;
 	int		i;

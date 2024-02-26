@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:09:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 18:01:24 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:19:20 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 void	print_err(char *err_message)
 {
 	ft_printf("Error\n%s\n", err_message);
 }
 
-int	parsing(t_vars *vars, char *path)
+int	parsing(t_data *vars, char *path)
 {
-	ft_memset(vars, 0, sizeof(t_vars));
+	ft_memset(vars, 0, sizeof(t_data));
 	if (get_map_data(vars, path) < 0)
 		return (1);
 	if (check_map(vars))
@@ -28,16 +29,100 @@ int	parsing(t_vars *vars, char *path)
 	return (0);
 }
 
-int	main(int c, char **v)
+void	init_img(t_data *data)
 {
-	t_vars	vars;
+	int	i;
 
-	if (c == 2)
+	i = 0;
+	data->texture_map[0] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/wall.xpm", &(data->size_ximg),
+			&(data->size_yimg));
+	data->texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/player.xpm", &(data->size_ximg),
+			&(data->size_yimg));
+	data->texture_map[2] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/floor.xpm", &(data->size_ximg),
+			&(data->size_yimg));
+	while (i < 3)
 	{
-		if (parsing(&vars, v[1]))
-			return (1);
+		if (data->texture_map[i] == NULL)
+		{
+			write(2, "Error\nImage no initialise", 26);
+			exit_and_free(data);
+		}
+		i++;
 	}
-	else
-		print_err("missing map");
+}
+void	display_map_2(t_data *data, int *i, int *j)
+{
+	if (data->map[*j][*i] == '1')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->texture_map[0], (*i * 50), (*j * 50));
+	if (data->map[*j][*i] == '0' || data->map[*j][*i] == 'N')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->texture_map[2], (*i * 50), (*j * 50));
+	if (data->map[*j][*i] == 'N')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->texture_map[1], (*i * 50), (*j * 50));
+}
+
+void	display_map(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (data->map[j])
+	{
+		while (data->map[j][i])
+		{
+			display_map_2(data, &i, &j);
+			i++;
+		}
+		i = 0;
+		j++;
+	}
+}
+
+void	move(t_data *data, int x, int y)
+{
+	return ;
+}
+int	on_keypress(int keysym, t_data *data)
+{
+	if (keysym == 65307)
+		exit_and_free(data);
+	if (keysym == 119 || keysym == 65362)
+		move(data, 0, -1);
+	if (keysym == 115 || keysym == 65364)
+		move(data, 0, 1);
+	if (keysym == 97 || keysym == 65361)
+		move(data, -1, 0);
+	if (keysym == 100 || keysym == 65363)
+		move(data, 1, 0);
+	return (0);
+}
+int	main(int argc, char **argv)
+{
+	t_data	data;
+
+	if (parsing(&data, argv[1]))
+		return (1);
+	data.size_ximg = 50;
+	data.size_yimg = 50;
+	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		return (-1);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, ft_strlen(data.map[0]) * 50,
+			ft_arraylen(data.map) * 50, "MazeCub3D");
+	if (!data.win_ptr)
+		return (free(data.win_ptr), -1);
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
+	init_img(&data);
+	display_map(&data);
+	mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &exit_and_free,
+		&data);
+	mlx_loop(data.mlx_ptr);
 	return (0);
 }
