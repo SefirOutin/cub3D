@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:39:40 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 17:57:07 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:15:55 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_char(char **map, int y, int x)
 	return (0);
 }
 
-int	check_map(t_vars *vars)
+int	check_map(t_data *vars)
 {
 	int	x;
 	int	y;
