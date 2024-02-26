@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:52:16 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/25 21:22:20 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:34:31 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,26 @@ int	get_map_data(t_vars *vars, char *path)
 	int		fd;
 	int		error;
 	int		skip;
-	size_t	size;
+	long	size;
 
 	error = 0;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return (ft_printf("Error\n"), perror("map file"), -1);
 	skip = get_textures(vars, fd, &error);
 	if (skip < 0)
 		return (-1);
-	size = get_map_size(fd, &error, &skip);
+	size = get_map_size_and_check_is_last(fd, &error, &skip);
 	if (size < 0)
 		return (-1);
 	vars->map = ft_calloc(size + 1, sizeof(char *));
 	if (!vars->map)
 		return (-1);
-	if (fill_map(vars, path, size, skip) < 0)
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (ft_printf("Error\n"), perror("map file"), -1);
+	if (fill_map(vars, fd, size, skip) < 0)
 		return (-1);
-	ft_print_tab(vars->map);
 	return (0);
 }
 
@@ -59,32 +61,33 @@ int	get_textures(t_vars *vars, int fd, int *error)
 		skip++;
 	}
 	if (nb_textures != 6)
-		return (-1);
+		return (print_err("missing information"), -1);
+	vars->textures[4] = NULL;
 	return (skip);
 }
 
 int	fill_textures_vars2(t_vars *vars, char *tmp, int *nb_textures)
 {
-	if (!ft_strncmp("EA ", tmp, 3) && ++(*nb_textures))
+	if (!ft_strncmp("WE ", tmp, 3) && ++(*nb_textures))
 	{
-		vars->east_texture = ft_substr(tmp, 3, ft_strlen(tmp + 3));
-		if (!vars->east_texture)
+		vars->textures[3] = ft_substr(tmp, 3, ft_strlen(tmp + 3));
+		if (!vars->textures[3])
 			return (-1);
 	}
 	else if (!ft_strncmp("F ", tmp, 2) && ++(*nb_textures))
 	{
 		if (fill_colors(vars->floor_color, tmp + 1))
-			return (printf("error: invalid color\n"), -1);
+			return (print_err("invalid color"), -1);
 	}
 	else if (!ft_strncmp("C ", tmp, 2) && ++(*nb_textures))
 	{
 		if (fill_colors(vars->ceilling_color, tmp + 1))
-			return (printf("error: invalid color\n"), -1);
+			return (print_err("invalid color"), -1);
 	}
 	else if (!ft_strncmp(tmp, "\n", 2))
 		return (0);
 	else
-		return (1);
+		return (print_err("header"), -1);
 	return (0);
 }
 
@@ -92,20 +95,20 @@ int	fill_textures_vars(t_vars *vars, char *tmp, int *nb_textures)
 {
 	if (!ft_strncmp("NO ", tmp, 3) && ++(*nb_textures))
 	{
-		vars->north_texture = ft_substr(tmp, 3, ft_strlen(tmp + 3));
-		if (!vars->north_texture)
+		vars->textures[0] = ft_substr(tmp, 3, ft_strlen(tmp + 3));
+		if (!vars->textures[0])
+			return (-1);
+	}
+	else if (!ft_strncmp("EA ", tmp, 3) && ++(*nb_textures))
+	{
+		vars->textures[1] = ft_substr(tmp, 3, ft_strlen(tmp + 3));
+		if (!vars->textures[1])
 			return (-1);
 	}
 	else if (!ft_strncmp("SO ", tmp, 3) && ++(*nb_textures))
 	{
-		vars->south_texture = ft_substr(tmp, 3, ft_strlen(tmp + 3));
-		if (!vars->south_texture)
-			return (-1);
-	}
-	else if (!ft_strncmp("WE ", tmp, 3) && ++(*nb_textures))
-	{
-		vars->west_texture = ft_substr(tmp, 3, ft_strlen(tmp + 3));
-		if (!vars->west_texture)
+		vars->textures[2] = ft_substr(tmp, 3, ft_strlen(tmp + 3));
+		if (!vars->textures[2])
 			return (-1);
 	}
 	else if (fill_textures_vars2(vars, tmp, nb_textures) < 0)
@@ -113,18 +116,14 @@ int	fill_textures_vars(t_vars *vars, char *tmp, int *nb_textures)
 	return (0);
 }
 
-int	fill_map(t_vars *vars, char *path, size_t size, int skip)
+int	fill_map(t_vars *vars, int fd, long size, int skip)
 {
 	char	*tmp;
-	int		fd;
 	int		i;
 	int		error;
 
 	i = 0;
 	error = 0;
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (-1);
 	if (skip_map_header(fd, &error, skip) < 0)
 		return (-1);
 	while (i < size)
@@ -135,7 +134,7 @@ int	fill_map(t_vars *vars, char *path, size_t size, int skip)
 		if (!ft_strncmp(tmp, "\n", 2))
 		{
 			free(tmp);
-			break ;	
+			break ;
 		}
 		vars->map[i] = ft_strdup(tmp);
 		if (!vars->map[i])
