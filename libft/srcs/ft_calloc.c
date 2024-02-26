@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 22:59:10 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/10/25 17:39:55 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:44:09 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_calloc(size_t nitems, size_t size)
 	}
 	buff = (void *)malloc(nitems * size);
 	if (!buff)
-		return (NULL);
+		return (perror("calloc"), NULL);
 	while (i < nitems * size)
 	{
 		((unsigned char *)buff)[i] = 0;
