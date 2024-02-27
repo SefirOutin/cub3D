@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:56:36 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 16:34:45 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:33:47 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ long	get_map_size_and_check_is_last(int fd, int *error, int *skip)
 			close(fd);
 			return (print_err("something after the map"), -1);
 		}
+		free(tmp);
 	}
 }
 

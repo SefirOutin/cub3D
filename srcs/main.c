@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:09:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 22:12:18 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:55:20 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	print_err(char *err_message)
 int	parsing(t_data *vars, char *path)
 {
 	ft_memset(vars, 0, sizeof(t_data));
+	ft_memset(&vars->player_move, 0, sizeof(t_player));
 	if (get_map_data(vars, path) < 0)
 		return (1);
 	if (check_map(vars))
 		return (1);
-	ft_print_tab(vars->map);
 	return (0);
 }
 
@@ -145,89 +145,79 @@ void	display_map(t_data *data)
 	}
 }
 
-void	move(t_data *data, int x, int y)
+void	move(t_data *data, double x, double y)
 {
-	int	coef_1[2];
-	int	coef_2[2];
-
-	if (x > 0)
-	{
-		coef_1[0] = 0;
-		coef_1[1] = 9;
-		coef_2[0] = -9;
-		coef_2[1] = 9;
-	}
-	else if (y > 0)
-	{
-		coef_1[0] = 0;
-		coef_1[1] = 0;
-		coef_2[0] = 0;
-		coef_2[1] = 9;
-	}
-	else if (x < 0)
-	{
-		coef_1[0] = 0;
-		coef_1[1] = 0;
-		coef_2[0] = -9;
-		coef_2[1] = 0;
-	}
-	else if (y < 0)
-	{
-		coef_1[0] = -9;
-		coef_1[1] = 0;
-		coef_2[0] = -9;
-		coef_2[1] = 9;
-	}
-	if (data->map[(data->pos_py + y) / 50][(data->pos_px + x) / 50
-		] == '1')
-		return ;
-	if (data->map[(data->pos_py + y) / 50 ][(data->pos_px + x) / 50
-		] == '1')
-		return ;
 	erase_square(data, data->pos_px, data->pos_py);
 	data->pos_px += x;
 	data->pos_py += y;
 	put_square(data->pos_px, data->pos_py, data);
 	return ;
 }
-int	on_keypress(int keysym, t_data *data)
+
+void	print_int_tab(int tab[6][2], int size)
 {
-	if (data->tab[S][1])
-		move(data, 0, -2);
-	if (data->tab[W][1])
-		move(data, 0, 2);
-	if (data->tab[A][1])
-		move(data, -2, 0);
-	if (data->tab[D][1])
-		move(data, 2, 0);
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		printf("i:%d ::::  %d\n", i, tab[i][1]);
+		i++;
+	}
+}
+
+int	on_keypress(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < 100000)
+		i++;
+	if (data->player_move.forward == 1)
+		move(data, 0, -0.005);
+	if (data->player_move.backward == 1)
+		move(data, 0,0.005);
+	if (data->player_move.left == 1)
+		move(data, -0.005, 0);
+	if (data->player_move.right == 1)
+		move(data, 0.005, 0);
 	return (0);
 }
 
 int	release_inputs(int keysym, t_data *data)
 {
-	if (keysym == 119)
-		data->tab[S][1] = 0;
-	if (keysym == 115)
-		data->tab[W][1] = 0;
-	if (keysym == 97)
-		data->tab[A][1] = 0;
-	if (keysym == 100)
-		data->tab[D][1] = 0;
+	if (keysym == 119 && data->player_move.forward == 1)
+		data->player_move.forward = 0;
+	if (keysym == 115 && data->player_move.backward == 1)
+		data->player_move.backward = 0;
+	if (keysym == 97 && data->player_move.left == 1)
+		data->player_move.left = 0;
+	if (keysym == 100 && data->player_move.right == 1)
+		data->player_move.right = 0;
+	if (keysym == 65361 && data->player_move.rotate == 1)
+		data->player_move.rotate = 0;
+	if (keysym == 65363 && data->player_move.rotate == 1)
+		data->player_move.rotate = 0;
 	return (0);
 }
 
 int	get_inputs(int keysym, t_data *data)
 {
+	printf("key :%d\n", keysym);
 	if (keysym == 65307)
 		exit_and_free(data);
 	if (keysym == 119)
-		data->tab[S][1] = 1;
+		data->player_move.forward = 1;
 	if (keysym == 115)
-		data->tab[W][1] = 1;
+		data->player_move.backward = 1;
 	if (keysym == 97)
-		data->tab[A][1] = 1;
+		data->player_move.left = 1;
 	if (keysym == 100)
-		data->tab[D][1] = 1;
+		data->player_move.right = 1;
+	if (keysym == 65361)
+		data->player_move.rotate= 1;
+	if (keysym == 65363)
+		data->player_move.rotate = 1;
 	return (0);
 }
 
@@ -242,18 +232,18 @@ int	main(int argc, char **argv)
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (-1);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, ft_strlen(data.map[0]) * 50,
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.x_max * 50,
 			ft_arraylen(data.map) * 50, "MazeCub3D");
 	if (!data.win_ptr)
 		return (free(data.win_ptr), -1);
 	init_img(&data);
 	display_map(&data);
 	dislay_player(&data);
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &get_inputs, &data);
-	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &release_inputs, &data);
-	mlx_loop_hook(data.mlx_ptr, &on_keypress, &data);
-	// mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &exit_and_free,
-	// 		&data);
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, release_inputs, &data);
+	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, get_inputs, &data);
+	mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &exit_and_free,
+			&data);
+	mlx_loop_hook(data.mlx_ptr, on_keypress, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
