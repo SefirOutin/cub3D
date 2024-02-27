@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/27 17:42:49 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:57:15 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ typedef struct s_data
 	void		*texture_map[3];
 	int			size_ximg;
 	int			size_yimg;
-	double		pos_px;
-	double		pos_py;
+	int			pos_px;
+	int			pos_py;
 	t_player	player_move;
 }				t_data;
 
@@ -68,9 +68,19 @@ int				skip_map_header(int fd, int *error, int skip);
 long			get_map_size(int fd, int *error, int *skip);
 long			get_map_size_and_check_is_last(int fd, int *error, int *skip);
 int				check_map(t_data *vars);
+int				parsing(t_data *vars, char *path);
+void			init_img(t_data *data);
 
 void			print_err(char *err_message);
 
 int				exit_and_free(t_data *data);
+void			erase_square(t_data *data, int x, int y);
+void			put_square(int x, int y, t_data *data);
+void			display_map(t_data *data);
+void			dislay_player(t_data *data);
+int	get_inputs(int keysym, t_data *data);
+int	release_inputs(int keysym, t_data *data);
+int	on_keypress(t_data *data);
+void	move(t_data *data, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/02/26 18:13:57 by bmoudach         ###   ########.fr        #
+#    Updated: 2024/02/27 19:01:11 by bmoudach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ SRC			=		srcs/main.c \
 					srcs/parsing/get_map_data.c \
 					srcs/parsing/get_map_data_utils.c \
 					srcs/parsing/check_map.c \
-					srcs/exit_free.c
+					srcs/exit_free.c \
+					srcs/parsing/parsing.c \
+					srcs/graphic/mini_map.c \
+					srcs/move_event/hook.c\
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)
 
