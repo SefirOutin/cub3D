@@ -6,18 +6,18 @@ void	init_img(t_data *data)
 	int	i;
 
 	i = 0;
-	data->texture_map[0] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/wall.xpm", &(data->size_ximg),
-			&(data->size_yimg));
-	data->texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/player.xpm", &(data->size_ximg),
-			&(data->size_yimg));
-	data->texture_map[2] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/floor.xpm", &(data->size_ximg),
-			&(data->size_yimg));
+	data->img.texture_map[0] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/wall.xpm", &(data->img.size_x),
+			&(data->img.size_y));
+	data->img.texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/player.xpm", &(data->img.size_x),
+			&(data->img.size_y));
+	data->img.texture_map[2] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/floor.xpm", &(data->img.size_x),
+			&(data->img.size_y));
 	while (i < 3)
 	{
-		if (data->texture_map[i] == NULL)
+		if (data->img.texture_map[i] == NULL)
 		{
 			write(2, "Error\nImage no initialise", 26);
 			exit_and_free(data);
@@ -62,7 +62,7 @@ void	put_square(int x, int y, t_data *data)
 	}
 }
 
-void	dislay_player(t_data *data)
+void	find_player(t_data *data)
 {
 	int	i;
 	int	j;
@@ -75,9 +75,9 @@ void	dislay_player(t_data *data)
 		{
 			if (data->map[j][i] == 'N')
 			{
-				data->pos_px = i * 50;
-				data->pos_py = j * 50;
-				put_square(data->pos_px, data->pos_py, data);
+				data->player.px = i * 50;
+				data->player.py = j * 50;
+				return ;
 			}
 			i++;
 		}
@@ -98,10 +98,10 @@ void	display_map(t_data *data)
 		{
 			if (data->map[j][i] == '1')
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-					data->texture_map[0], (i * 50), (j * 50));
+					data->img.texture_map[0], (i * 50), (j * 50));
 			if (data->map[j][i] == '0' || data->map[j][i] == 'N')
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-					data->texture_map[2], (i * 50), (j * 50));
+					data->img.texture_map[2], (i * 50), (j * 50));
 			i++;
 		}
 		i = 0;

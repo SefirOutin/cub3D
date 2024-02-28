@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/28 04:31:22 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/02/28 22:38:17 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@
 # include <X11/keysym.h>
 # include <errno.h>
 # include <math.h>
+#include <stdio.h>
 # include <stdlib.h>
+
+#define	PI 3.14159265359
 
 typedef enum e_key
 {
-	W,
-	A,
-	S,
-	D,
-	LEFT,
-	RIGHT,
+	W_KEY,
+	A_KEY,
+	S_KEY,
+	D_KEY,
+	LEFT_ROTATE,
+	RIGHT_ROTATE,
 }						t_key;
 
 typedef struct s_pixel_list
@@ -41,29 +44,31 @@ typedef struct s_pixel_list
 
 typedef struct s_player
 {
-	int					forward;
-	int					backward;
-	int					left;
-	int					right;
-	int					rotate;
+	int					inputs[6][2];
+	double				px;
+	double				py;
+	double				direction;
 }						t_player;
 
-typedef struct s_data
+typedef struct s_img
 {
+	void				*texture_map[3];
 	char				*textures[5];
 	int					floor_color[3];
 	int					ceilling_color[3];
 	int					x_max;
 	int					y_max;
+	int					size_x;
+	int					size_y;
+}						t_img;
+
+typedef struct s_data
+{
 	void				*mlx_ptr;
 	void				*win_ptr;
 	char				**map;
-	void				*texture_map[3];
-	int					size_ximg;
-	int					size_yimg;
-	double				pos_px;
-	double				pos_py;
-	t_player			player_move;
+	t_img				img;
+	t_player			player;
 	t_pixel_list		*pixel_list;
 }						t_data;
 
@@ -89,7 +94,7 @@ int						exit_and_free(t_data *data);
 void					erase_square(t_data *data, int x, int y);
 void					put_square(int x, int y, t_data *data);
 void					display_map(t_data *data);
-void					dislay_player(t_data *data);
+void					find_player(t_data *data);
 int						get_inputs(int keysym, t_data *data);
 int						release_inputs(int keysym, t_data *data);
 int						on_keypress(t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:39:40 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/26 18:15:55 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/02/28 22:29:17 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,26 @@ int	check_char(char **map, int y, int x)
 	return (0);
 }
 
+void	fill_player_direction(t_data *data, int c)
+{
+	if (c == 'N')
+	{
+		data->player.direction = PI /2;
+	}
+	if (c == 'S')
+	{
+		data->player.direction = 3 * PI / 2;
+	}
+	if (c == 'W')
+	{
+		data->player.direction = PI;
+	}
+	if (c == 'E')
+	{
+		data->player.direction = 0;
+	}
+}
+
 int	check_map(t_data *vars)
 {
 	int	x;
@@ -54,12 +74,12 @@ int	check_map(t_data *vars)
 				player++;
 			x++;
 		}
-		if (x > vars->x_max)
-			vars->x_max = x - 1;
+		if (x > vars->img.x_max)
+			vars->img.x_max = x - 1;
 		y++;
 	}
 	if (player != 1)
 		return (print_err("too many players"), 1);
-	vars->y_max = y - 1;
+	vars->img.y_max = y - 1;
 	return (0);
 }
