@@ -85,7 +85,6 @@ void	dislay_player(t_data *data)
 	}
 }
 
-
 void	display_map(t_data *data)
 {
 	int	i;

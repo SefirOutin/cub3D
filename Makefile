@@ -6,7 +6,7 @@
 #    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/02/27 19:01:11 by bmoudach         ###   ########.fr        #
+#    Updated: 2024/02/28 04:30:41 by bmoudach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRC			=		srcs/main.c \
 					srcs/parsing/parsing.c \
 					srcs/graphic/mini_map.c \
 					srcs/move_event/hook.c\
+					srcs/graphic/ray.c \
+					srcs/graphic/pixel_collector.c
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)
 
@@ -32,7 +34,7 @@ CC			=		clang
 CPPFLAGS	=		-I./inc -I./libft/inc
 MLX			=		-L./minilibx-linux
 MLXFLAGS	=		-lm -lmlx -lX11 -lXext 
-CFLAGS		=		-Wall -Werror -Werror -g3
+CFLAGS		=		-Wall -Werror -Werror -g3 -o3
 
 $(NAME):			$(OBJ) 
 						$(MAKE) -C minilibx-linux
