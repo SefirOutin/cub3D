@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:39:40 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/28 22:29:17 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/29 02:15:47 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,6 @@ int	check_char(char **map, int y, int x)
 	return (0);
 }
 
-void	fill_player_direction(t_data *data, int c)
-{
-	if (c == 'N')
-	{
-		data->player.direction = PI /2;
-	}
-	if (c == 'S')
-	{
-		data->player.direction = 3 * PI / 2;
-	}
-	if (c == 'W')
-	{
-		data->player.direction = PI;
-	}
-	if (c == 'E')
-	{
-		data->player.direction = 0;
-	}
-}
 
 int	check_map(t_data *vars)
 {

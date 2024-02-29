@@ -16,10 +16,12 @@ int	on_keypress(t_data *data)
 		move(data, -1, 0);
 	if (data->player.inputs[D_KEY][1] == 1)
 		move(data, 1, 0);
-	// if (data->player.inputs[LEFT_ROTATE][1] == 1)
-	// 	rotate(data, -1);
-	// if (data->player.inputs[RIGHT_ROTATE][1] == 1)
-	// 	rotate(data, 1);
+	if (data->player.inputs[LEFT_ROTATE][1] == 1)
+		rotate(data, -1);
+	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
+		rotate(data, 1);
+	printf("%d\n", data->player.inputs[LEFT_ROTATE][1]);
+	printf("%d\n", data->player.inputs[RIGHT_ROTATE][1]);
 	return (0);
 }
 
@@ -33,7 +35,7 @@ int	release_inputs(int keysym, t_data *data)
 		data->player.inputs[A_KEY][1] = 0;
 	if (keysym == 100 && data->player.inputs[D_KEY][1] == 1)
 		data->player.inputs[D_KEY][1] = 0;
-	if (keysym == 65361 && data->player.inputs[RIGHT_ROTATE][1] == 1)
+	if (keysym == 65361 && data->player.inputs[LEFT_ROTATE][1] == 1)
 		data->player.inputs[LEFT_ROTATE][1] = 0;
 	if (keysym == 65363 && data->player.inputs[RIGHT_ROTATE][1] == 1)
 		data->player.inputs[RIGHT_ROTATE][1] = 0;
@@ -57,5 +59,6 @@ int	get_inputs(int keysym, t_data *data)
 		data->player.inputs[LEFT_ROTATE][1] = 1;
 	if (keysym == 65363)
 		data->player.inputs[RIGHT_ROTATE][1] = 1;
+	printf("%d\n", keysym);
 	return (0);
 }

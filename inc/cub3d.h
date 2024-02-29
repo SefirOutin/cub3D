@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/28 22:38:17 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/29 01:57:52 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <stdlib.h>
 
 #define	PI 3.14159265359
+
+typedef struct s_point {
+    double x;
+    double y;
+} t_point;
 
 typedef enum e_key
 {
@@ -102,5 +107,6 @@ void					move(t_data *data, double x, double y);
 int						erased_ray(t_data *data);
 int						put_ray(t_data *data);
 int						convert_map_to_pixel(char **map, int x, int y);
+void rotate(t_data *data, double angleDegrees);
 
 #endif
