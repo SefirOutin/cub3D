@@ -65,7 +65,7 @@ int	erased_ray(t_data *data)
 }
 double	degToRad(double degrees)
 {
-	return (degrees * M_PI / 180.0);
+	return (degrees * PI / 180.0);
 }
 
 // Fonction pour trouver les coordonnées du point sur la section de l'angle
@@ -87,13 +87,16 @@ t_point	*createSection(t_point start, t_point end, int numPoints)
 {
 	t_point	*section;
 	double	ratio;
+	int		i;
 
+	i = 0;
 	section = (t_point *)malloc(numPoints * sizeof(t_point));
-	for (int i = 0; i < numPoints; ++i)
+	while (i < numPoints)
 	{
 		ratio = (double)i / (double)(numPoints - 1);
 		section[i].x = start.x + ratio * (end.x - start.x);
 		section[i].y = start.y + ratio * (end.y - start.y);
+		i++;
 	}
 	return (section);
 }
@@ -155,7 +158,7 @@ void	rotate(t_data *data, double angleDegrees)
 
 	fov = 90;
 	i = 0;
-	len_ray = 100;
+	len_ray = 90;
 	while (i < fov)
 		erase_direction(data, angleDegrees + i++, len_ray);
 	data->player.direction += angleDegrees;

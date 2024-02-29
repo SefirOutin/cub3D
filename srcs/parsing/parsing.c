@@ -1,22 +1,24 @@
 #include "cub3d.h"
 #include <stdio.h>
 
-int	parsing(t_data *vars, char *path)
+int	parsing(t_data *data, char *path)
 {
 	// int	i;
 
 	// i = 0;
-	ft_memset(vars, 0, sizeof(t_data));
-	ft_memset(&vars->player, 0, sizeof(t_player));
+	ft_memset(data, 0, sizeof(t_data));
+	ft_memset(&data->player, 0, sizeof(t_player));
 	// while (i < 6)
 	// {
-	// 	ft_memset(vars->player.inputs[i], 0, 2);
+	// 	ft_memset(data->player.inputs[i], 0, 2);
 	// 	i++;
 	// }
-	if (get_map_data(vars, path) < 0)
+	if (get_map_data(data, path) < 0)
 		return (1);
-	if (check_map(vars))
+	if (check_map(data))
 		return (1);
-	find_player(vars);
+	find_player(data);
+	// if (data->img.x_max * 50 > 1200)
+	// 	return (print_err("Map too big"), 1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:39:40 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/29 02:15:47 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:15:57 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int	check_map(t_data *vars)
 			x++;
 		}
 		if (x > vars->img.x_max)
-			vars->img.x_max = x - 1;
+			vars->img.x_max = x;
 		y++;
 	}
 	if (player != 1)
 		return (print_err("too many players"), 1);
-	vars->img.y_max = y - 1;
+	vars->img.y_max = y;
 	return (0);
 }

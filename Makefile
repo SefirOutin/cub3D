@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
+#    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/02/28 04:30:41 by bmoudach         ###   ########.fr        #
+#    Updated: 2024/02/29 14:14:22 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRC			=		srcs/main.c \
 					srcs/graphic/mini_map.c \
 					srcs/move_event/hook.c\
 					srcs/graphic/ray.c \
-					srcs/graphic/pixel_collector.c
+					srcs/graphic/pixel_collector.c \
+					srcs/graphic/draw_2d_player.c \
+					srcs/graphic/put_pixels.c
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)
 

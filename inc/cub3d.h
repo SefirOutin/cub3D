@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/29 01:57:52 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:26:30 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 # include <X11/keysym.h>
 # include <errno.h>
 # include <math.h>
-#include <stdio.h>
+# include <stdio.h>
 # include <stdlib.h>
 
-#define	PI 3.14159265359
+# define WIN_W 1200
+# define WIN_H 900
+# define PI 3.14159265359
 
-typedef struct s_point {
-    double x;
-    double y;
-} t_point;
+typedef struct s_point
+{
+	double				x;
+	double				y;
+}						t_point;
 
 typedef enum e_key
 {
@@ -57,6 +60,13 @@ typedef struct s_player
 
 typedef struct s_img
 {
+	void				*img;
+	int					*addr;
+	int					bpp;
+	int					line_l;
+	int					endian;
+	int					x;
+	int					y;
 	void				*texture_map[3];
 	char				*textures[5];
 	int					floor_color[3];
@@ -103,10 +113,24 @@ void					find_player(t_data *data);
 int						get_inputs(int keysym, t_data *data);
 int						release_inputs(int keysym, t_data *data);
 int						on_keypress(t_data *data);
-void					move(t_data *data, double x, double y);
+void					move(t_data *data, double x, double y,
+							double angle_degrees);
 int						erased_ray(t_data *data);
 int						put_ray(t_data *data);
 int						convert_map_to_pixel(char **map, int x, int y);
-void rotate(t_data *data, double angleDegrees);
+void					rotate(t_data *data, double angleDegrees);
+
+void					filled_circle_erase(t_data *data, int radius);
+void					filled_circle_draw(t_data *data, int radius);
+void					mid_point_circle_erase(t_data *data, int r);
+void					mid_point_circle_draw(t_data *data, int r);
+void					mid_point_put_pixels(t_data *data, t_point current,
+							int color);
+void					put_circle_pixels(t_data *data, int point, int xx,
+							int color);
+
+void					erase_direction(t_data *data, double angleDegrees,
+							int len_ray);
+t_img					init_mlx_img(t_data *data);
 
 #endif
