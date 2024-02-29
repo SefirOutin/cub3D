@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/29 15:26:30 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/29 21:05:58 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ typedef struct s_player
 	double				px;
 	double				py;
 	double				direction;
+	t_point				*section[90];
 }						t_player;
 
-typedef struct s_img
+typedef struct s_mlx_img
 {
 	void				*img;
 	int					*addr;
@@ -67,6 +68,10 @@ typedef struct s_img
 	int					endian;
 	int					x;
 	int					y;
+}						t_mlx_img;
+
+typedef struct s_img
+{
 	void				*texture_map[3];
 	char				*textures[5];
 	int					floor_color[3];
@@ -82,10 +87,21 @@ typedef struct s_data
 	void				*mlx_ptr;
 	void				*win_ptr;
 	char				**map;
+	t_mlx_img			image;
 	t_img				img;
 	t_player			player;
 	t_pixel_list		*pixel_list;
 }						t_data;
+
+void					init_hook_and_loop(t_data *data);
+int						init_mlx_data(t_data *data);
+void					init_img(t_data *data);
+int						init_mlx_img(t_data *data);
+
+int						get_inputs(int keysym, t_data *data);
+int						release_inputs(int keysym, t_data *data);
+int						on_keypress(t_data *data);
+int						exit_and_free(t_data *data);
 
 int						get_map_data(t_data *vars, char *path);
 int						get_textures(t_data *vars, int fd, int *error);
@@ -101,36 +117,32 @@ long					get_map_size_and_check_is_last(int fd, int *error,
 							int *skip);
 int						check_map(t_data *vars);
 int						parsing(t_data *vars, char *path);
-void					init_img(t_data *data);
 
 void					print_err(char *err_message);
 
-int						exit_and_free(t_data *data);
-void					erase_square(t_data *data, int x, int y);
-void					put_square(int x, int y, t_data *data);
-void					display_map(t_data *data);
-void					find_player(t_data *data);
-int						get_inputs(int keysym, t_data *data);
-int						release_inputs(int keysym, t_data *data);
-int						on_keypress(t_data *data);
-void					move(t_data *data, double x, double y,
-							double angle_degrees);
-int						erased_ray(t_data *data);
-int						put_ray(t_data *data);
 int						convert_map_to_pixel(char **map, int x, int y);
-void					rotate(t_data *data, double angleDegrees);
+void					find_player(t_data *data);
+void					display_map(t_data *data);
 
-void					filled_circle_erase(t_data *data, int radius);
+void					put_square(int x, int y, t_data *data);
+void					erase_square(t_data *data, int x, int y);
 void					filled_circle_draw(t_data *data, int radius);
-void					mid_point_circle_erase(t_data *data, int r);
+void					put_circle_pixels(t_data *data, int point, int xx,
+							int color);
+void					filled_circle_erase(t_data *data, int radius);
 void					mid_point_circle_draw(t_data *data, int r);
 void					mid_point_put_pixels(t_data *data, t_point current,
 							int color);
-void					put_circle_pixels(t_data *data, int point, int xx,
-							int color);
+void					mid_point_circle_erase(t_data *data, int r);
 
-void					erase_direction(t_data *data, double angleDegrees,
-							int len_ray);
-t_img					init_mlx_img(t_data *data);
+void					move(t_data *data, double x, double y,
+							double rotation_angle);
+int						rotate(t_data *data, double rotation_angle);
+int						put_direction(t_data *data, int len_ray, int curr_ray);
+void					erase_direction(t_data *data, int len_ray);
+int						fix_ang(int a);
+
+void					free_section(t_point **section, int size);
+int						e_direction(t_data *data, int len_ray, int curr_ray);
 
 #endif
