@@ -6,7 +6,7 @@
 #    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/02/29 14:14:22 by soutin           ###   ########.fr        #
+#    Updated: 2024/02/29 17:57:33 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC			=		srcs/main.c \
 					srcs/graphic/ray.c \
 					srcs/graphic/pixel_collector.c \
 					srcs/graphic/draw_2d_player.c \
-					srcs/graphic/put_pixels.c
+					srcs/graphic/put_pixels.c \
+					srcs/init.c
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)
 
