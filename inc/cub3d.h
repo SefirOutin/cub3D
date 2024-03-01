@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/29 21:05:58 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/01 13:16:24 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void					mid_point_circle_erase(t_data *data, int r);
 void					move(t_data *data, double x, double y,
 							double rotation_angle);
 int						rotate(t_data *data, double rotation_angle);
-int						put_direction(t_data *data, int len_ray, int curr_ray);
+int						put_direction(t_data *data, double len_ray, int curr_ray);
 void					erase_direction(t_data *data, int len_ray);
 int						fix_ang(int a);
 

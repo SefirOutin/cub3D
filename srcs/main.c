@@ -81,18 +81,11 @@ int	background(t_data *data)
 
 void	first_display(t_data *data)
 {
-	int	i;
-
 	background(data);
 	display_map(data);
 	filled_circle_draw(data, 6);
-	mid_point_circle_draw(data, 15);
-	i = 0;
-	while (i < 90)
-	{
-		put_direction(data, 90, i);
-		i++;
-	}
+	mid_point_circle_draw(data, 8);
+	rotate(data, 0);
 }
 
 int	main(int argc, char **argv)

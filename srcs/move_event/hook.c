@@ -17,9 +17,9 @@ int	on_keypress(t_data *data)
 	if (data->player.inputs[D_KEY][1] == 1)
 		move(data, 1, 0, 0);
 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
-		move(data, 0, 0, -1);
-	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
 		move(data, 0, 0, 1);
+	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
+		move(data, 0, 0, -1);
 	// printf("%d\n", data->player.inputs[LEFT_ROTATE][1]);
 	// printf("%d\n", data->player.inputs[RIGHT_ROTATE][1]);
 	return (0);
