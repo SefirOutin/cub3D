@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/29 15:25:46 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/02 20:17:31 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	filled_circle_draw(t_data *data, int radius)
 	current.y = radius;
 	m = 3 - 4 * radius;
 	xx = 0;
+	// printf("circle player x:%f y:%f\n", data->player.px, data->player.py);
 	while (current.x <= current.y)
 	{
 		xx = data->player.px - current.y;

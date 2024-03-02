@@ -7,13 +7,13 @@ void	init_img(t_data *data)
 
 	i = 0;
 	data->img.texture_map[0] = mlx_xpm_file_to_image(data->mlx_ptr,
-		"./asset/map_asset/wall.xpm", &(data->img.size_x),
+		"./asset/map_asset/black.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	data->img.texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"./asset/map_asset/player.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	data->img.texture_map[2] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/floor.xpm", &(data->img.size_x),
+			"./asset/map_asset/white.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	while (i < 3)
 	{
@@ -97,8 +97,8 @@ void	find_player(t_data *data)
 			if (ft_strchr("NWSE", data->map[j][i]))
 			{
 				fill_player_direction(data, data->map[j][i]);
-				data->player.px = i * 50 + 24;
-				data->player.py = j * 50 + 24;
+				data->player.px = i * 50 + 25;
+				data->player.py = j * 50 + 25;
 				return ;
 			}
 			i++;
@@ -122,7 +122,7 @@ void	display_map(t_data *data)
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 						data->img.texture_map[0], (i * data->img.size_x), (j
 							* data->img.size_y));
-			if (data->map[j][i] == '0' || data->map[j][i] == 'N')
+			if (ft_strchr("0NSWE", data->map[j][i]))
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 						data->img.texture_map[2], (i * data->img.size_x), (j
 							* data->img.size_y));

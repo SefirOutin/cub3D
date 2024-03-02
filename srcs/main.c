@@ -54,13 +54,13 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	if (check_collision(data, x, y))
 		return ;
 	erase_direction(data, 90);
-	mid_point_circle_erase(data, 15);
+	// mid_point_circle_erase(data, 15);
 	filled_circle_erase(data, 6);
 	data->player.px += x;
 	data->player.py += y;
 	rotate(data, rotation_angle);
 	filled_circle_draw(data, 6);
-	mid_point_circle_draw(data, 15);
+	// mid_point_circle_draw(data, 15);
 	return ;
 }
 
@@ -83,9 +83,9 @@ void	first_display(t_data *data)
 {
 	background(data);
 	display_map(data);
-	filled_circle_draw(data, 6);
-	mid_point_circle_draw(data, 8);
 	rotate(data, 0);
+	filled_circle_draw(data, 6);
+	// mid_point_circle_draw(data, 8);
 }
 
 int	main(int argc, char **argv)
