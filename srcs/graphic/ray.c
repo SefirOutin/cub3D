@@ -128,6 +128,10 @@ t_point	check_next_case(t_data *data, int curr_ray, double angle_deg, int max_re
 	// y =tan(a)x +b 
 	// if (curr_ray != 44)
 	// 	return (0);
+	if (angle_deg > 360)
+		angle_deg -= 360;
+	if (angle_deg < 0)
+		angle_deg += 360;
 	printf("player x:%f y:%f\n", data->player.px, data->player.py);
 	// calcule un vecteur normalisé (len à 1)
 	length.x = cos(degToRad(angle_deg));
