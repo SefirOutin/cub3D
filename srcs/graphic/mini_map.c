@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/05 01:18:43 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/05 16:47:05 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ void	init_img(t_data *data)
 		"./asset/map_asset/black.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	data->img.texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/player.xpm", &(data->img.size_x),
-			&(data->img.size_y));
-	data->img.texture_map[2] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"./asset/map_asset/white.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	while (i < 3)
@@ -37,7 +34,7 @@ void	init_img(t_data *data)
 	}
 }
 
-void	fill_player_direction(t_data *data, int c)
+void	get_player_data(t_data *data, int c, int i, int j)
 {
 	if (c == 'N')
 	{
@@ -55,6 +52,8 @@ void	fill_player_direction(t_data *data, int c)
 	{
 		data->player.direction = 0;
 	}
+	data->player.px = i * 50 + 25;
+	data->player.py = j * 50 + 25;
 }
 
 void	find_player(t_data *data)
@@ -70,9 +69,7 @@ void	find_player(t_data *data)
 		{
 			if (ft_strchr("NWSE", data->map[j][i]))
 			{
-				fill_player_direction(data, data->map[j][i]);
-				data->player.px = i * 50 + 25;
-				data->player.py = j * 50 + 25;
+				get_player_data(data, data->map[j][i], i, j);
 				return ;
 			}
 			i++;
@@ -98,7 +95,7 @@ void	display_map(t_data *data)
 							* data->img.size_y));
 			if (ft_strchr("0NSWE", data->map[j][i]))
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-						data->img.texture_map[2], (i * data->img.size_x), (j
+						data->img.texture_map[1], (i * data->img.size_x), (j
 							* data->img.size_y));
 			i++;
 		}

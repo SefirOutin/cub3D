@@ -6,8 +6,6 @@ int	on_keypress(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < 20000000)
-		i++;
 	if (data->player.inputs[W_KEY][1] == 1)
 		move(data, 0, -1, 0);
 	if (data->player.inputs[S_KEY][1] == 1)
@@ -18,18 +16,14 @@ int	on_keypress(t_data *data)
 		move(data, 1, 0, 0);
 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
 	{
-		if (data->player.direction > 359)
-			data->player.direction = 0;
-		move(data, 0, 0, 1);
+		data->player.direction = fix_ang(data->player.direction);
+		move(data, 0, 0, 0.5);
 	}
 	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
 	{
-		if (data->player.direction < 0)
-			data->player.direction = 359;
-		move(data, 0, 0, -1);
+		data->player.direction = fix_ang(data->player.direction);
+		move(data, 0, 0, -0.5);
 	}
-	// printf("%d\n", data->player.inputs[LEFT_ROTATE][1]);
-	// printf("%d\n", data->player.inputs[RIGHT_ROTATE][1]);
 	return (0);
 }
 

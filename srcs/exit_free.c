@@ -31,7 +31,6 @@ int	exit_and_free(t_data *data)
 	free_section(data->player.section, 90);
 	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[0]);
 	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[1]);
-	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[2]);
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	if (data->mlx_ptr)
