@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/02 20:17:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/05 01:01:56 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,30 +116,5 @@ void	mid_point_circle_erase(t_data *data, int r)
 		// All the perimeter points have already been printed
 		if (!(current.x < current.y))
 			mid_point_put_pixels(data, current, 0xFFFFFF);
-		// if (current.x < current.y)
-		// 	break ;
-		// // Printing the generated point and its reflection
-		// // in the other octants after translation
-		// mlx_pixel_put(data->mlx_ptr, data->win_ptr, current.x + data->player.px, current.y + data->player.py,
-		// 	0xFFFFFF);
-		// mlx_pixel_put(data->mlx_ptr, data->win_ptr, -current.x + data->player.px, current.y + data->player.py,
-		// 	0xFFFFFF);
-		// mlx_pixel_put(data->mlx_ptr, data->win_ptr, current.x + data->player.px, -current.y + data->player.py,
-		// 	0xFFFFFF);
-		// mlx_pixel_put(data->mlx_ptr, data->win_ptr, -current.x + data->player.px, -current.y
-		// 	+ data->player.py, 0xFFFFFF);
-		// // If the generated point is on the line x = y then
-		// // the perimeter points have already been printed
-		// if (current.x != current.y)
-		// {
-		// 	mlx_pixel_put(data->mlx_ptr, data->win_ptr, current.y + data->player.px, current.x
-		// 		+ data->player.py, 0xFFFFFF);
-		// 	mlx_pixel_put(data->mlx_ptr, data->win_ptr, current.y + data->player.px, -current.x
-		// 		+ data->player.py, 0xFFFFFF);
-		// 	mlx_pixel_put(data->mlx_ptr, data->win_ptr, -current.y + data->player.px, current.x
-		// 		+ data->player.py, 0xFFFFFF);
-		// 	mlx_pixel_put(data->mlx_ptr, data->win_ptr, -current.y + data->player.px, -current.x
-		// 		+ data->player.py, 0xFFFFFF);
-		// }
 	}
 }

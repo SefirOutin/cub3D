@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:12:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/29 17:54:20 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/05 01:14:23 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	put_circle_pixels(t_data *data, int point, int xx, int color)
 			color);
 	mlx_pixel_put(data->mlx_ptr, data->win_ptr, xx, data->player.py + point,
 			color);
+	if (data->map[(int)(data->player.py - point) / 50][(int)xx / 50] == '1')
+		data->map[(int)(data->player.py - point) / 50][(int)xx / 50] = '5';
+	if (ft_strchr("ONSWE", data->map[(int)(data->player.py + point) / 50][(int)xx / 50]))
+		data->map[(int)(data->player.py + point) / 50][(int)xx / 50] = '6';
 }
 
 void	mid_point_put_pixels(t_data *data, t_point current, int color)

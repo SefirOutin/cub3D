@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/05 01:18:43 by soutin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-#include <stdio.h>
 
 void	init_img(t_data *data)
 {
@@ -26,43 +37,6 @@ void	init_img(t_data *data)
 	}
 }
 
-void	erase_square(t_data *data, int x, int y)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 10)
-	{
-		j = 0;
-		while (j < 10)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y + i,
-				0xFFFFFF);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	put_square(int x, int y, t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 10)
-	{
-		j = 0;
-		while (j < 10)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y + i,
-				0xD35400);
-			j++;
-		}
-		i++;
-	}
-}
 void	fill_player_direction(t_data *data, int c)
 {
 	if (c == 'N')

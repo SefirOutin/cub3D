@@ -44,34 +44,6 @@ int	put_ray(t_data *data)
 	return (0);
 }
 
-int	erased_ray(t_data *data)
-{
-	int	i;
-	int	y;
-	int	save;
-	int	curr_ray;
-
-	i = 0;
-	while (1)
-	{
-		y = (data->player.py - 3 - i) / 50;
-		save = data->map[y][(int)(data->player.px / 50)];
-		printf("save:%c\n", save);
-		curr_ray = (data->player.py - i) - (((int)(data->player.py - i) / 50)
-				* 50);
-		printf("curr_ray : %d\n", curr_ray);
-		if (save == '1')
-			break ;
-		while (curr_ray > -1)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, (int)data->player.px,
-				(int)data->player.py - i - curr_ray, 0xFFFFFF);
-			curr_ray--;
-		}
-		i++;
-	}
-	return (0);
-}
 double	degToRad(double degrees)
 {
 	return (degrees * PI / 180.0);
@@ -120,18 +92,13 @@ t_point	check_next_case(t_data *data, int curr_ray, double angle_deg, int max_re
 {
 	t_point	end;
 	t_point	unit_size;
-	// double	vtmp_end;
 	t_point	length;
 	t_point	delta;
 	// double		i;
 	// t_point	tmp_end;
 	// y =tan(a)x +b 
-	// if (curr_ray != 44)
-	// 	return (0);
-	if (angle_deg > 360)
-		angle_deg -= 360;
-	if (angle_deg < 0)
-		angle_deg += 360;
+
+	angle_deg = fix_ang(angle_deg);
 	printf("player x:%f y:%f\n", data->player.px, data->player.py);
 	// calcule un vecteur normalisé (len à 1)
 	length.x = cos(degToRad(angle_deg));
@@ -186,27 +153,26 @@ int	put_direction(t_data *data, double len_ray, int curr_ray)
 	t_point		end;
 	t_point		delta;
 	int			i;
-	i = 6;
+	t_point		save;
 
-	// end = find_point_on_section(data, data->player.px, data->player.py,
-	// 		(data->player.direction + curr_ray - 45), len_ray);
-	end = check_next_case(data, curr_ray, data->player.direction + curr_ray , 25);
-	
+	i = 0;
+	end = check_next_case(data, curr_ray, data->player.direction + curr_ray - 45, 25);
 	delta.x = data->player.px;
 	delta.y = data->player.py;
 	data->player.section[curr_ray] = create_section(delta, end, len_ray);
 	if (!data->player.section[curr_ray])
 		return (free_section(data->player.section, curr_ray), -1);
-	// printf("first point drawn x:%f y :%f\n", data->player.section[curr_ray][i].x, data->player.section[curr_ray][i].y);
 	while (i < len_ray)
 	{
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr,
 			data->player.section[curr_ray][i].x,
 			data->player.section[curr_ray][i].y, 0x7FFF00);
-		// if (data->map[(int)(data->player.section[curr_ray][i].y / 50)][(int)(data->player.section[curr_ray][i].x / 50)] == '1')
-		// 	data->map[(int)(data->player.section[curr_ray][i].y / 50)][(int)(data->player.section[curr_ray][i].x / 50)] = '5';
-		// else
-		// 	data->map[(int)(data->player.section[curr_ray][i].y / 50)][(int)(data->player.section[curr_ray][i].x / 50)] = '6';
+		save.x = data->player.section[curr_ray][i].x;
+		save.y = data->player.section[curr_ray][i].y;
+		if (data->map[(int)save.y / 50][(int)save.x / 50] == '1')
+			data->map[(int)save.y / 50][(int)save.x / 50] = '5';
+		else if (ft_strchr("ONSWE", data->map[(int)save.y / 50][(int)save.x / 50]))
+			data->map[(int)save.y / 50][(int)save.x / 50] = '6';
 		i++;
 	}
 	// ft_print_tab(data->map);
@@ -217,33 +183,7 @@ void	erase_direction(t_data *data, int len_ray)
 {
 	int		i;
 	int		curr_ray;
-	// int		j;
 	
-	// j = 0;
-	// while (j < data->img.y_max)
-	// {
-	// 	i = 0;
-	// 	while (i < data->img.x_max)
-	// 	{
-			
-	// 		if (data->map[j][i] == '5')
-	// 		{
-	// 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-	// 					data->img.texture_map[0], (i * data->img.size_x), (-j
-	// 						* data->img.size_y));
-	// 			data->map[j][i] = '1';
-	// 		}
-	// 		else if (data->map[j][i] == '6')
-	// 		{
-	// 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-	// 					data->img.texture_map[2], (i * data->img.size_x), (-j
-	// 						* data->img.size_y));
-	// 			data->map[j][i] = '0';
-	// 		}
-	// 		i++;
-	// 	}
-	// 	j++;
-	// }
 	curr_ray = 0;
 	while (curr_ray < 90)
 	{

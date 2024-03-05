@@ -46,6 +46,38 @@ int	check_collision(t_data *data, double x, double y)
 	return (0);
 }
 
+void	erase_points(t_data *data)
+{
+	int		i;
+	// int		curr_ray;
+	int		j;
+	
+	j = 0;
+	while (j < data->img.y_max)
+	{
+		i = 0;
+		while (i < data->img.x_max)
+		{
+			if (data->map[j][i] == '5')
+			{
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+						data->img.texture_map[0], (i * data->img.size_x), (-j
+							* data->img.size_y));
+				data->map[j][i] = '1';
+			}
+			else if (data->map[j][i] == '6')
+			{
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+						data->img.texture_map[2], (i * data->img.size_x), (-j
+							* data->img.size_y));
+				data->map[j][i] = '0';
+			}
+			i++;
+		}
+		j++;
+	}
+}
+
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
 	// int	i;
@@ -53,9 +85,9 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	// i = 0;
 	if (check_collision(data, x, y))
 		return ;
-	erase_direction(data, 90);
+	erase_points(data);
 	// mid_point_circle_erase(data, 15);
-	filled_circle_erase(data, 6);
+	// filled_circle_erase(data, 6);
 	data->player.px += x;
 	data->player.py += y;
 	rotate(data, rotation_angle);

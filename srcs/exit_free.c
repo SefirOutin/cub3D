@@ -20,9 +20,9 @@ void	free_section(t_point **section, int size)
 
 int	exit_and_free(t_data *data)
 {
-	int i;
+	// int i;
 
-	i = 0;
+	// i = 0;
 	ft_free_tab(data->map);
 	free(data->img.textures[0]);
 	free(data->img.textures[1]);
