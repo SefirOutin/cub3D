@@ -46,21 +46,41 @@ int	check_collision(t_data *data, double x, double y)
 	return (0);
 }
 
+void	erase_floors(t_data *data)
+{
+	int		i;
+	int		j;
+	
+	j = 0;
+	while (data->map[j])
+	{
+		i = 0;
+		while (data->map[j][i])
+		{
+			if (ft_strchr("0NSWE", data->map[j][i]))
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+						data->img.texture_map[1], (i * data->img.size_x), (j
+							* data->img.size_y));
+			i++;
+		}
+		j++;
+	}
+}
+
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
-	// int	i;
+	int	i;
 
-	// i = 0;
+	i = 0;
+	while (i++ < 300000)
 	if (check_collision(data, x, y))
 		return ;
-	erase_direction(data, 90);
-	mid_point_circle_erase(data, 15);
-	filled_circle_erase(data, 6);
+	erase_floors(data);
 	data->player.px += x;
 	data->player.py += y;
-	rotate(data, rotation_angle);
+	data->player.direction += rotation_angle;	
+	rotate(data);
 	filled_circle_draw(data, 6);
-	mid_point_circle_draw(data, 15);
 	return ;
 }
 
@@ -81,18 +101,11 @@ int	background(t_data *data)
 
 void	first_display(t_data *data)
 {
-	int	i;
-
 	background(data);
 	display_map(data);
+	rotate(data);
 	filled_circle_draw(data, 6);
-	mid_point_circle_draw(data, 15);
-	i = 0;
-	while (i < 90)
-	{
-		put_direction(data, 90, i);
-		i++;
-	}
+	// mid_point_circle_draw(data, 8);
 }
 
 int	main(int argc, char **argv)

@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/06 15:59:23 by soutin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-#include <stdio.h>
 
 void	init_img(t_data *data)
 {
@@ -7,12 +18,9 @@ void	init_img(t_data *data)
 
 	i = 0;
 	data->img.texture_map[0] = mlx_xpm_file_to_image(data->mlx_ptr,
-		"./asset/map_asset/wall.xpm", &(data->img.size_x),
+		"./asset/map_asset/black.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	data->img.texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/player.xpm", &(data->img.size_x),
-			&(data->img.size_y));
-	data->img.texture_map[2] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"./asset/map_asset/floor.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	while (i < 3)
@@ -26,44 +34,7 @@ void	init_img(t_data *data)
 	}
 }
 
-void	erase_square(t_data *data, int x, int y)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 10)
-	{
-		j = 0;
-		while (j < 10)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y + i,
-				0xFFFFFF);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	put_square(int x, int y, t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 10)
-	{
-		j = 0;
-		while (j < 10)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y + i,
-				0xD35400);
-			j++;
-		}
-		i++;
-	}
-}
-void	fill_player_direction(t_data *data, int c)
+void	get_player_data(t_data *data, int c, int i, int j)
 {
 	if (c == 'N')
 	{
@@ -81,6 +52,8 @@ void	fill_player_direction(t_data *data, int c)
 	{
 		data->player.direction = 0;
 	}
+	data->player.px = i * 50 + 25;
+	data->player.py = j * 50 + 25;
 }
 
 void	find_player(t_data *data)
@@ -96,9 +69,7 @@ void	find_player(t_data *data)
 		{
 			if (ft_strchr("NWSE", data->map[j][i]))
 			{
-				fill_player_direction(data, data->map[j][i]);
-				data->player.px = i * 50 + 24;
-				data->player.py = j * 50 + 24;
+				get_player_data(data, data->map[j][i], i, j);
 				return ;
 			}
 			i++;
@@ -122,9 +93,9 @@ void	display_map(t_data *data)
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 						data->img.texture_map[0], (i * data->img.size_x), (j
 							* data->img.size_y));
-			if (data->map[j][i] == '0' || data->map[j][i] == 'N')
+			if (ft_strchr("0NSWE", data->map[j][i]))
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-						data->img.texture_map[2], (i * data->img.size_x), (j
+						data->img.texture_map[1], (i * data->img.size_x), (j
 							* data->img.size_y));
 			i++;
 		}
