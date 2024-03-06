@@ -69,18 +69,18 @@ void	erase_floors(t_data *data)
 
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
-	while (i++ < 300000)
+	// i = 0;
+	// while (i++ < 200000)
 	if (check_collision(data, x, y))
 		return ;
 	erase_floors(data);
 	data->player.px += x;
 	data->player.py += y;
 	data->player.direction += rotation_angle;	
-	rotate(data);
 	filled_circle_draw(data, 6);
+	rotate(data);
 	return ;
 }
 
@@ -101,7 +101,7 @@ int	background(t_data *data)
 
 void	first_display(t_data *data)
 {
-	background(data);
+	// background(data);
 	display_map(data);
 	rotate(data);
 	filled_circle_draw(data, 6);
