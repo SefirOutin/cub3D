@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/05 16:47:05 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/06 15:59:23 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_img(t_data *data)
 		"./asset/map_asset/black.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	data->img.texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/white.xpm", &(data->img.size_x),
+			"./asset/map_asset/floor.xpm", &(data->img.size_x),
 			&(data->img.size_y));
 	while (i < 3)
 	{

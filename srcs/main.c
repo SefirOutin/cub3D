@@ -72,7 +72,7 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	int	i;
 
 	i = 0;
-	while (i++ < 200000)
+	while (i++ < 300000)
 	if (check_collision(data, x, y))
 		return ;
 	erase_floors(data);
