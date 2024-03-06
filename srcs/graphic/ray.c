@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/06 15:57:03 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/06 23:42:58 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,11 @@ double	degToRad(double degrees)
 }
 
 // Fonction pour trouver les coordonnées du point sur la section de l'angle
-void	find_point_on_section(t_point *end, double angle, double len_ray)
+void	find_point_on_section(t_ray *ray, double len)
 {
-	double	angle_radians;
-
-	// Convertir l'angle en radians
-	angle_radians = degToRad(angle);
 	// Calculer les nouvelles coordonnées du point avec un rayon constant
-	end->x = end->x + len_ray * cos(angle_radians);
-	end->y = end->y - len_ray * sin(angle_radians);
+	ray->end.x = ray->end.x + len * cos(ray->angle_rad);
+	ray->end.y = ray->end.y - len * sin(ray->angle_rad);
 }
 
 // Fonction pour créer une section entre deux points
@@ -91,84 +87,39 @@ int	create_section(t_data *data, t_point end, int numPoints, t_point **section)
 	return (0);
 }
 
-int	check_next_edges(t_data *data, double angle_deg, t_point *curr_start)
+int	check_next_edges(t_ray *ray)
 {
-	t_point	vlen;
-	t_point	length;
 	t_point	delta;
 	// y =tan(a)x +b 
 
-	printf("curr_start x:%f y:%f\n", curr_start->x, curr_start->y);
-	angle_deg = fix_ang(angle_deg);
-	printf("player x:%f y:%f\n", data->player.px, data->player.py);
-	
-	// calcule un vecteur normalisé (len à 1)
-	length.x = cos(degToRad(angle_deg));
-	length.y = sin(degToRad(angle_deg));
-	// printf("end x:%f y:%f\n", length.x, length.y);
-	printf("direction deg:%f\n", angle_deg);
-	
 	// calcule la distance du joueur par rapport aux bords de la case que le joueur regarde (sert à vlen)
-	if (angle_deg > 0 && angle_deg < 180)
-		delta.y = curr_start->y - (floor(curr_start->y / 50) * 50) + 1;
+	if (ray->angle_deg > 0 && ray->angle_deg < 180)
+		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * 50)+1;
 	else
-		delta.y = (ceil(curr_start->y / 50) * 50) - curr_start->y + 1;
-	if ((angle_deg > 90 && angle_deg < 270))
-		delta.x = curr_start->x - (floor(curr_start->x / 50) * 50) + 1;
+		delta.y = (ceil(ray->end.y * 0.02) * 50) - ray->end.y +1;
+	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
+		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * 50)+1 ;
 	else
-		delta.x = (ceil(curr_start->x / 50) * 50) - curr_start->x + 1;
-	printf("delta unit len x:%f y:%f\n", delta.x, delta.y);
+		delta.x = (ceil(ray->end.x * 0.02) * 50) - ray->end.x +1;
+	// printf("delta unit len x:%f y:%f\n", delta.x, delta.y);
 	
 	// calcule du vecteur pour prochain x entier et prochain y entier pour ensuite les comparer 
-	vlen.x = delta.x * sqrt(1 + pow((length.y) / (length.x), 2));
-	vlen.y = delta.y * sqrt(1 + pow((length.x) / (length.y), 2));
-	printf("vlen x:%f y:%f\n", vlen.x, vlen.y);
-	if (isnan(vlen.x))
-		printf("x is Nan\n");
-	if (isnan(vlen.y))
-		printf("y is Nan\n");
-	// vtmp_end = sqrt(pow(tmp_curr_start->x - data->player.px, 2) + pow(tmp_curr_start->y - data->player.py, 2));
-	// printf("tmp_end :%f\n", vtmp_end);
-	
-	// if (!vlen.y)
-	// 	return (result);
-	// if (!vlen.x)
-	// 	return (result1);
-	if ((vlen.x < vlen.y))
-	{
-		find_point_on_section(curr_start, angle_deg, vlen.x);
-		printf("len x <\n");
-		return ((int)vlen.x);
-	}	
+	ray->vlen.x = delta.x * ray->hypo_len.x;
+	ray->vlen.y = delta.y * ray->hypo_len.y;
+	printf("vlen x:%f Y:%f\n", ray->vlen.x, ray->vlen.y);
+	if (ray->vlen.x == ray->vlen.y)
+		printf("okkkkkkkkkk\n");
+	if ((ray->vlen.x < ray->vlen.y))
+		return (find_point_on_section(ray, ray->vlen.x), (int)ray->vlen.x);
 	else
-	{
-		find_point_on_section(curr_start, angle_deg, vlen.y);
-		printf("len y <\n");
-		return ((int)vlen.y);
-	}
-	// printf("curr_ray p x:%f y:%f\n", result.x, result.y);
+		return (find_point_on_section(ray, ray->vlen.y), (int)ray->vlen.y);
 }
 
-int	put_direction(t_data *data, int curr_ray)
+void	display_ray(t_data *data, t_point *section, int len)
 {
-	t_point		end;
-	t_point		*section;
 	int			i;
-	int			len;
-
-	i = 0;
-	section = NULL;
-	len = 0;
-	end.x = data->player.px;
-	end.y = data->player.py;
-	while (data->map[(int)(end.y / 50)][(int)(end.x / 50)] != '1')
-	{
-		len += check_next_edges(data, data->player.direction + curr_ray, &end);
-		printf("coor map X:%d y:%d\n\n", (int)(end.x / 50), (int)(end.y / 50));
-		
-	}
-	if (create_section(data, end, len, &section))
-		return (1);
+	
+	i = 7;
 	while (i < len)
 	{
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr,
@@ -176,7 +127,45 @@ int	put_direction(t_data *data, int curr_ray)
 		i++;
 	}
 	// printf("last x:%f y:%f\n", section[i - 1].x, section[i - 1].y);
-	free(section);
+}
+
+void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
+{
+	ray->end.x = data->player.px;
+	ray->end.y = data->player.py;
+	ray->angle_deg = fix_ang(data->player.direction + curr_ray - 45);
+	ray->angle_rad = degToRad(ray->angle_deg);
+	ray->v_norm_len.x = cos(ray->angle_rad);
+	ray->v_norm_len.y = sin(ray->angle_rad);
+	ray->hypo_len.x =  sqrt(1 + pow((ray->v_norm_len.y) / (ray->v_norm_len.x), 2));
+	ray->hypo_len.y = sqrt(1 + pow((ray->v_norm_len.x) / (ray->v_norm_len.y), 2));
+	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->v_norm_len.x, ray->v_norm_len.y);
+	while (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1')
+	{
+		ray->len += check_next_edges(ray);
+		printf("player x:%f y:%f\n", data->player.px, data->player.py);
+		printf("ray len %d\n", ray->len);
+		printf("end x %f end y %f\n\n\n ",(ray->end.x*0.02),(ray->end.y*0.02));
+		if (abs((int)ray->vlen.x * 10) - abs((int)ray->vlen.y * 10) > 10)
+		{
+			if (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] == '1')
+			{
+				
+			}
+		}
+	}
+}
+
+int	create_ray(t_data *data, int curr_ray)
+{
+	t_ray	ray;
+	
+	ray.section = NULL;
+	find_next_wall(data, &ray, curr_ray);
+	if (create_section(data, ray.end, ray.len * 0.1, &ray.section))
+		return (1);
+	display_ray(data, ray.section, ray.len * 0.1);
+	free(ray.section);
 	return (0);
 }
 
@@ -186,9 +175,11 @@ int	rotate(t_data *data)
 	int		i;
 
 	i = 0;
-	fov = 90;
+	fov = 1;
 	while (i < fov)
-		if (put_direction(data, i++) < 0)
+	{
+		if (create_ray(data, i+=2) < 0)
 			return (1);
+	}
 	return (0);
 }

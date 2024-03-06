@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/06 15:46:32 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/06 22:11:13 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ typedef struct s_player
 	double				direction;
 	t_point				*section[90];
 }						t_player;
+
+typedef struct s_ray
+{
+	t_point		end;
+	t_point		*section;
+	t_point		v_norm_len;
+	t_point		hypo_len;
+	t_point		vlen;
+	int			len;
+	double		angle_rad;
+	double		angle_deg;
+}	t_ray;
 
 typedef struct s_mlx_img
 {
