@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/06 23:42:58 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:07:06by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,19 @@ int	create_section(t_data *data, t_point end, int numPoints, t_point **section)
 	return (0);
 }
 
+int differenceToNearestMultipleOf50(int x) {
+    // Calcul du multiple de 50 le plus proche
+    int nearestMultiple = 50 * (x / 50);
+
+    // Calcul de la différence
+    int difference = x - nearestMultiple;
+	
+	if (difference > 25)
+		return (50 - difference);
+    return (difference);
+}
+
+
 int	check_next_edges(t_ray *ray)
 {
 	t_point	delta;
@@ -94,21 +107,18 @@ int	check_next_edges(t_ray *ray)
 
 	// calcule la distance du joueur par rapport aux bords de la case que le joueur regarde (sert à vlen)
 	if (ray->angle_deg > 0 && ray->angle_deg < 180)
-		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * 50)+1;
+		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * 50) + 1;
 	else
-		delta.y = (ceil(ray->end.y * 0.02) * 50) - ray->end.y +1;
+		delta.y = (ceil(ray->end.y * 0.02) * 50) - ray->end.y +1 ;
 	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
-		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * 50)+1 ;
+		delta.x = ray->end.x - (floor(ray->end.x * 0.02)  * 50) + 1;
 	else
-		delta.x = (ceil(ray->end.x * 0.02) * 50) - ray->end.x +1;
+		delta.x = (ceil(ray->end.x * 0.02)) * 50 - ray->end.x + 1;
 	// printf("delta unit len x:%f y:%f\n", delta.x, delta.y);
 	
 	// calcule du vecteur pour prochain x entier et prochain y entier pour ensuite les comparer 
 	ray->vlen.x = delta.x * ray->hypo_len.x;
 	ray->vlen.y = delta.y * ray->hypo_len.y;
-	printf("vlen x:%f Y:%f\n", ray->vlen.x, ray->vlen.y);
-	if (ray->vlen.x == ray->vlen.y)
-		printf("okkkkkkkkkk\n");
 	if ((ray->vlen.x < ray->vlen.y))
 		return (find_point_on_section(ray, ray->vlen.x), (int)ray->vlen.x);
 	else
@@ -143,14 +153,28 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 	while (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1')
 	{
 		ray->len += check_next_edges(ray);
-		printf("player x:%f y:%f\n", data->player.px, data->player.py);
-		printf("ray len %d\n", ray->len);
-		printf("end x %f end y %f\n\n\n ",(ray->end.x*0.02),(ray->end.y*0.02));
-		if (abs((int)ray->vlen.x * 10) - abs((int)ray->vlen.y * 10) > 10)
+		ray->end.x = ceil(ray->end.x);
+		ray->end.y = ceil(ray->end.y);
+		//printf("player x:%f y:%f\n", data->player.px, data->player.py);
+		//printf("ray len %d\n", ray->len);
+		//printf("end x %f end y %f\n\n\n ",ray->end.x ,ray->end.y );
+		//printf("diff %d    %d\n\n",differenceToNearestMultipleOf50(ray->end.x) ,differenceToNearestMultipleOf50(ray->end.y));				
+		//printf("end x %d end y %d\n\n\n ",(int)(ray->end.x * 0.02) ,(int)(ray->end.y * 0.02));
+		if(abs(differenceToNearestMultipleOf50(ray->end.x) * differenceToNearestMultipleOf50(ray->end.y)) < 2 )
 		{
-			if (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] == '1')
+			if (ray->angle_deg > 180)
 			{
-				
+				if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) + 1] == '1'))
+					return ;
+				else if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1] == '1' ))
+					return ;
+			}
+			else
+			{
+				if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) + 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1 ] == '1'))
+					return ;
+				else if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) ][(int)(ray->end.x * 0.02) - 1] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)+1 ] == '1'))
+					return ;
 			}
 		}
 	}
@@ -175,7 +199,7 @@ int	rotate(t_data *data)
 	int		i;
 
 	i = 0;
-	fov = 1;
+	fov = 90;
 	while (i < fov)
 	{
 		if (create_ray(data, i+=2) < 0)
