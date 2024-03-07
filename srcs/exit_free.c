@@ -28,7 +28,6 @@ int	exit_and_free(t_data *data)
 	free(data->img.textures[1]);
 	free(data->img.textures[2]);
 	free(data->img.textures[3]);
-	free_section(data->player.section, 90);
 	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[0]);
 	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[1]);
 	if (data->win_ptr)

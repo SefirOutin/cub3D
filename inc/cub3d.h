@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/06 22:11:13 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/07 16:39:47 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,19 @@ typedef struct s_player
 	double				px;
 	double				py;
 	double				direction;
-	t_point				*section[90];
 }						t_player;
 
 typedef struct s_ray
 {
-	t_point		end;
-	t_point		*section;
-	t_point		v_norm_len;
-	t_point		hypo_len;
-	t_point		vlen;
-	int			len;
-	double		angle_rad;
-	double		angle_deg;
-}	t_ray;
+	t_point				end;
+	t_point				*section;
+	t_point				vec_len_one_u;
+	t_point				hypo_len_one_u;
+	t_point				vlen;
+	int					len;
+	double				angle_rad;
+	double				angle_deg;
+}						t_ray;
 
 typedef struct s_mlx_img
 {
@@ -153,9 +152,10 @@ void					move(t_data *data, double x, double y,
 int						rotate(t_data *data);
 int						put_direction(t_data *data, int curr_ray);
 void					erase_direction(t_data *data, int len_ray);
-double						fix_ang(double a);
+double					fix_ang(double a);
 
 void					free_section(t_point **section, int size);
 int						e_direction(t_data *data, int len_ray, int curr_ray);
+void					erase_floors(t_data *data);
 
 #endif

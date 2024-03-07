@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/06 23:42:58 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/07 16:56:17 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	create_section(t_data *data, t_point end, int numPoints, t_point **section)
 		ratio = (double)i / (double)(numPoints - 1);
 		(*section)[i].x = start.x + ratio * (end.x - start.x);
 		(*section)[i].y = start.y +  ratio * (end.y - start.y);
-		
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr,
+			(*section)[i].x, (*section)[i].y, 0x7FFF00);
 		i++;
 	}
 	return (0);
@@ -94,18 +95,21 @@ int	check_next_edges(t_ray *ray)
 
 	// calcule la distance du joueur par rapport aux bords de la case que le joueur regarde (sert à vlen)
 	if (ray->angle_deg > 0 && ray->angle_deg < 180)
-		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * 50)+1;
+		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * 50) + 1;
 	else
-		delta.y = (ceil(ray->end.y * 0.02) * 50) - ray->end.y +1;
+		delta.y = (ceil(ray->end.y * 0.02) * 50) - ray->end.y + 1;
 	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
-		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * 50)+1 ;
+		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * 50) + 1;
 	else
-		delta.x = (ceil(ray->end.x * 0.02) * 50) - ray->end.x +1;
+		delta.x = (ceil(ray->end.x * 0.02) * 50) - ray->end.x + 1;
 	// printf("delta unit len x:%f y:%f\n", delta.x, delta.y);
-	
+	// if (!delta.x)
+	// 	delta.x = 49;
+	// if (!delta.y)
+	// 	delta.y = 49;
 	// calcule du vecteur pour prochain x entier et prochain y entier pour ensuite les comparer 
-	ray->vlen.x = delta.x * ray->hypo_len.x;
-	ray->vlen.y = delta.y * ray->hypo_len.y;
+	ray->vlen.x = delta.x * ray->hypo_len_one_u.x;
+	ray->vlen.y = delta.y * ray->hypo_len_one_u.y;
 	printf("vlen x:%f Y:%f\n", ray->vlen.x, ray->vlen.y);
 	if (ray->vlen.x == ray->vlen.y)
 		printf("okkkkkkkkkk\n");
@@ -135,37 +139,52 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 	ray->end.y = data->player.py;
 	ray->angle_deg = fix_ang(data->player.direction + curr_ray - 45);
 	ray->angle_rad = degToRad(ray->angle_deg);
-	ray->v_norm_len.x = cos(ray->angle_rad);
-	ray->v_norm_len.y = sin(ray->angle_rad);
-	ray->hypo_len.x =  sqrt(1 + pow((ray->v_norm_len.y) / (ray->v_norm_len.x), 2));
-	ray->hypo_len.y = sqrt(1 + pow((ray->v_norm_len.x) / (ray->v_norm_len.y), 2));
-	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->v_norm_len.x, ray->v_norm_len.y);
+	ray->vec_len_one_u.x = cos(ray->angle_rad);
+	ray->vec_len_one_u.y = sin(ray->angle_rad);
+	ray->hypo_len_one_u.x =  sqrt(1 + pow((ray->vec_len_one_u.y) / (ray->vec_len_one_u.x), 2));
+	ray->hypo_len_one_u.y = sqrt(1 + pow((ray->vec_len_one_u.x) / (ray->vec_len_one_u.y), 2));
+	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->vec_len_one_u.x, ray->vec_len_one_u.y);
 	while (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1')
 	{
 		ray->len += check_next_edges(ray);
 		printf("player x:%f y:%f\n", data->player.px, data->player.py);
 		printf("ray len %d\n", ray->len);
-		printf("end x %f end y %f\n\n\n ",(ray->end.x*0.02),(ray->end.y*0.02));
-		if (abs((int)ray->vlen.x * 10) - abs((int)ray->vlen.y * 10) > 10)
-		{
-			if (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] == '1')
-			{
+		printf("end x %f end y %f\n\n\n ",(ray->end.x),(ray->end.y));
+		// if (abs((int)ray->vlen.x * 10) - abs((int)ray->vlen.y * 10) > 10)
+		// {
+		// 	if (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] == '1')
+		// 	{
 				
-			}
-		}
+		// 	}
+		// }
 	}
 }
 
 int	create_ray(t_data *data, int curr_ray)
 {
 	t_ray	ray;
+	double	ratio;
+	int		i;
+	int		num_points;
 	
-	ray.section = NULL;
+	i = 0;
+	ft_memset(&ray, 0, sizeof(t_ray));
 	find_next_wall(data, &ray, curr_ray);
-	if (create_section(data, ray.end, ray.len * 0.1, &ray.section))
-		return (1);
-	display_ray(data, ray.section, ray.len * 0.1);
-	free(ray.section);
+	// create_section(data, ray.end, ray.len * 0.1);
+	num_points = ray.len * 0.5;
+	// if (create_section(data, ray.end, ray.len * 0.5, &ray.section))
+	// 	return (1);
+	// display_ray(data, ray.section, ray.len * 0.5);
+	// free(ray.section);
+	printf("%d\n", num_points);
+	while (i < num_points)
+	{
+		ratio = (double)i / (double)(num_points - 1);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr,
+			data->player.px + ratio * (ray.end.x - data->player.px),
+			data->player.py +  ratio * (ray.end.y - data->player.py), 0x7FFF00);
+		i++;
+	}
 	return (0);
 }
 
@@ -175,7 +194,7 @@ int	rotate(t_data *data)
 	int		i;
 
 	i = 0;
-	fov = 1;
+	fov = 90;
 	while (i < fov)
 	{
 		if (create_ray(data, i+=2) < 0)

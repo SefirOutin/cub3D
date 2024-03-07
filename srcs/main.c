@@ -78,9 +78,9 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	erase_floors(data);
 	data->player.px += x;
 	data->player.py += y;
-	data->player.direction += rotation_angle;	
-	filled_circle_draw(data, 6);
+	data->player.direction += rotation_angle;
 	rotate(data);
+	filled_circle_draw(data, 6);
 	return ;
 }
 
