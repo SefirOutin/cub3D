@@ -79,9 +79,8 @@ int	create_section(t_data *data, t_point end, int numPoints, t_point **section)
 	while (i < numPoints)
 	{
 		ratio = (double)i / (double)(numPoints - 1);
-		(*section)[i].x = start.x + ratio * (end.x - start.x);
-		(*section)[i].y = start.y +  ratio * (end.y - start.y);
-		
+		(*section)[i].x = start.x + ratio * (end.x - start.x );
+		(*section)[i].y = start.y +  ratio * (end.y - start.y );
 		i++;
 	}
 	return (0);
@@ -138,8 +137,7 @@ void	display_ray(t_data *data, t_point *section, int len)
 	}
 	// printf("last x:%f y:%f\n", section[i - 1].x, section[i - 1].y);
 }
-
-void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
+void init_ray(t_data *data, t_ray *ray, int curr_ray)
 {
 	ray->end.x = data->player.px;
 	ray->end.y = data->player.py;
@@ -149,6 +147,10 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 	ray->v_norm_len.y = sin(ray->angle_rad);
 	ray->hypo_len.x =  sqrt(1 + pow((ray->v_norm_len.y) / (ray->v_norm_len.x), 2));
 	ray->hypo_len.y = sqrt(1 + pow((ray->v_norm_len.x) / (ray->v_norm_len.y), 2));
+}
+void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
+{
+	init_ray(data,ray,curr_ray);
 	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->v_norm_len.x, ray->v_norm_len.y);
 	while (data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1')
 	{
@@ -164,16 +166,16 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 		{
 			if (ray->angle_deg > 180)
 			{
-				if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) + 1] == '1'))
+				if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' && data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) + 1] == '1'))
 					return ;
-				else if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1] == '1' ))
+				else if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' && data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1] == '1' ))
 					return ;
 			}
 			else
 			{
-				if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) + 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1 ] == '1'))
+				if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) + 1][(int)(ray->end.x * 0.02)] == '1' && data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1 ] == '1'))
 					return ;
-				else if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) ][(int)(ray->end.x * 0.02) - 1] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)+1 ] == '1'))
+				else if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) ][(int)(ray->end.x * 0.02) - 1] == '1' && data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)+1 ] == '1'))
 					return ;
 			}
 		}
