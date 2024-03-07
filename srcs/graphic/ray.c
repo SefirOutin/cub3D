@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/07 17:55:14 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/07 21:38:42 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ double	degToRad(double degrees)
 // Fonction pour trouver les coordonnées du point sur la section de l'angle
 void	find_point_on_section(t_ray *ray, double len)
 {
-	ray->end.x = ray->end.x + len * ray->len_one_u.x;
-	ray->end.y = ray->end.y - len * ray->len_one_u.y;
+	ray->len += (int)len;
+	ray->end.x = ceil(ray->end.x + len * ray->len_one_u.x);
+	ray->end.y = ceil(ray->end.y - len * ray->len_one_u.y);
 }
 
-int differenceToNearestMultipleOf50(int x) {
+int diff_nearest_50x(int x)
+{
     // Calcul du multiple de 50 le plus proche
     int nearestMultiple = 50 * (x / 50);
-
     // Calcul de la différence
     int difference = x - nearestMultiple;
 	
@@ -118,8 +119,6 @@ int	check_next_edges(t_ray *ray)
 	ray->vlen.x = delta.x * ray->hypo_len_one_u.x;
 	ray->vlen.y = delta.y * ray->hypo_len_one_u.y;
 	// printf("vlen x:%f Y:%f\n", ray->vlen.x, ray->vlen.y);
-	// if (ray->vlen.x == ray->vlen.y)
-	// 	printf("okkkkkkkkkk\n");
 	if ((ray->vlen.x < ray->vlen.y))
 		return (find_point_on_section(ray, ray->vlen.x), (int)ray->vlen.x);
 	else
@@ -139,6 +138,42 @@ void	display_ray(t_data *data, t_point *section, int len)
 	}
 	// printf("last x:%f y:%f\n", section[i - 1].x, section[i - 1].y);
 }
+void	points_cpy(t_point *new1, t_point *new2, t_point old)
+{
+	new1->x = (int)(old.x * 0.02);
+	new1->y = (int)(old.y * 0.02);
+	new2->x = (int)(old.x * 0.02);
+	new2->y = (int)(old.y * 0.02);
+}
+
+int	check_angles(t_data *data, t_ray *ray)
+{
+	t_point	first;
+	t_point	second;
+	
+	points_cpy(&first, &second, ray->end);
+	if(!(abs(diff_nearest_50x(ray->end.x) * diff_nearest_50x(ray->end.y)) < 2))
+		return (0);
+	if (ray->angle_deg > 180)
+	{
+		first.y--;
+		if(ray->end.x < data->player.px)
+			second.x++;
+		else if(ray->end.x > data->player.px)
+			second.x--;
+	}
+	else
+	{
+		if(ray->end.x > data->player.px)
+			(first.y++, second.x--);
+		else if(ray->end.x < data->player.px)
+			(first.x--, second.x++);
+	}
+	if (data->map[(int)first.y][(int)first.x] == '1'
+		|| data->map[(int)second.y][(int)second.x] == '1')
+		return (1);
+	return (0);
+}
 
 void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 {
@@ -153,29 +188,31 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->vec_len_one_u.x, ray->vec_len_one_u.y);
 	while ((data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1'))
 	{
-		ray->len += check_next_edges(ray);
-		printf("player x:%f y:%f\n", data->player.px, data->player.py);
-		printf("ray len %d\n", ray->len);
-		printf("end x %f end y %f\n\n\n ",(ray->end.x),(ray->end.y));
+		check_next_edges(ray);
+		// printf("player x:%f y:%f\n", data->player.px, data->player.py);
+		// printf("ray len %d\n", ray->len);
+		// printf("end x %f end y %f\n\n\n ",(ray->end.x),(ray->end.y));
 		ray->end.x = ceil(ray->end.x);
 		ray->end.y = ceil(ray->end.y);
-		if(abs(differenceToNearestMultipleOf50(ray->end.x) * differenceToNearestMultipleOf50(ray->end.y)) < 2 )
-		{
-			if (ray->angle_deg > 180)
-			{
-				if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) + 1] == '1'))
-					return ;
-				else if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1] == '1' ))
-					return ;
-			}
-			else
-			{
-				if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) + 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1 ] == '1'))
-					return ;
-				else if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) ][(int)(ray->end.x * 0.02) - 1] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)+1 ] == '1'))
-					return ;
-			}
-		}
+		if (check_angles(data, ray))
+			return ;
+		// if(abs(differenceToNearestMultipleOf50(ray->end.x) * differenceToNearestMultipleOf50(ray->end.y)) < 2 )
+		// {
+		// 	if (ray->angle_deg > 180)
+		// 	{
+		// 		if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) + 1] == '1'))
+		// 			return ;
+		// 		else if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) - 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1] == '1' ))
+		// 			return ;
+		// 	}
+		// 	else
+		// 	{
+		// 		if(ray->end.x > data->player.px && (data->map[(int)(ray->end.y * 0.02) + 1][(int)(ray->end.x * 0.02)] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02) - 1 ] == '1'))
+		// 			return ;
+		// 		else if(ray->end.x < data->player.px && (data->map[(int)(ray->end.y * 0.02) ][(int)(ray->end.x * 0.02) - 1] == '1' || data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)+1 ] == '1'))
+		// 			return ;
+		// 	}
+		// }
 	}
 }
 
