@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/07 16:39:47 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/07 17:47:03 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ typedef struct s_player
 typedef struct s_ray
 {
 	t_point				end;
-	t_point				*section;
-	t_point				vec_len_one_u;
+	t_point				len_one_u;
 	t_point				hypo_len_one_u;
 	t_point				vlen;
 	int					len;

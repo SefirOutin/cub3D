@@ -79,8 +79,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	data->player.px += x;
 	data->player.py += y;
 	data->player.direction += rotation_angle;
-	rotate(data);
 	filled_circle_draw(data, 6);
+	rotate(data);
 	return ;
 }
 
@@ -103,8 +103,8 @@ void	first_display(t_data *data)
 {
 	// background(data);
 	display_map(data);
-	rotate(data);
 	filled_circle_draw(data, 6);
+	rotate(data);
 	// mid_point_circle_draw(data, 8);
 }
 
