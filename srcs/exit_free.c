@@ -24,12 +24,12 @@ int	exit_and_free(t_data *data)
 
 	// i = 0;
 	ft_free_tab(data->map);
-	free(data->img.textures[0]);
-	free(data->img.textures[1]);
-	free(data->img.textures[2]);
-	free(data->img.textures[3]);
-	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[0]);
-	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[1]);
+	free(data->textures[0]);
+	free(data->textures[1]);
+	free(data->textures[2]);
+	free(data->textures[3]);
+	mlx_destroy_image_if_exists(data->mlx_ptr, data->mnmap.textures[0]);
+	mlx_destroy_image_if_exists(data->mlx_ptr, data->mnmap.textures[1]);
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	if (data->mlx_ptr)

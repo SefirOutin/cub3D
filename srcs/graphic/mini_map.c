@@ -6,26 +6,26 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/06 16:39:42 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:50:08 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_img(t_data *data)
+void	init_mnmap_textures(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->img.texture_map[0] = mlx_xpm_file_to_image(data->mlx_ptr,
-		"./asset/map_asset/wall.xpm", &(data->img.size_x),
-			&(data->img.size_y));
-	data->img.texture_map[1] = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./asset/map_asset/floor.xpm", &(data->img.size_x),
-			&(data->img.size_y));
-	while (i < 3)
+	data->mnmap.textures[0] = mlx_xpm_file_to_image(data->mlx_ptr,
+		"./asset/map_asset/wall.xpm", &(data->mnmap.size),
+			&(data->mnmap.size));
+	data->mnmap.textures[1] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/floor.xpm", &(data->mnmap.size),
+			&(data->mnmap.size));
+	while (i < 2)
 	{
-		if (data->img.texture_map[i] == NULL)
+		if (data->mnmap.textures[i] == NULL)
 		{
 			write(2, "Error\nImage no initialised", 26);
 			exit_and_free(data);
@@ -83,23 +83,22 @@ void	display_map(t_data *data)
 	int	i;
 	int	j;
 
-	i = 0;
 	j = 0;
 	while (data->map[j])
 	{
+		i = 0;
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-						data->img.texture_map[0], (i * data->img.size_x), (j
-							* data->img.size_y));
+						data->mnmap.textures[0], (i * data->mnmap.size),
+						(j * data->mnmap.size));
 			if (ft_strchr("0NSWE", data->map[j][i]))
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-						data->img.texture_map[1], (i * data->img.size_x), (j
-							* data->img.size_y));
+						data->mnmap.textures[1], (i * data->mnmap.size),
+						(j * data->mnmap.size));
 			i++;
 		}
-		i = 0;
 		j++;
 	}
 }

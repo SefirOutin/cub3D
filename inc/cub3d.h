@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/07 17:47:03 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:57:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define FOV 90
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
@@ -56,6 +57,7 @@ typedef struct s_player
 	double				px;
 	double				py;
 	double				direction;
+	int					health;
 }						t_player;
 
 typedef struct s_ray
@@ -69,7 +71,7 @@ typedef struct s_ray
 	double				angle_deg;
 }						t_ray;
 
-typedef struct s_mlx_img
+typedef struct s_img
 {
 	void				*img;
 	int					*addr;
@@ -78,35 +80,35 @@ typedef struct s_mlx_img
 	int					endian;
 	int					x;
 	int					y;
-}						t_mlx_img;
+}						t_img;
 
-typedef struct s_img
+typedef struct s_mnmap
 {
-	void				*texture_map[2];
-	char				*textures[5];
-	int					floor_color[3];
-	int					ceilling_color[3];
+	void				*textures[2];
 	int					x_max;
 	int					y_max;
-	int					size_x;
-	int					size_y;
-}						t_img;
+	int					size;
+}						t_mnmap;
 
 typedef struct s_data
 {
 	void				*mlx_ptr;
 	void				*win_ptr;
+	char				*textures[5];
+	int					floor_color[3];
+	int					ceilling_color[3];
 	char				**map;
-	t_mlx_img			image;
+	int					rays_len[FOV];
 	t_img				img;
+	t_mnmap				mnmap;
 	t_player			player;
 	t_pixel_list		*pixel_list;
 }						t_data;
 
 void					init_hook_and_loop(t_data *data);
 int						init_mlx_data(t_data *data);
-void					init_img(t_data *data);
-int						init_mlx_img(t_data *data);
+void					init_mnmap_textures(t_data *data);
+int						init_img(t_data *data);
 
 int						get_inputs(int keysym, t_data *data);
 int						release_inputs(int keysym, t_data *data);
@@ -156,5 +158,7 @@ double					fix_ang(double a);
 void					free_section(t_point **section, int size);
 int						e_direction(t_data *data, int len_ray, int curr_ray);
 void					erase_floors(t_data *data);
+
+void					put_pixel_to_image(t_img *img, int x, int y, int color);
 
 #endif
