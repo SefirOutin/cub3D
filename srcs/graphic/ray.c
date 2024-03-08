@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/07 21:38:42 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:36:49 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,19 @@ int diff_nearest_50x(int x)
 // 	return (0);
 // }
 
-int	check_next_edges(t_ray *ray)
+int	check_next_edges(t_data *data, t_ray *ray)
 {
 	t_point	delta;
 	
 	// calcule la distance du joueur par rapport aux bords de la case que le joueur regarde (sert à vlen)
 	if (ray->angle_deg > 0 && ray->angle_deg < 180)
-		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * 50) + 1;
+		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * data->mnmap.size) + 1;
 	else
-		delta.y = (ceil(ray->end.y * 0.02) * 50) - ray->end.y + 1;
+		delta.y = (ceil(ray->end.y * 0.02) * data->mnmap.size) - ray->end.y + 1;
 	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
-		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * 50) + 1;
+		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * data->mnmap.size) + 1;
 	else
-		delta.x = (ceil(ray->end.x * 0.02) * 50) - ray->end.x + 1;
+		delta.x = (ceil(ray->end.x * 0.02) * data->mnmap.size) - ray->end.x + 1;
 	// printf("delta unit len x:%f y:%f\n", delta.x, delta.y);
 	
 	// calcule du vecteur pour prochain x entier et prochain y entier pour ensuite les comparer 
@@ -179,7 +179,7 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 {
 	ray->end.x = data->player.px;
 	ray->end.y = data->player.py;
-	ray->angle_deg = fix_ang(data->player.direction + curr_ray - 45);
+	ray->angle_deg = fix_ang(data->player.direction + curr_ray - FOV * 0.5);
 	ray->angle_rad = degToRad(ray->angle_deg);
 	ray->len_one_u.x = cos(ray->angle_rad);
 	ray->len_one_u.y = sin(ray->angle_rad);
@@ -188,7 +188,7 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->vec_len_one_u.x, ray->vec_len_one_u.y);
 	while ((data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1'))
 	{
-		check_next_edges(ray);
+		check_next_edges(data, ray);
 		// printf("player x:%f y:%f\n", data->player.px, data->player.py);
 		// printf("ray len %d\n", ray->len);
 		// printf("end x %f end y %f\n\n\n ",(ray->end.x),(ray->end.y));
@@ -240,12 +240,10 @@ int	create_ray(t_data *data, int curr_ray)
 
 int	rotate(t_data *data)
 {
-	int		fov;
 	int		i;
 
 	i = 0;
-	fov = 90;
-	while (i < fov)
+	while (i < FOV)
 	{
 		if (create_ray(data, i+=2) < 0)
 			return (1);

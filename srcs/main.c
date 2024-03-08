@@ -59,8 +59,8 @@ void	erase_floors(t_data *data)
 		{
 			if (ft_strchr("0NSWE", data->map[j][i]))
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-						data->img.texture_map[1], (i * data->img.size_x), (j
-							* data->img.size_y));
+						data->mnmap.textures[1], (i * data->mnmap.size), (j
+							* data->mnmap.size));
 			i++;
 		}
 		j++;
@@ -86,16 +86,33 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 
 int	background(t_data *data)
 {
+	int		x;
+	int		y;
 	int		i;
-
-	i = 0;
-	if (init_mlx_img(data))
+	
+	y = 0;
+	if (init_img(data))
 		return (-1);
-	while (data->image.addr[i])
-		data->image.addr[i] = 0xFFFFFF;
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image.img, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, data->image.img);
-	ft_memset(&data->image, 0, sizeof(t_mlx_img));
+	while (data->map[y])
+	{
+		x = 0;
+		while (data->map[y][x])
+		{
+			i = 0;
+			while (i < 50)
+			{
+				put_pixel_to_image(data->img.img, (x * 50) + i, (y * 50) + i, 0xFFFFFF);
+				i++;
+			}
+			x++;
+		}
+		y++;
+		// if (!(i % data->img.bpp))
+		// 	data->img.addr[i] = 0xFFFFFF;
+	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
+	// mlx_destroy_image(data->mlx_ptr, data->img.img);
+	// ft_memset(&data->img, 0, sizeof(t_img));
 	return (0);
 }
 
