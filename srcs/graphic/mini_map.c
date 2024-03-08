@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 15:50:08 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 18:40:31 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,27 @@ void	display_map(t_data *data)
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 						data->mnmap.textures[1], (i * data->mnmap.size),
 						(j * data->mnmap.size));
+			i++;
+		}
+		j++;
+	}
+}
+
+void	erase_floors(t_data *data)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	while (data->map[j])
+	{
+		i = 0;
+		while (data->map[j][i])
+		{
+			if (ft_strchr("0NSWE", data->map[j][i]))
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+						data->mnmap.textures[1], (i * data->mnmap.size), (j
+							* data->mnmap.size));
 			i++;
 		}
 		j++;

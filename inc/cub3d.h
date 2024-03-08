@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 15:57:40 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 18:09:44 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_data
 	int					floor_color[3];
 	int					ceilling_color[3];
 	char				**map;
-	int					rays_len[FOV];
+	int					rays_len[FOV / 2];
 	t_img				img;
 	t_mnmap				mnmap;
 	t_player			player;
@@ -160,5 +160,6 @@ int						e_direction(t_data *data, int len_ray, int curr_ray);
 void					erase_floors(t_data *data);
 
 void					put_pixel_to_image(t_img *img, int x, int y, int color);
+double					deg_to_rad(double degrees);
 
 #endif

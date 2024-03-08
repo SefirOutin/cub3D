@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/05 01:01:56 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 17:48:49 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	filled_circle_draw(t_data *data, int radius)
 	current.y = radius;
 	m = 3 - 4 * radius;
 	xx = 0;
-	// printf("circle player x:%f y:%f\n", data->player.px, data->player.py);
 	while (current.x <= current.y)
 	{
 		xx = data->player.px - current.y;
@@ -66,55 +65,5 @@ void	filled_circle_erase(t_data *data, int radius)
 		}
 		current.x++;
 		m += 8 * current.x + 4;
-	}
-}
-
-void	mid_point_circle_draw(t_data *data, int r)
-{
-	t_point	current;
-	int		P;
-
-	current.x = r;
-	current.y = 0;
-	P = 1 - r;
-	while (current.x > current.y)
-	{
-		current.y++;
-		if (P <= 0)
-			P = P + 2 * current.y + 1;
-		else
-		{
-			current.x--;
-			P = P + 2 * current.y - 2 * current.x + 1;
-		}
-		if (!(current.x < current.y))
-			mid_point_put_pixels(data, current, 0xFF0000);
-	}
-}
-
-void	mid_point_circle_erase(t_data *data, int r)
-{
-	t_point current;
-	int P;
-
-	current.x = r;
-	current.y = 0;
-	P = 1 - r;
-	// Initialising the value of P
-	while (current.x > current.y)
-	{
-		current.y++;
-		// Mid-point is inside or on the perimeter
-		if (P <= 0)
-			P = P + 2 * current.y + 1;
-		// Mid-point is outside the perimeter
-		else
-		{
-			current.x--;
-			P = P + 2 * current.y - 2 * current.x + 1;
-		}
-		// All the perimeter points have already been printed
-		if (!(current.x < current.y))
-			mid_point_put_pixels(data, current, 0xFFFFFF);
 	}
 }

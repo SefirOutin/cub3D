@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 15:36:49 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 18:15:53 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ double	fix_ang(double a)
 // 	return (0);
 // }
 
-double	degToRad(double degrees)
+double	deg_to_rad(double degrees)
 {
 	return (degrees * PI / 180.0);
 }
@@ -177,12 +177,12 @@ int	check_angles(t_data *data, t_ray *ray)
 
 void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 {
-	ray->end.x = data->player.px;
-	ray->end.y = data->player.py;
 	ray->angle_deg = fix_ang(data->player.direction + curr_ray - FOV * 0.5);
-	ray->angle_rad = degToRad(ray->angle_deg);
+	ray->angle_rad = deg_to_rad(ray->angle_deg);
 	ray->len_one_u.x = cos(ray->angle_rad);
 	ray->len_one_u.y = sin(ray->angle_rad);
+	ray->end.x = data->player.px;
+	ray->end.y = data->player.py;
 	ray->hypo_len_one_u.x =  sqrt(1 + pow((ray->len_one_u.y) / (ray->len_one_u.x), 2));
 	ray->hypo_len_one_u.y = sqrt(1 + pow((ray->len_one_u.x) / (ray->len_one_u.y), 2));
 	// printf("rad:%f deg%f len x:%f len y:%f\n", ray->angle_rad,ray->angle_deg, ray->vec_len_one_u.x, ray->vec_len_one_u.y);
@@ -225,6 +225,8 @@ int	create_ray(t_data *data, int curr_ray)
 	
 	i = 4;
 	ft_memset(&ray, 0, sizeof(t_ray));
+	ft_memset(data->rays_len, 0, FOV / 2);
+	// ft_memset(&ray.end, 0, sizeof(t_point));
 	find_next_wall(data, &ray, curr_ray);
 	num_points = ray.len * 0.5;
 	while (i < num_points)
@@ -235,6 +237,7 @@ int	create_ray(t_data *data, int curr_ray)
 			data->player.py +  ratio * (ray.end.y - data->player.py), 0x7FFF00);
 		i++;
 	}
+	data->rays_len[(int)(curr_ray * 0.5)] = ray.len;
 	return (0);
 }
 
@@ -245,8 +248,7 @@ int	rotate(t_data *data)
 	i = 0;
 	while (i < FOV)
 	{
-		if (create_ray(data, i+=2) < 0)
-			return (1);
+		create_ray(data, i+=2);
 	}
 	return (0);
 }

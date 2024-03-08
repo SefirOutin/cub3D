@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 15:53:05 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 21:37:11 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,5 @@ int	init_img(t_data *data)
 		return (-1);
 	data->img.addr = (int *)mlx_get_data_addr(data->img.img, &data->img.bpp,
 			&data->img.line_l, &data->img.endian);
-	while (data->img.addr[i])
-		data->img.addr[i++] = 0xFFFFFF;
 	return (0);
 }
