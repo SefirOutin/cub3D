@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 15:36:49 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/08 18:47:55 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,26 +152,20 @@ int	check_angles(t_data *data, t_ray *ray)
 	t_point	second;
 	
 	points_cpy(&first, &second, ray->end);
-	if(!(abs(diff_nearest_50x(ray->end.x) * diff_nearest_50x(ray->end.y)) < 2))
-		return (0);
-	if (ray->angle_deg > 180)
+	if((abs(diff_nearest_50x(ray->end.x) * diff_nearest_50x(ray->end.y)) < 2))
 	{
-		first.y--;
+		if (ray->angle_deg > 180)
+			first.y--;
+		else
+			first.y++;
 		if(ray->end.x < data->player.px)
 			second.x++;
 		else if(ray->end.x > data->player.px)
-			second.x--;
+			second.x--;	
+		if (data->map[(int)first.y][(int)first.x] == '1'
+		&& data->map[(int)second.y][(int)second.x] == '1')
+			return (1);
 	}
-	else
-	{
-		if(ray->end.x > data->player.px)
-			(first.y++, second.x--);
-		else if(ray->end.x < data->player.px)
-			(first.x--, second.x++);
-	}
-	if (data->map[(int)first.y][(int)first.x] == '1'
-		|| data->map[(int)second.y][(int)second.x] == '1')
-		return (1);
 	return (0);
 }
 
@@ -226,7 +220,7 @@ int	create_ray(t_data *data, int curr_ray)
 	i = 4;
 	ft_memset(&ray, 0, sizeof(t_ray));
 	find_next_wall(data, &ray, curr_ray);
-	num_points = ray.len * 0.5;
+	num_points = ray.len * 1;
 	while (i < num_points)
 	{
 		ratio = (double)i / (double)(num_points - 1);
