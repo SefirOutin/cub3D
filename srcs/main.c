@@ -96,25 +96,19 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 
 int	background(t_data *data)
 {
-	int		i;
 	int		y;
 	int		x;
 
 	y = 0;
-	i = 0;
 	if (init_img(data))
 		return (-1);
-	while (data->map[y])
+	// printf("ok\n");
+	while (y < data->mnmap.y_max * 50)
 	{
 		x = 0;
-		while (data->map[y][x])
+		while (x < data->mnmap.x_max * 50)
 		{
-			i = 0;
-			while (i < 49)
-			{
-				put_pixel_to_image(data->img.img, x * 50 + i, y * 50 + i, 0xFFFFFF);
-				i++;
-			}
+			put_pixel_to_image(&data->img, x, y, 0xFFFFFF);
 			x++;
 		}
 		y++;
@@ -127,7 +121,7 @@ int	background(t_data *data)
 
 void	first_display(t_data *data)
 {
-	// background(data);
+	background(data);
 	display_map(data);
 	filled_circle_draw(data, 6);
 	rotate(data);

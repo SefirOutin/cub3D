@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:12:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 15:28:06 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/09 23:54:55 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
 	int	pixel_index;
 
+	printf("x%d y%d\n", x, y);
 	pixel_index = y * img->line_l + x * (int)(img->bpp / 8);
 	((img->addr))[pixel_index / (int)(img->bpp / 8)] = color;
 }
