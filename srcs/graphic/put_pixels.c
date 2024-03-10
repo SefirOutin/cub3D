@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:12:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/09 23:54:55 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:30:30 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
 	int	pixel_index;
 
-	printf("x%d y%d\n", x, y);
+	// printf("x%d y%d\n", x, y);
 	pixel_index = y * img->line_l + x * (int)(img->bpp / 8);
 	((img->addr))[pixel_index / (int)(img->bpp / 8)] = color;
 }
 
-void	put_circle_pixels(t_data *data, int point, int xx, int color)
+void	put_circle_pixels(t_data *data, t_img *img, int point, int xx, int color)
 {
-    // put_pixel_to_image(img, xx, data->player.py - point, color);
-    // put_pixel_to_image(img, xx, data->player.py + point, color);
-	mlx_pixel_put(data->mlx_ptr, data->win_ptr, xx, data->player.py - point,
-			color);
-	mlx_pixel_put(data->mlx_ptr, data->win_ptr, xx, data->player.py + point,
-			color);
+    put_pixel_to_image(img, xx, data->player.py - point, color);
+    put_pixel_to_image(img, xx, data->player.py + point, color);
+	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, xx, data->player.py - point,
+	// 		color);
+	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, xx, data->player.py + point,
+	// 		color);
 	// if (data->map[(int)(data->player.py - point) / 50][(int)xx / 50] == '1')
 	// 	data->map[(int)(data->player.py - point) / 50][(int)xx / 50] = '5';
 	// if (ft_strchr("0NSWE", data->map[(int)(data->player.py + point) / 50][(int)xx / 50]))

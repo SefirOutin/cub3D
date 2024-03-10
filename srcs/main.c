@@ -98,9 +98,11 @@ int	background(t_data *data)
 {
 	int		y;
 	int		x;
+	t_img	img;
 
 	y = 0;
-	if (init_img(data))
+	img = init_img(data, data->mnmap.x_max * 50, data->mnmap.y_max * 50);
+	if (!img.img)
 		return (-1);
 	// printf("ok\n");
 	while (y < data->mnmap.y_max * 50)
@@ -108,20 +110,20 @@ int	background(t_data *data)
 		x = 0;
 		while (x < data->mnmap.x_max * 50)
 		{
-			put_pixel_to_image(&data->img, x, y, 0xFFFFFF);
+			put_pixel_to_image(&img, x, y, 0x00FFFFFF);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, data->img.img);
-	ft_memset(&data->img, 0, sizeof(t_img));
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, img.img);
+	// ft_memset(&img, 0, sizeof(t_img));
 	return (0);
 }
 
 void	first_display(t_data *data)
 {
-	background(data);
+	// background(data);
 	display_map(data);
 	filled_circle_draw(data, 6);
 	rotate(data);

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/09 23:47:40 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:15:13 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,16 @@ void	init_hook_and_loop(t_data *data)
 	mlx_loop(data->mlx_ptr);
 
 }
-int	init_img(t_data *data)
+t_img	init_img(t_data *data, int size_x, int size_y)
 {
-	// int	i;
+	t_img	img;
 	
-	// i = 0;
-	data->img.img = mlx_new_image(data->mlx_ptr, data->mnmap.x_max * 50,
-			(data->mnmap.y_max) * 50);
-	if (!data->img.img)
-		return (-1);
-	data->img.addr = (int *)mlx_get_data_addr(data->img.img, &data->img.bpp,
-			&data->img.line_l, &data->img.endian);
+	img.img = mlx_new_image(data->mlx_ptr, size_x,
+			size_y);
+	if (!img.img)
+		return (img);
+	img.addr = (int *)mlx_get_data_addr(img.img, &img.bpp,
+			&img.line_l, &img.endian);
 	// printf("%d\n", data->img.bpp);
-	return (0);
+	return (img);
 }
