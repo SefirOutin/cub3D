@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/11 15:41:06 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:17:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,8 +192,8 @@ void	find_next_wall(t_data *data, t_ray *ray, int curr_ray)
 		// printf("player x:%f y:%f\n", data->player.px, data->player.py);
 		// printf("ray len %d\n", ray->len);
 		// printf("end x %f end y %f\n\n\n ",(ray->end.x),(ray->end.y));
-		ray->end.x = ceil(ray->end.x);
-		ray->end.y = ceil(ray->end.y);
+		// ray->end.x = ceil(ray->end.x);
+		// ray->end.y = ceil(ray->end.y);
 		if (check_angles(data, ray))
 			return ;
 		// if(abs(differenceToNearestMultipleOf50(ray->end.x) * differenceToNearestMultipleOf50(ray->end.y)) < 2 )

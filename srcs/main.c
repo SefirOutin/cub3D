@@ -50,8 +50,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 {
 	if ((x || y) && check_collision(data, x, y))
 		return ;
-	erase_floors(data);
-	
+	// erase_floors(data);
+	display_map(data);
 	// printf("new x:%f y:%f\n\n", x, y);
 	data->player.px += x;
 	data->player.py += y;
