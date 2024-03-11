@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 18:15:53 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/11 15:41:06 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ int	rotate(t_data *data)
 	i = 0;
 	while (i < FOV)
 	{
-		create_ray(data, i+=2);
+		create_ray(data, i++);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 18:40:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:08:25 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	init_mnmap_textures(t_data *data)
 			&(data->mnmap.size));
 	data->mnmap.textures[1] = mlx_xpm_file_to_image(data->mlx_ptr,
 			"./asset/map_asset/floor.xpm", &(data->mnmap.size),
+			&(data->mnmap.size));
+	data->mnmap.textures[2] = mlx_xpm_file_to_image(data->mlx_ptr,
+			"./asset/map_asset/player.xpm", &(data->mnmap.size),
 			&(data->mnmap.size));
 	while (i < 2)
 	{
@@ -97,6 +100,10 @@ void	display_map(t_data *data)
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 						data->mnmap.textures[1], (i * data->mnmap.size),
 						(j * data->mnmap.size));
+			// if (ft_strchr("NSWE", data->map[j][i]))
+			// {
+			// 	draw_xpm(data->mnmap.textures[2], data->mlx_ptr, data->win_ptr, i * data->mnmap.size, j * data->mnmap.size, data->player.direction);
+			// }
 			i++;
 		}
 		j++;

@@ -48,84 +48,26 @@ int	check_collision(t_data *data, double x, double y)
 
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
-	// int	i = 0;
-
-	// while (i++ < 2000)
-	if (check_collision(data, x, y))
+	if ((x || y) && check_collision(data, x, y))
 		return ;
 	erase_floors(data);
+	draw_xpm(data->mnmap.textures[2], data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, data->player.direction);
+	
+	// printf("new x:%f y:%f\n\n", x, y);
 	data->player.px += x;
 	data->player.py += y;
-	data->player.direction = rotation_angle;
-	filled_circle_draw(data, 6);
+	data->player.direction = fix_ang(data->player.direction + rotation_angle);
+	// filled_circle_draw(data, 6);
 	rotate(data);
 	return ;
-}
-
-// int	background(t_data *data)
-// {
-// 	int		x;
-// 	int		y;
-// 	int		i;
-	
-// 	y = 0;
-// 	if (init_img(data))
-// 		return (-1);
-// 	while (data->map[y])
-// 	{
-// 		x = 0;
-// 		while (data->map[y][x])
-// 		{
-// 			i = 0;
-// 			while (i < 50)
-// 			{
-// 				put_pixel_to_image(data->img.img, (x * 50) + i, (y * 50) + i, 0xFFFFFF);
-// 				i++;
-// 			}
-// 			x++;
-// 		}
-// 		y++;
-// 		// if (!(i % data->img.bpp))
-// 		// 	data->img.addr[i] = 0xFFFFFF;
-// 	}
-// 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
-// 	// mlx_destroy_image(data->mlx_ptr, data->img.img);
-// 	// ft_memset(&data->img, 0, sizeof(t_img));
-// 	return (0);
-// }
-
-int	background(t_data *data)
-{
-	int		y;
-	int		x;
-	t_img	img;
-
-	y = 0;
-	img = init_img(data, data->mnmap.x_max * 50, data->mnmap.y_max * 50);
-	if (!img.img)
-		return (-1);
-	// printf("ok\n");
-	while (y < data->mnmap.y_max * 50)
-	{
-		x = 0;
-		while (x < data->mnmap.x_max * 50)
-		{
-			put_pixel_to_image(&img, x, y, 0x00FFFFFF);
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, img.img);
-	// ft_memset(&img, 0, sizeof(t_img));
-	return (0);
 }
 
 void	first_display(t_data *data)
 {
 	// background(data);
 	display_map(data);
-	filled_circle_draw(data, 6);
+	// filled_circle_draw(data, 6);
+	draw_xpm(data->mnmap.textures[2], data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, data->player.direction);
 	rotate(data);
 	// init_img(data);
 

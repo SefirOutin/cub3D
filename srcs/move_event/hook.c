@@ -1,72 +1,43 @@
 #include "cub3d.h"
 #include <stdio.h>
 
-// int	on_keypress(t_data *data)
-// {
-// 	t_point	new;
-// 	// int		i;
-
-// 	// i = 0;
-// 	new.x = 0.1 * cos(deg_to_rad(data->player.direction));
-// 	new.y = 0.1 * sin(deg_to_rad(data->player.direction));
-// 	printf("x cos:%f y sin:%f\n", cos(deg_to_rad(data->player.direction)), sin(deg_to_rad(data->player.direction)));
-// 	if (data->player.inputs[W_KEY][1] == 1)
-// 	{
-// 		new.x += -new.x;
-// 		new.y = -new.y;
-// 		move(data, new.x, new.y, 0);
-// 	}
-// 	if (data->player.inputs[S_KEY][1] == 1)
-// 	{
-// 		// new.x = 0.1 * cos(deg_to_rad(data->player.direction));
-// 		// new.y = 0.1 * sin(deg_to_rad(data->player.direction));
-// 		move(data, new.x, new.y, 0);
-// 	}
-// 		// move(data, 0, 1, 0);
-// 	if (data->player.inputs[A_KEY][1] == 1)
-// 	{
-// 		// new.x += 0.1 * cos(deg_to_rad(data->player.direction));
-// 		new.y += -new.y;
-// 		move(data, new.x, new.y, 0);
-// 	}
-// 		// move(data, -1, 0, 0);
-// 	if (data->player.inputs[D_KEY][1] == 1)
-// 	{
-// 		new.x += -new.x;
-// 		// new.y += 0.1 * sin(deg_to_rad(data->player.direction));
-// 		move(data, new.x, new.y, 0);
-// 	}
-// 		// move(data, 1, 0, 0);
-// 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
-// 		move(data, new.x, new.y, fix_ang(data->player.direction + 1));
-// 	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
-// 		move(data, new.x, new.y, fix_ang(data->player.direction - 1));
-// 	printf("x:%f Y:%f\n", new.x, new.y);
-// 	return (0);
-// }
-
 int	on_keypress(t_data *data)
 {
 	if (data->player.inputs[W_KEY][1] == 1)
-		move(data, 0, -1, 0);
+		move(data, 0.2 * cos(fix_ang(deg_to_rad(data->player.direction))),
+			0.2 * -sin(fix_ang(deg_to_rad(data->player.direction))), 0);
 	if (data->player.inputs[S_KEY][1] == 1)
-		move(data, 0, 1, 0);
+		move(data, 0.2 * cos(fix_ang(deg_to_rad(data->player.direction + 180))),
+			0.2 * -sin(fix_ang(deg_to_rad(data->player.direction + 180))), 0);
 	if (data->player.inputs[A_KEY][1] == 1)
-		move(data, -1, 0, 0);
+		move(data, 0.2 * cos(fix_ang(deg_to_rad(data->player.direction + 90))),
+			0.2 * -sin(fix_ang(deg_to_rad(data->player.direction + 90))), 0);
 	if (data->player.inputs[D_KEY][1] == 1)
-		move(data, 1, 0, 0);
+		move(data, 0.2 * cos(fix_ang(deg_to_rad(data->player.direction + 270))),
+			0.2 * -sin(fix_ang(deg_to_rad(data->player.direction + 270))), 0);
 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
-	{
-		data->player.direction = fix_ang(data->player.direction);
-		move(data, 0, 0, 0.5);
-	}
+		move(data, 0, 0, +0.3);
 	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
-	{
-		data->player.direction = fix_ang(data->player.direction);
-		move(data, 0, 0, -0.5);
-	}
+		move(data, 0, 0, -0.3);
 	return (0);
 }
+
+// int	on_keypress(t_data *data)
+// {
+// 	if (data->player.inputs[W_KEY][1] == 1)
+// 		move(data, 0, -1, 0);
+// 	if (data->player.inputs[S_KEY][1] == 1)
+// 		move(data, 0, 1, 0);
+// 	if (data->player.inputs[A_KEY][1] == 1)
+// 		move(data, -1, 0, 0);
+// 	if (data->player.inputs[D_KEY][1] == 1)
+// 		move(data, 1, 0, 0);
+// 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
+// 		move(data, 0, 0, 0.5);
+// 	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
+// 		move(data, 0, 0, -0.5);
+// 	return (0);
+// }
 
 int	release_inputs(int keysym, t_data *data)
 {
