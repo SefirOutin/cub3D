@@ -51,7 +51,6 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	if ((x || y) && check_collision(data, x, y))
 		return ;
 	erase_floors(data);
-	draw_xpm(data->mnmap.textures[2], data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, data->player.direction);
 	
 	// printf("new x:%f y:%f\n\n", x, y);
 	data->player.px += x;
@@ -59,6 +58,7 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
 	// filled_circle_draw(data, 6);
 	rotate(data);
+	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	return ;
 }
 
@@ -67,7 +67,7 @@ void	first_display(t_data *data)
 	// background(data);
 	display_map(data);
 	// filled_circle_draw(data, 6);
-	draw_xpm(data->mnmap.textures[2], data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, data->player.direction);
+	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	rotate(data);
 	// init_img(data);
 

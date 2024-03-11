@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/11 16:55:08 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:25:11 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,5 @@ void					erase_floors(t_data *data);
 void					put_pixel_to_image(t_img *img, int x, int y, int color);
 double					deg_to_rad(double degrees);
 void					background_img(t_img *img, int size, int color);
-void					draw_xpm(void *img_ptr, void *mlx_ptr, void *win_ptr,
-							int x_pos, int y_pos, double angle);
+void					draw_xpm(t_data *data, double angle);
 #endif

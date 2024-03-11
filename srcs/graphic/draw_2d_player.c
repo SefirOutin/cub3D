@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/11 17:14:32 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:30:13 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,30 @@
 //     mlx_destroy_image(mlx_ptr, img_ptr);
 // }
 
-void draw_xpm(void *img_ptr, void *mlx_ptr, void *win_ptr, int x_pos, int y_pos, double angle)
+void draw_xpm(t_data *data, double angle)
 {
-    int color;
-    int *data;
+    t_img	img;
+    int		color;
+    int		x;
+    int		y;
 
-    int x, y;
-    int bpp, size_line, endian;
-    data = (int *)mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
-    printf("angle %f\n", angle);
-    // Convert the angle to radians
-    double angle_rad = fix_ang(angle - 90) * M_PI / 180.0;
+	y = 0;
+    img.addr = (int *)mlx_get_data_addr(data->mnmap.textures[2], &img.bpp, &img.line_l, &img.endian);
+    while (y < 50)
+	{
+		x = 0;
+		while (x < 50)
+		{
+            int new_x = round((x - 25) * cos(angle) + (y - 25) * sin(angle)) + data->player.px;
+            int new_y = round((x - 25) * sin(angle) + (y - 25) * cos(angle)) + data->player.py;
 
-    for (y = 0; y < 50; y++)
-    {
-        for (x = 0; x < 50; x++)
-        {
-            // Calculate rotated coordinates
-            int new_x = round((x - 25) * cos(angle_rad) + (y - 25) * sin(angle_rad)) + x_pos;
-            int new_y = round((x - 25) * sin(angle_rad) + (y - 25) * cos(angle_rad)) + y_pos;
-
-            color = data[y * 50 + x];
+            color = img.addr[y * 50 + x];
             if (color >= 0 && new_x >= 0 && new_x < 1920 && new_y >= 0 && new_y < 1080)
-                mlx_pixel_put(mlx_ptr, win_ptr, new_x, new_y, color);
-        }
-    }
-
+                mlx_pixel_put(data->mlx_ptr, data->win_ptr, new_x, new_y, color);
+			x++;
+		}
+		y++;
+	}
     // mlx_destroy_image(mlx_ptr, img_ptr);
 }
 
