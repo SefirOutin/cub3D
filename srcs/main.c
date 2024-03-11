@@ -46,82 +46,32 @@ int	check_collision(t_data *data, double x, double y)
 	return (0);
 }
 
-void	erase_floors(t_data *data)
-{
-	int		i;
-	int		j;
-	
-	j = 0;
-	while (data->map[j])
-	{
-		i = 0;
-		while (data->map[j][i])
-		{
-			if (ft_strchr("0NSWE", data->map[j][i]))
-				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-						data->mnmap.textures[1], (i * data->mnmap.size), (j
-							* data->mnmap.size));
-			i++;
-		}
-		j++;
-	}
-}
-
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
-	// int	i;
-
-	// i = 0;
-	// while (i++ < 200000)
-	if (check_collision(data, x, y))
+	if ((x || y) && check_collision(data, x, y))
 		return ;
-	erase_floors(data);
+	// erase_floors(data);
+	display_map(data);
+	// printf("new x:%f y:%f\n\n", x, y);
 	data->player.px += x;
 	data->player.py += y;
-	data->player.direction += rotation_angle;
-	filled_circle_draw(data, 6);
+	data->player.direction = fix_ang(data->player.direction + rotation_angle);
+	// filled_circle_draw(data, 6);
 	rotate(data);
+	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	return ;
-}
-
-int	background(t_data *data)
-{
-	int		x;
-	int		y;
-	int		i;
-	
-	y = 0;
-	if (init_img(data))
-		return (-1);
-	while (data->map[y])
-	{
-		x = 0;
-		while (data->map[y][x])
-		{
-			i = 0;
-			while (i < 50)
-			{
-				put_pixel_to_image(data->img.img, (x * 50) + i, (y * 50) + i, 0xFFFFFF);
-				i++;
-			}
-			x++;
-		}
-		y++;
-		// if (!(i % data->img.bpp))
-		// 	data->img.addr[i] = 0xFFFFFF;
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
-	// mlx_destroy_image(data->mlx_ptr, data->img.img);
-	// ft_memset(&data->img, 0, sizeof(t_img));
-	return (0);
 }
 
 void	first_display(t_data *data)
 {
 	// background(data);
 	display_map(data);
-	filled_circle_draw(data, 6);
+	// filled_circle_draw(data, 6);
+	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	rotate(data);
+	// init_img(data);
+
+
 	// mid_point_circle_draw(data, 8);
 }
 

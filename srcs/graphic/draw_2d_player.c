@@ -6,115 +6,127 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/05 01:01:56 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:30:13 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	filled_circle_draw(t_data *data, int radius)
-{
-	t_point	current;
-	int		m;
-	int		xx;
 
-	current.x = 0;
-	current.y = radius;
-	m = 3 - 4 * radius;
-	xx = 0;
-	// printf("circle player x:%f y:%f\n", data->player.px, data->player.py);
-	while (current.x <= current.y)
+
+// void	filled_circle_draw(t_data *data, int radius)
+// {
+// 	t_point	current;
+// 	t_img	img;
+// 	int		m;
+// 	int		xx;
+
+// 	// img = init_img(data, 50, 50);
+// 	// background_img(&img, 50, 0xFFFFFF00);
+// 	current.x = 0;
+// 	current.y = radius;
+// 	m = 2 - 3 * radius;
+// 	xx = 0;
+// 	while (current.x <= current.y)
+// 	{
+// 		xx = 25 - current.y;
+// 		while (xx <= 25 + current.y)
+// 			put_circle_pixels(radius, &img, current.x, xx++, 0xFF0000);
+// 		if (m > 0)
+// 		{
+// 			xx = 25 - current.x;
+// 			while (xx <= 25 + current.x)
+// 				put_circle_pixels(radius, &img, current.y, xx++, 0xFF0000);
+// 			current.y--;
+// 			m -= 8 * current.y;
+// 		}
+// 		current.x++;
+// 		m += 8 * current.x + 4;
+// 	}
+// 	// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img, data->player.px - 25, data->player.py - 25);
+// }
+
+// void    draw_player(void *img_ptr, void *mlx_ptr, void *win_ptr, int x_pos,
+//         int y_pos, double angle)
+// {
+//     int        color;
+//     int        *data;
+//     double    angle_rad;
+//     int        new_x;
+//     int        new_y;
+
+//     int x, y;
+//     int bpp, size_line, endian;
+//     data = (int *)mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
+//     angle_rad = angle * M_PI / 180.0;
+//     for (y = 0; y < 50; y++)
+//     {
+//         for (x = 0; x < 50; x++)
+//         {
+//             new_x = x_pos + round((x - 25) * cos(angle_rad) - (y - 25) * sin(angle_rad))
+//                 + 25;
+//             new_y = y_pos - round((x - 25) * sin(angle_rad) + (y - 25) * cos(angle_rad))
+//                 + 25;
+//             color = data[y * 50 + x];
+//             if (color >= 0 && new_x >= 0 && new_x < 1920 && new_y >= 0
+//                 && new_y < 1080)
+//                 mlx_pixel_put(mlx_ptr, win_ptr, new_x, new_y, color);
+//         }
+//     }
+//     mlx_destroy_image(mlx_ptr, img_ptr);
+// }
+
+void draw_xpm(t_data *data, double angle)
+{
+    t_img	img;
+    int		color;
+    int		x;
+    int		y;
+
+	y = 0;
+    img.addr = (int *)mlx_get_data_addr(data->mnmap.textures[2], &img.bpp, &img.line_l, &img.endian);
+    while (y < 50)
 	{
-		xx = data->player.px - current.y;
-		while (xx <= data->player.px + current.y)
-			put_circle_pixels(data, current.x, xx++, 0xFF0000);
-		if (m > 0)
+		x = 0;
+		while (x < 50)
 		{
-			xx = data->player.px - current.x;
-			while (xx <= data->player.px + current.x)
-				put_circle_pixels(data, current.y, xx++, 0xFF0000);
-			current.y--;
-			m -= 8 * current.y;
+            int new_x = round((x - 25) * cos(angle) + (y - 25) * sin(angle)) + data->player.px;
+            int new_y = round((x - 25) * sin(angle) + (y - 25) * cos(angle)) + data->player.py;
+
+            color = img.addr[y * 50 + x];
+            if (color >= 0 && new_x >= 0 && new_x < 1920 && new_y >= 0 && new_y < 1080)
+                mlx_pixel_put(data->mlx_ptr, data->win_ptr, new_x, new_y, color);
+			x++;
 		}
-		current.x++;
-		m += 8 * current.x + 4;
+		y++;
 	}
+    // mlx_destroy_image(mlx_ptr, img_ptr);
 }
 
-void	filled_circle_erase(t_data *data, int radius)
-{
-	t_point	current;
-	int		m;
-	int		xx;
+// void	filled_circle_erase(t_data *data, int radius)
+// {
+// 	t_point	current;
+// 	int		m;
+// 	int		xx;
 
-	current.x = 0;
-	current.y = radius;
-	m = 3 - 4 * radius;
-	xx = 0;
-	while (current.x <= current.y)
-	{
-		xx = data->player.px - current.y;
-		while (xx <= data->player.px + current.y)
-			put_circle_pixels(data, current.x, xx++, 0xFFFFFF);
-		if (m > 0)
-		{
-			xx = data->player.px - current.x;
-			while (xx <= data->player.px + current.x)
-				put_circle_pixels(data, current.y, xx++, 0xFFFFFF);
-			current.y--;
-			m -= 8 * current.y;
-		}
-		current.x++;
-		m += 8 * current.x + 4;
-	}
-}
-
-void	mid_point_circle_draw(t_data *data, int r)
-{
-	t_point	current;
-	int		P;
-
-	current.x = r;
-	current.y = 0;
-	P = 1 - r;
-	while (current.x > current.y)
-	{
-		current.y++;
-		if (P <= 0)
-			P = P + 2 * current.y + 1;
-		else
-		{
-			current.x--;
-			P = P + 2 * current.y - 2 * current.x + 1;
-		}
-		if (!(current.x < current.y))
-			mid_point_put_pixels(data, current, 0xFF0000);
-	}
-}
-
-void	mid_point_circle_erase(t_data *data, int r)
-{
-	t_point current;
-	int P;
-
-	current.x = r;
-	current.y = 0;
-	P = 1 - r;
-	// Initialising the value of P
-	while (current.x > current.y)
-	{
-		current.y++;
-		// Mid-point is inside or on the perimeter
-		if (P <= 0)
-			P = P + 2 * current.y + 1;
-		// Mid-point is outside the perimeter
-		else
-		{
-			current.x--;
-			P = P + 2 * current.y - 2 * current.x + 1;
-		}
-		// All the perimeter points have already been printed
-		if (!(current.x < current.y))
-			mid_point_put_pixels(data, current, 0xFFFFFF);
-	}
-}
+// 	current.x = 0;
+// 	current.y = radius;
+// 	m = 3 - 4 * radius;
+// 	xx = 0;
+// 	while (current.x <= current.y)
+// 	{
+// 		xx = data->player.px - current.y;
+// 		while (xx <= data->player.px + current.y)
+// 			put_circle_pixels(data, current.x, xx++, 0xFFFFFF);
+// 		if (m > 0)
+// 		{
+// 			xx = data->player.px - current.x;
+// 			while (xx <= data->player.px + current.x)
+// 				put_circle_pixels(data, current.y, xx++, 0xFFFFFF);
+// 			current.y--;
+// 			m -= 8 * current.y;
+// 		}
+// 		current.x++;
+// 		m += 8 * current.x + 4;
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/08 18:49:43 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:25:11 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_img
 
 typedef struct s_mnmap
 {
-	void				*textures[2];
+	void				*textures[3];
 	int					x_max;
 	int					y_max;
 	int					size;
@@ -98,7 +98,7 @@ typedef struct s_data
 	int					floor_color[3];
 	int					ceilling_color[3];
 	char				**map;
-	int					rays_len[FOV];
+	int					rays_len[FOV / 2];
 	t_img				img;
 	t_mnmap				mnmap;
 	t_player			player;
@@ -108,7 +108,7 @@ typedef struct s_data
 void					init_hook_and_loop(t_data *data);
 int						init_mlx_data(t_data *data);
 void					init_mnmap_textures(t_data *data);
-int						init_img(t_data *data);
+t_img					init_img(t_data *data, int size_x, int size_y);
 
 int						get_inputs(int keysym, t_data *data);
 int						release_inputs(int keysym, t_data *data);
@@ -140,8 +140,8 @@ void					display_map(t_data *data);
 void					put_square(int x, int y, t_data *data);
 void					erase_square(t_data *data, int x, int y);
 void					filled_circle_draw(t_data *data, int radius);
-void					put_circle_pixels(t_data *data, int point, int xx,
-							int color);
+void					put_circle_pixels(int radius, t_img *img, int point,
+							int xx, int color);
 void					filled_circle_erase(t_data *data, int radius);
 void					mid_point_circle_draw(t_data *data, int r);
 void					mid_point_put_pixels(t_data *data, t_point current,
@@ -160,5 +160,7 @@ int						e_direction(t_data *data, int len_ray, int curr_ray);
 void					erase_floors(t_data *data);
 
 void					put_pixel_to_image(t_img *img, int x, int y, int color);
-
+double					deg_to_rad(double degrees);
+void					background_img(t_img *img, int size, int color);
+void					draw_xpm(t_data *data, double angle);
 #endif
