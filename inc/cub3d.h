@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/11 17:25:11 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/12 21:05:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define FOV 90
+# define FOV 1
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
@@ -66,6 +66,7 @@ typedef struct s_ray
 	t_point				len_one_u;
 	t_point				hypo_len_one_u;
 	t_point				vlen;
+	t_point				v_camera;
 	int					len;
 	double				angle_rad;
 	double				angle_deg;
@@ -98,7 +99,7 @@ typedef struct s_data
 	int					floor_color[3];
 	int					ceilling_color[3];
 	char				**map;
-	int					rays_len[FOV / 2];
+	int					rays_len[FOV];
 	t_img				img;
 	t_mnmap				mnmap;
 	t_player			player;
@@ -150,10 +151,10 @@ void					mid_point_circle_erase(t_data *data, int r);
 
 void					move(t_data *data, double x, double y,
 							double rotation_angle);
-int						rotate(t_data *data);
 int						put_direction(t_data *data, int curr_ray);
 void					erase_direction(t_data *data, int len_ray);
 double					fix_ang(double a);
+int						create_rays(t_data *data);
 
 void					free_section(t_point **section, int size);
 int						e_direction(t_data *data, int len_ray, int curr_ray);

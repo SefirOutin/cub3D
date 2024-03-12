@@ -57,8 +57,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	data->player.py += y;
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
 	// filled_circle_draw(data, 6);
-	rotate(data);
-	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	create_rays(data);
+	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	return ;
 }
 
@@ -66,13 +66,8 @@ void	first_display(t_data *data)
 {
 	// background(data);
 	display_map(data);
-	// filled_circle_draw(data, 6);
-	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
-	rotate(data);
-	// init_img(data);
-
-
-	// mid_point_circle_draw(data, 8);
+	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	create_rays(data);
 }
 
 int	main(int argc, char **argv)
