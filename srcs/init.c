@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/10 13:15:13 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/12 21:54:05 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	init_mlx_data(t_data *data)
 	if (!data->win_ptr)
 		return (free(data->win_ptr), 1);
 	init_mnmap_textures(data);
+	init_asset(data->asset,data);
 	data->mnmap.size = 50;
 	return (0);
 }

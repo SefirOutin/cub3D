@@ -48,17 +48,21 @@ int	check_collision(t_data *data, double x, double y)
 
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
+
 	if ((x || y) && check_collision(data, x, y))
 		return ;
-	// erase_floors(data);
+	erase_floors(data);
 	display_map(data);
 	// printf("new x:%f y:%f\n\n", x, y);
 	data->player.px += x;
 	data->player.py += y;
+	data->player_mini.px += x*0.3;
+	data->player_mini.py += y*0.3;
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
 	// filled_circle_draw(data, 6);
 	rotate(data);
 	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	setup_minimap(data);
 	return ;
 }
 
@@ -69,9 +73,8 @@ void	first_display(t_data *data)
 	// filled_circle_draw(data, 6);
 	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	rotate(data);
+	setup_minimap(data);
 	// init_img(data);
-
-
 	// mid_point_circle_draw(data, 8);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/11 18:17:40 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:05:56 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ double	fix_ang(double a)
 // 		{
 // 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, (int)data->player.px,
 // 				(int)data->player.py - i - curr_ray, 0x7FFF00);
-// 			curr_ray--;
+// 			minimap_window.img = mlx_new_image(data->mlx_ptr, 250, 250);curr_ray--;
 // 		}
 // 		i++;
 // 	}
