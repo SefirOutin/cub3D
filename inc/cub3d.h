@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/12 21:05:54 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/13 18:20:10 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define FOV 1
+# define FOV 90
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
@@ -67,7 +67,7 @@ typedef struct s_ray
 	t_point				hypo_len_one_u;
 	t_point				vlen;
 	t_point				v_camera;
-	int					len;
+	double				len;
 	double				angle_rad;
 	double				angle_deg;
 }						t_ray;
@@ -99,7 +99,7 @@ typedef struct s_data
 	int					floor_color[3];
 	int					ceilling_color[3];
 	char				**map;
-	int					rays_len[FOV];
+	int					rays_len[360];
 	t_img				img;
 	t_mnmap				mnmap;
 	t_player			player;

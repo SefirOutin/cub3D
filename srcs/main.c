@@ -58,7 +58,7 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
 	// filled_circle_draw(data, 6);
 	create_rays(data);
-	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	return ;
 }
 
@@ -66,7 +66,7 @@ void	first_display(t_data *data)
 {
 	// background(data);
 	display_map(data);
-	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	create_rays(data);
 }
 
