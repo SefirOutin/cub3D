@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/12 17:46:21 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/13 22:58:04 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void draw_xpm(t_data *data, double angle)
 		{
             int new_x = round((x - 25) * cos(angle) + (y - 25) * sin(angle)) + data->player.px;
             int new_y = round((x - 25) * sin(angle) + (y - 25) * cos(angle)) + data->player.py;
-
             color = img.addr[y * 50 + x];
             if (color >= 0 && new_x >= 0 && new_x < 1920 && new_y >= 0 && new_y < 1080)
                 mlx_pixel_put(data->mlx_ptr, data->win_ptr, new_x, new_y, color);

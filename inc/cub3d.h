@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/13 18:20:10 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/13 22:57:06 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <stdlib.h>
 
 # define FOV 90
+# define MINI_W 120
+# define MINI_H 120
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
@@ -85,7 +87,7 @@ typedef struct s_img
 
 typedef struct s_mnmap
 {
-	void				*textures[3];
+	void				*textures[6];
 	int					x_max;
 	int					y_max;
 	int					size;
@@ -101,8 +103,10 @@ typedef struct s_data
 	char				**map;
 	int					rays_len[360];
 	t_img				img;
+	t_img				asset[3];
 	t_mnmap				mnmap;
 	t_player			player;
+	t_player            player_mini;
 	t_pixel_list		*pixel_list;
 }						t_data;
 
@@ -163,5 +167,8 @@ void					erase_floors(t_data *data);
 void					put_pixel_to_image(t_img *img, int x, int y, int color);
 double					deg_to_rad(double degrees);
 void					background_img(t_img *img, int size, int color);
+void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset);
+void	init_asset(t_img *asset, t_data *data);
+void	setup_minimap(t_data *data);
 void					draw_xpm(t_data *data, double angle);
 #endif
