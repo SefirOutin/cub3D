@@ -63,8 +63,8 @@ void print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
     int j;
     int player_x = data->player_mini.px;
     int player_y = data->player_mini.py;
-    int half_mini_width = MINI_W / 30;  // Taille de la minimap divisée par 2 et par la taille des tuiles
-    int half_mini_height = MINI_H / 30; // Taille de la minimap divisée par 2 et par la taille des tuiles
+    int half_mini_width = MINI_W / 2;  // Taille de la minimap divisée par 2 et par la taille des tuiles
+    int half_mini_height = MINI_H / 2; // Taille de la minimap divisée par 2 et par la taille des tuiles
     int x;
     int y;
 
@@ -81,8 +81,8 @@ void print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
                 put_img_to_img(*win_minimap, asset[0], x, y);
             if (ft_strchr("0NSWE", data->map[j][i]))
                 put_img_to_img(*win_minimap, asset[1], x, y);
-            if (ft_strchr("NSWE", data->map[j][i]))
-                put_img_to_img(*win_minimap, asset[2], x, y);
+            // if (ft_strchr("NSWE", data->map[j][i]))
+            //     put_img_to_img(*win_minimap, asset[2], x, y);
             i++;
         }
         j++;
@@ -101,7 +101,6 @@ void	setup_minimap(t_data *data)
 
 	create_minimap_window(&window_minimap, data);
 	print_minimap(&window_minimap, data, data->asset);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, window_minimap.img, 0,
-		0);
-	destroy_image(window_minimap, data);
+	put_img_to_img(data->view,window_minimap,0,0);
+	// destroy_image(window_minimap, data);
 }

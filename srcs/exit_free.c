@@ -24,10 +24,10 @@ int	exit_and_free(t_data *data)
 
 	// i = 0;
 	ft_free_tab(data->map);
-	free(data->textures[0]);
-	free(data->textures[1]);
-	free(data->textures[2]);
-	free(data->textures[3]);
+	// free(data->textures[0]);
+	// free(data->textures[1]);
+	// free(data->textures[2]);
+	// free(data->textures[3]);
 	mlx_destroy_image_if_exists(data->mlx_ptr, data->mnmap.textures[0]);
 	mlx_destroy_image_if_exists(data->mlx_ptr, data->mnmap.textures[1]);
 	if (data->win_ptr)

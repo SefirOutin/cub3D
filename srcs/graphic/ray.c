@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/13 22:55:24 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:12:33 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	get_quadrant(int angle)
 		return (2);
 	if (angle >= 270 && angle < 360)
 		return (3);
+	return (-1);
 }
 
 int	check_next_edges(t_data *data, t_ray *ray)
@@ -201,7 +202,6 @@ int	create_rays(t_data *data)
 	
 	curr_ray = 0;
 	angle_ratio = FOV / 360;
-	
 	// printf("ratio :%f\n", angle_ratio);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, 0x0000FF);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px - 1, data->player.py, 0x0000FF);
@@ -213,25 +213,8 @@ int	create_rays(t_data *data)
 		ft_memset(&ray, 0, sizeof(t_ray));
 		find_next_wall(data, &ray, curr_ray * 0.25);
 		data->rays_len[curr_ray] = ray.len;
-		display_rays(data, &ray);
+		// display_rays(data, &ray);
 		curr_ray++;
 	}
 	return (0);
 }
-
-// void	view(t_data *data)
-// {
-// 	t_img	view;
-// 	int		x;
-// 	int		y;
-
-// 	view = init_img(data, WIN_W, WIN_H);
-// 	while (x < WIN_W)
-// 	{
-// 		y = 0;
-// 		while (y < WIN_H / 2)
-// 		{
-// 			return ;
-// 		}
-// 	}
-// }

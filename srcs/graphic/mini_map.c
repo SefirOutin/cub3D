@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/13 22:58:35 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/14 13:17:59 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	get_player_data(t_data *data, int c, int i, int j)
 	data->player.px = i * 50 + 25;
 	data->player.py = j * 50 + 25;
 	data->player_mini.px = i * 15 + 7;
-	data->player_mini.px = j * 15 + 7;
+	data->player_mini.py = j * 15 + 7;
 }
 
 void	find_player(t_data *data)
