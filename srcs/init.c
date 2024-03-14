@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/12 21:54:05 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:38:12 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	init_mlx_data(t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, (data->mnmap.x_max + 1) * 50,
-			(data->mnmap.y_max + 1) * 50, "MazeCub3D");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_W,
+			WIN_H, "MazeCub3D");
 	if (!data->win_ptr)
 		return (free(data->win_ptr), 1);
 	init_mnmap_textures(data);
@@ -39,16 +39,15 @@ void	init_hook_and_loop(t_data *data)
 	mlx_loop(data->mlx_ptr);
 
 }
-t_img	init_img(t_data *data, int size_x, int size_y)
+t_img	init_img(t_data *data, int width, int height)
 {
 	t_img	img;
 	
-	img.img = mlx_new_image(data->mlx_ptr, size_x,
-			size_y);
+	img.img = mlx_new_image(data->mlx_ptr, width,
+			height);
 	if (!img.img)
 		return (img);
 	img.addr = (int *)mlx_get_data_addr(img.img, &img.bpp,
 			&img.line_l, &img.endian);
-	// printf("%d\n", data->img.bpp);
 	return (img);
 }

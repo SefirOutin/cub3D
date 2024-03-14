@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:56:36 by soutin            #+#    #+#             */
-/*   Updated: 2024/02/27 14:33:47 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:25:44 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,18 @@ long	get_map_size(int fd, int *error, int *skip)
 	return (size);
 }
 
-int	fill_colors(int *color_tab, char *tmp)
+int	create_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
+
+
+int	fill_colors(int *color, char *tmp)
 {
 	int	i;
 	int	j;
 	int	count;
+	int	colors[3];
 
 	i = 0;
 	count = 0;
@@ -94,12 +101,14 @@ int	fill_colors(int *color_tab, char *tmp)
 		if (tmp[i] && !ft_strchr(",\n", tmp[i]))
 			return (1);
 		tmp[i] = 0;
-		color_tab[count] = ft_atoi(tmp + j);
-		if (color_tab[count] < 0 || color_tab[count] > 255)
+		colors[count] = ft_atoi(tmp + j);
+		if (colors[count] < 0 || colors[count] > 255)
 			return (1);
 		count++;
 	}
 	if (count != 3)
 		return (1);
+	*color = create_rgb(colors[0], colors[1], colors[2]);
+	// printf("color  :%d\n", *color);
 	return (0);
 }

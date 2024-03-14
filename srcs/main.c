@@ -51,8 +51,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 
 	if ((x || y) && check_collision(data, x, y))
 		return ;
-	erase_floors(data);
-	display_map(data);
+	// erase_floors(data);
+	// display_map(data);
 	// printf("new x:%f y:%f\n\n", x, y);
 	data->player.px += x;
 	data->player.py += y;
@@ -60,20 +60,25 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	data->player_mini.py += y*0.3;
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
 	// filled_circle_draw(data, 6);
-	rotate(data);
-	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	create_rays(data);
+	view(data);
+	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	setup_minimap(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->view.img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, data->view.img);
 	return ;
 }
 
 void	first_display(t_data *data)
 {
 	// background(data);
-	display_map(data);
-	// filled_circle_draw(data, 6);
-	draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
-	rotate(data);
+	// display_map(data);
+	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
+	create_rays(data);
+	view(data);
 	setup_minimap(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->view.img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, data->view.img);
 	// init_img(data);
 	// mid_point_circle_draw(data, 8);
 }
