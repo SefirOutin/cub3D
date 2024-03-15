@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 18:53:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 20:51:00 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	view(t_data *data)
 	int		i;
 
 	ratio = data->win.w / data->main_img.nb_rays;
-	printf("w:%d\n", data->win.w);
+	// printf("w:%d\n", data->win.w);
 	half_height = data->win.h * 0.5;
 	data->main_img.view = init_img(data, data->win.w, data->win.h);
 	x = 0;

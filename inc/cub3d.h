@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 18:49:09 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 19:42:53 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@
 # include <stdlib.h>
 
 # define FOV 90
-# define MINI_W 120
-# define MINI_H 120
+# define MINI_W 240
+# define MINI_H 240
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
+# define SHIFT_AMOUNT 16 // 2^16 = 65536
+# define SHIFT_MASK ((1 << SHIFT_AMOUNT) - 1)
 
 typedef struct s_point
 {

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 17:40:29 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 20:48:43 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_minimap_textures(t_data *data)
 	}
 }
 
-void	get_player_data(t_data *data, int c, int i, int j)
+void	get_player_data(t_data *data, int c, int x, int y)
 {
 	if (c == 'N')
 	{
@@ -62,10 +62,10 @@ void	get_player_data(t_data *data, int c, int i, int j)
 	{
 		data->player.direction = 0;
 	}
-	data->player.pos.x = i * 50 + 25;
-	data->player.pos.y = j * 50 + 25;
-	data->player_mini.pos.x = i * 15 + 7;
-	data->player_mini.pos.y = j * 15 + 7;
+	data->player.pos.x = x * 50 + 25;
+	data->player.pos.y = y * 50 + 25;
+	data->player_mini.pos.x = x * 15 + 7;
+	data->player_mini.pos.y = y * 15 + 7;
 }
 
 void	find_player(t_data *data)

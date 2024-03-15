@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 17:19:39 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 20:51:17 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,6 @@ int	check_angles(t_data *data, t_ray *ray)
 
 void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 {
-	// t_point	len;
-	// int i = 0;
-	// int ratio;
-	
 	ray->angle_deg = fix_ang(data->player.direction + curr_ray - FOV * 0.5);
 	ray->angle_rad = deg_to_rad(ray->angle_deg);
 	ray->len_one_u.x = cos(ray->angle_rad);
