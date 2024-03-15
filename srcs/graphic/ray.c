@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:12:33 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 13:44:20 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,6 @@ int	check_angles(t_data *data, t_ray *ray)
 
 void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 {
-	// t_point	len;
-	// int i = 0;
-	// int ratio;
-	
 	ray->angle_deg = fix_ang(data->player.direction + curr_ray - FOV * 0.5);
 	ray->angle_rad = deg_to_rad(ray->angle_deg);
 	ray->len_one_u.x = cos(ray->angle_rad);
@@ -149,30 +145,12 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 	ray->end.y = data->player.py;
 	ray->hypo_len_one_u.x =  sqrt(1 + pow((ray->len_one_u.y) / (ray->len_one_u.x), 2));
 	ray->hypo_len_one_u.y = sqrt(1 + pow((ray->len_one_u.x) / (ray->len_one_u.y), 2));
-	// ray->v_camera.x = -sin(ray->angle_rad);
 	while ((data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1'))
 	{
 		check_next_edges(data, ray);
 		if (check_angles(data, ray))
 			return ;
 	}
-	ray->len *= cos(ray->angle_rad - deg_to_rad(data->player.direction));
-	// printf("len:%f ray:%f\n", ray->len, curr_ray);
-	// double x = ray->len * cos(ray->angle_rad - deg_to_rad(data->player.direction));
-	// printf("ray len before %f\n", ray->len);
-	// printf("ray len after %f\n", ray->len);
-	// len.x = ray->end.x + x;
-	// len.y = x + ray->end.y;
-	// while (i < 50)
-	// {
-	// 	ratio = (double)i / (double)(50 - 1);
-	// 	mlx_pixel_put(data->mlx_ptr, data->win_ptr,
-	// 		len.x + ratio * (ray->end.x - len.x),
-	// 		len.y +  ratio * (ray->end.y - len.y), 0x7FFF00);
-	// 	// printf("put x:%f y:%f\n", (data->player.px + ray->len_one_u.x) + ratio * ((data->player.px + len.x) + (data->player.px + ray->len_one_u.x)), (data->player.py + ray->len_one_u.y) +  ratio * ((data->player.py - len.y) + (data->player.py + ray->len_one_u.y)));
-		
-	// 	i++;
-	// }
 }
 
 void	display_rays(t_data *data, t_ray *ray)
@@ -201,18 +179,18 @@ int	create_rays(t_data *data)
 	double	angle_ratio;
 	
 	curr_ray = 0;
-	angle_ratio = FOV / 360;
+	angle_ratio = 0.15;
 	// printf("ratio :%f\n", angle_ratio);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, 0x0000FF);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px - 1, data->player.py, 0x0000FF);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px + 1, data->player.py, 0x0000FF);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py - 1, 0x0000FF);
 	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py + 1, 0x0000FF);
-	while (curr_ray < 360)
+	while (curr_ray < 600)
 	{
 		ft_memset(&ray, 0, sizeof(t_ray));
-		find_next_wall(data, &ray, curr_ray * 0.25);
-		data->rays_len[curr_ray] = ray.len;
+		find_next_wall(data, &ray, curr_ray * angle_ratio);
+		data->rays_len[curr_ray] = ray.len * cos(ray.angle_rad - deg_to_rad(data->player.direction));
 		// display_rays(data, &ray);
 		curr_ray++;
 	}

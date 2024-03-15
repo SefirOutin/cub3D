@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:38:12 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 13:50:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	init_mlx_data(t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_W,
-			WIN_H, "MazeCub3D");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920,
+			1080, "MazeCub3D");
 	if (!data->win_ptr)
 		return (free(data->win_ptr), 1);
 	init_mnmap_textures(data);

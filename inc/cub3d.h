@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:38:38 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 13:46:18 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_data
 	int					floor_color;
 	int					ceilling_color;
 	char				**map;
-	int					rays_len[360];
+	int					rays_len[600];
 	t_img				img;
 	t_img				asset[3];
 	t_mnmap				mnmap;
