@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:52:16 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 15:45:14 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 17:31:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_textures(t_data *data, int fd, int *error)
 	}
 	if (nb_textures != 6)
 		return (print_err("missing information"), -1);
-	data->textures[4] = NULL;
+	data->main_img.textures[4] = NULL;
 	return (skip);
 }
 
@@ -70,18 +70,18 @@ int	fill_textures_data2(t_data *data, char *tmp, int *nb_textures)
 {
 	if (!ft_strncmp("WE ", tmp, 3) && ++(*nb_textures))
 	{
-		data->textures[3] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
-		if (!data->textures[3])
+		data->main_img.textures[3] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		if (!data->main_img.textures[3])
 			return (-1);
 	}
 	else if (!ft_strncmp("F ", tmp, 2) && ++(*nb_textures))
 	{
-		if (fill_colors(&data->floor_color, tmp + 1))
+		if (fill_colors(&data->main_img.floor_color, tmp + 1))
 			return (print_err("invalid color"), -1);
 	}
 	else if (!ft_strncmp("C ", tmp, 2) && ++(*nb_textures))
 	{
-		if (fill_colors(&data->ceilling_color, tmp + 1))
+		if (fill_colors(&data->main_img.ceilling_color, tmp + 1))
 			return (print_err("invalid color"), -1);
 	}
 	else if (!ft_strncmp(tmp, "\n", 2))
@@ -95,20 +95,20 @@ int	fill_textures_data(t_data *data, char *tmp, int *nb_textures)
 {
 	if (!ft_strncmp("NO ", tmp, 3) && ++(*nb_textures))
 	{
-		data->textures[0] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
-		if (!data->textures[0])
+		data->main_img.textures[0] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		if (!data->main_img.textures[0])
 			return (-1);
 	}
 	else if (!ft_strncmp("EA ", tmp, 3) && ++(*nb_textures))
 	{
-		data->textures[1] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
-		if (!data->textures[1])
+		data->main_img.textures[1] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		if (!data->main_img.textures[1])
 			return (-1);
 	}
 	else if (!ft_strncmp("SO ", tmp, 3) && ++(*nb_textures))
 	{
-		data->textures[2] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
-		if (!data->textures[2])
+		data->main_img.textures[2] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		if (!data->main_img.textures[2])
 			return (-1);
 	}
 	else if (fill_textures_data2(data, tmp, nb_textures) < 0)
