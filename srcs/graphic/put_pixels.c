@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_pixels.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:12:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/11 16:28:18 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/14 18:49:05 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
 	int	pixel_index;
 
-	// printf("x:%d, y:%d\n", x, y);
 	pixel_index = y * img->line_l + x * (int)(img->bpp / 8);
 	((img->addr))[pixel_index / (int)(img->bpp / 8)] = color;
 }

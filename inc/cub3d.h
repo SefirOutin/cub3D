@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:38:38 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/14 18:36:34 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ void					init_asset(t_img *asset, t_data *data);
 void					setup_minimap(t_data *data);
 void					draw_xpm(t_data *data, double angle);
 int						view(t_data *data);
+void					put_img_to_img(t_img dst, t_img src, int x, int y,int width,int height);
 
 #endif

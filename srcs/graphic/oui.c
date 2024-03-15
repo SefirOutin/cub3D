@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   oui.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:59:49 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/14 22:38:52 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	view(t_data *data)
 {
 	int		x;
-	int		y;
+	double		y;
 	double	height;
 
 	data->view = init_img(data, 1080, 360);
