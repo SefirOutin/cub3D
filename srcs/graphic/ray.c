@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:12:33 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/15 17:19:39 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ double	deg_to_rad(double degrees)
 void	find_point_on_section(t_ray *ray, double len)
 {
 	ray->len += (int)len;
-	ray->end.x = ceil(ray->end.x + len * ray->len_one_u.x);
-	ray->end.y = ceil(ray->end.y - len * ray->len_one_u.y);
+	ray->end.x = round(ray->end.x + len * ray->len_one_u.x);
+	ray->end.y = round(ray->end.y - len * ray->len_one_u.y);
 }
 
 int diff_nearest_50x(int x)
@@ -46,30 +46,6 @@ int diff_nearest_50x(int x)
     return (difference);
 }
 
-// Fonction pour créer une section entre deux points
-// int	create_section(t_data *data, t_point end, int numPoints, t_point **section)
-// {
-// 	t_point	start;
-// 	double	ratio;
-// 	int		i;
-
-// 	i = 0;
-// 	start.x = data->player.px;
-// 	start.y = data->player.py;
-// 	*section = (t_point *)ft_calloc(numPoints, sizeof(t_point));
-// 	if (!section)
-// 		return (1);
-// 	while (i < numPoints)
-// 	{
-// 		ratio = (double)i / (double)(numPoints - 1);
-// 		(*section)[i].x = start.x + ratio * (end.x - start.x);
-// 		(*section)[i].y = start.y +  ratio * (end.y - start.y);
-// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr,
-// 			(*section)[i].x, (*section)[i].y, 0x7FFF00);
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 int	get_quadrant(int angle)
 {
@@ -90,15 +66,13 @@ int	check_next_edges(t_data *data, t_ray *ray)
 	
 	// calcule la distance du joueur par rapport aux bords de la case que le joueur regarde (sert à vlen)
 	if (ray->angle_deg > 0 && ray->angle_deg < 180)
-		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * data->mnmap.size) + 1;
+		delta.y = ray->end.y - (floor(ray->end.y  * 0.02) * data->minimap.size) + 1;
 	else
-		delta.y = (ceil(ray->end.y * 0.02) * data->mnmap.size) - ray->end.y + 1;
+		delta.y = (ceil(ray->end.y * 0.02) * data->minimap.size) - ray->end.y + 1;
 	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
-		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * data->mnmap.size) + 1;
+		delta.x = ray->end.x - (floor(ray->end.x * 0.02) * data->minimap.size) + 1;
 	else
-		delta.x = (ceil(ray->end.x * 0.02) * data->mnmap.size) - ray->end.x + 1;
-	// printf("delta unit len x:%f y:%f\n", delta.x, delta.y);
-	
+		delta.x = (ceil(ray->end.x * 0.02) * data->minimap.size) - ray->end.x + 1;
 	// calcule du vecteur pour prochain x entier et prochain y entier pour ensuite les comparer 
 	ray->vlen.x = delta.x * ray->hypo_len_one_u.x;
 	ray->vlen.y = delta.y * ray->hypo_len_one_u.y;
@@ -124,9 +98,9 @@ int	check_angles(t_data *data, t_ray *ray)
 			first.y--;
 		else
 			first.y++;
-		if(ray->end.x < data->player.px)
+		if(ray->end.x < data->player.pos.x)
 			second.x++;
-		else if(ray->end.x > data->player.px)
+		else if(ray->end.x > data->player.pos.x)
 			second.x--;	
 		if (data->map[(int)first.y][(int)first.x] == '1'
 		&& data->map[(int)second.y][(int)second.x] == '1')
@@ -145,11 +119,10 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 	ray->angle_rad = deg_to_rad(ray->angle_deg);
 	ray->len_one_u.x = cos(ray->angle_rad);
 	ray->len_one_u.y = sin(ray->angle_rad);
-	ray->end.x = data->player.px;
-	ray->end.y = data->player.py;
+	ray->end.x = data->player.pos.x;
+	ray->end.y = data->player.pos.y;
 	ray->hypo_len_one_u.x =  sqrt(1 + pow((ray->len_one_u.y) / (ray->len_one_u.x), 2));
 	ray->hypo_len_one_u.y = sqrt(1 + pow((ray->len_one_u.x) / (ray->len_one_u.y), 2));
-	// ray->v_camera.x = -sin(ray->angle_rad);
 	while ((data->map[(int)(ray->end.y * 0.02)][(int)(ray->end.x * 0.02)] != '1'))
 	{
 		check_next_edges(data, ray);
@@ -157,22 +130,6 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 			return ;
 	}
 	ray->len *= cos(ray->angle_rad - deg_to_rad(data->player.direction));
-	// printf("len:%f ray:%f\n", ray->len, curr_ray);
-	// double x = ray->len * cos(ray->angle_rad - deg_to_rad(data->player.direction));
-	// printf("ray len before %f\n", ray->len);
-	// printf("ray len after %f\n", ray->len);
-	// len.x = ray->end.x + x;
-	// len.y = x + ray->end.y;
-	// while (i < 50)
-	// {
-	// 	ratio = (double)i / (double)(50 - 1);
-	// 	mlx_pixel_put(data->mlx_ptr, data->win_ptr,
-	// 		len.x + ratio * (ray->end.x - len.x),
-	// 		len.y +  ratio * (ray->end.y - len.y), 0x7FFF00);
-	// 	// printf("put x:%f y:%f\n", (data->player.px + ray->len_one_u.x) + ratio * ((data->player.px + len.x) + (data->player.px + ray->len_one_u.x)), (data->player.py + ray->len_one_u.y) +  ratio * ((data->player.py - len.y) + (data->player.py + ray->len_one_u.y)));
-		
-	// 	i++;
-	// }
 }
 
 void	display_rays(t_data *data, t_ray *ray)
@@ -186,9 +143,9 @@ void	display_rays(t_data *data, t_ray *ray)
 	while (i  < num_points)
 	{
 		ratio = (double)i / (double)(num_points - 1);
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr,
-			data->player.px + ratio * (ray->end.x - data->player.px),
-			data->player.py +  ratio * (ray->end.y - data->player.py), 0x7FFF00);
+		mlx_pixel_put(data->win.mlx_ptr, data->win.win_ptr,
+			data->player.pos.x + ratio * (ray->end.x - data->player.pos.x),
+			data->player.pos.y +  ratio * (ray->end.y - data->player.pos.y), 0x7FFF00);
 		i++;
 	}
 	
@@ -201,18 +158,12 @@ int	create_rays(t_data *data)
 	double	angle_ratio;
 	
 	curr_ray = 0;
-	angle_ratio = FOV / 360;
-	// printf("ratio :%f\n", angle_ratio);
-	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py, 0x0000FF);
-	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px - 1, data->player.py, 0x0000FF);
-	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px + 1, data->player.py, 0x0000FF);
-	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py - 1, 0x0000FF);
-	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, data->player.px, data->player.py + 1, 0x0000FF);
-	while (curr_ray < 360)
+	angle_ratio = 0.140625;
+	while (curr_ray < data->main_img.nb_rays)
 	{
 		ft_memset(&ray, 0, sizeof(t_ray));
-		find_next_wall(data, &ray, curr_ray * 0.25);
-		data->rays_len[curr_ray] = ray.len;
+		find_next_wall(data, &ray, curr_ray * angle_ratio);
+		data->main_img.rays_len[curr_ray] = ray.len;
 		// display_rays(data, &ray);
 		curr_ray++;
 	}
