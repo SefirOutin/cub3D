@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_mlx_data(&data))
 		return (exit_and_free(&data), 1);
-	first_display(&data);
+	// first_display(&data);
 	init_hook_and_loop(&data);
 	return (0);
 }
