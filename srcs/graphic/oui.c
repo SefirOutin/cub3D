@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   oui.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 18:53:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:36:49by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 	((img->addr))[pixel_index / (int)(img->bpp / 8)] = color;
 }
 
-int	view(t_data *data)
+ int	view(t_data *data)
 {
 	int		x;
 	double	y_top;
@@ -31,7 +31,6 @@ int	view(t_data *data)
 	int		i;
 
 	ratio = data->win.w / data->main_img.nb_rays;
-	printf("w:%d\n", data->win.w);
 	half_height = data->win.h * 0.5;
 	data->main_img.view = init_img(data, data->win.w, data->win.h);
 	x = 0;
@@ -42,13 +41,16 @@ int	view(t_data *data)
 		wall_height = data->win.h / data->main_img.rays_len[x / ratio] * 3;
 		y_bot = half_height;
 		y_top = half_height;
-		while (wall_height--)
+		while (wall_height-- && y_top >= 0)
 		{
 			i = 0;
 			while (i < ratio)
 			{
-				put_pixel_to_image(&data->main_img.view, x + i, y_bot, 0x0000FF);
-		 		put_pixel_to_image(&data->main_img.view, x + i++, y_top, 0x0000FF);	
+				put_pixel_to_image(&data->main_img.view, x + i, y_bot,
+					0x0000FF);
+				put_pixel_to_image(&data->main_img.view, x + i, y_top,
+					0x0000FF);
+				i++;
 			}
 			y_bot++;
 			y_top--;
@@ -58,15 +60,15 @@ int	view(t_data *data)
 			i = 0;
 			while (i < ratio)
 				put_pixel_to_image(&data->main_img.view, x + i++, y_bot,
-						data->main_img.floor_color);
+					data->main_img.floor_color);
 			y_bot++;
 		}
 		while (y_top > -1)
 		{
 			i = 0;
 			while (i < ratio)
-				put_pixel_to_image(&data->main_img.view, x + i++, y_top,
-						data->main_img.ceilling_color);		
+				put_pixel_toぷmage(&data->main_img.view, x + i++, y_top,
+					data->main_img.ceilling_color);
 			y_top--;
 		}
 		x += ratio;
@@ -74,3 +76,78 @@ int	view(t_data *data)
 	// mlx_destroy_image(data->mlx_ptr, data->main_img.view.img);
 	return (0);
 }
+
+//void	create_vertical_line(t_img *img, t_point start, int len, int color)
+//{
+//	while (len--)
+//	{
+//		put_pixel_to_image(img, start.x, start.y, color);
+//		start.y++;
+//	}
+//}
+//
+//void	create_wall(t_data *data)
+//{
+//	int		color_wall;
+//	int		len_wall;
+//	t_point	start;
+//
+//	color_wall = 0x0000FF;
+//	start.x = 0;
+//	len_wall = 0;
+//	while (start.x < 640 && len_wall < 1080)
+//	{
+//		len_wall = data->win.h / ((data->main_img.rays_len[(int)start.x]));
+//		len_wall *= 15;
+//		start.y = (data->win.h / 2) - (len_wall / 2);
+//		create_vertical_line(&data->main_img.view, start, len_wall, color_wall);
+//		start.x++;
+//	}
+//}
+//void	create_floor(t_data *data)
+//{
+//	int		len_wall;
+//	int		len_floor;
+//	t_point	start;
+//
+//	start.x = 0;
+//	while (start.x < 640)
+//	{
+//		len_wall = data->win.h / data->main_img.rays_len[(int)start.x];
+//		len_wall *= 15;
+//		start.y = (data->win.h / 2) + (len_wall / 2);
+//		len_floor = data->win.h - start.x;
+//		create_vertical_line(&data->main_img.view, start, len_floor,
+//			data->main_img.floor_color);
+//		start.x++;
+//	}
+//}
+//
+//void	create_sky(t_data *data)
+//{
+//	int		len_wall;
+//	int		len_sky;
+//	t_point	start;
+//
+//	start.x = 0;
+//	while (start.x < 640)
+//	{
+//		len_wall = data->win.h / data->main_img.rays_len[(int)start.x];
+//		start.y = 0;
+//		len_wall *= 15;
+//		len_sky = (data->win.h / 2) - (len_wall / 2);
+//		create_vertical_line(&data->main_img.view, start, len_sky,
+//			data->main_img.ceilling_color);
+//		start.x++;
+//	}
+//}
+//
+//int	view(t_data *data)
+//{
+//	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
+//		return (-1);
+//	create_wall(data);
+//	// create_floor(data);
+//	create_sky(data);
+//	return (0);
+//}

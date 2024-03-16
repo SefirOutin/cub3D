@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 18:49:09 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/16 15:54:22 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 # define FOV 90
-# define MINI_W 120
-# define MINI_H 120
+# define MINI_W 240
+# define MINI_H 240
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
@@ -103,6 +103,7 @@ typedef struct s_main_img
 	int			ceilling_color;
 	int			nb_rays;
 	int			rays_len[640];
+	int 		ray_len_norm[640];
 
 }				t_main_img;
 
@@ -119,7 +120,7 @@ typedef struct s_data
 void			init_hook_and_loop(t_data *data);
 int				init_mlx_data(t_data *data);
 void			init_minimap_textures(t_data *data);
-t_img			init_img(t_data *data, int width, int height);
+int			init_img(t_data *data, t_img *img,int width, int height);
 
 int				get_inputs(int keysym, t_data *data);
 int				release_inputs(int keysym, t_data *data);
