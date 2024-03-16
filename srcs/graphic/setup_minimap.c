@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 18:49:30 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/17 00:42:58 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,6 @@ void	init_asset(t_img *asset, t_data *data)
 			&(asset[1].bpp), &(asset[1].line_l), &(asset[1].endian));
 	asset[2].addr = (int *)mlx_get_data_addr(data->minimap.textures[5],
 			&(asset[2].bpp), &(asset[2].line_l), &(asset[2].endian));
-}
-
-void	create_minimap_window(t_img *win_minimap, t_data *data)
-{
-	win_minimap->img = mlx_new_image(data->win.mlx_ptr, MINI_W, MINI_H);
-	win_minimap->addr = (int *)mlx_get_data_addr(win_minimap->img,
-			&(win_minimap->bpp), &(win_minimap->line_l),
-			&(win_minimap->endian));
 }
 
 void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
@@ -126,11 +118,10 @@ void	setup_minimap(t_data *data)
 {
 	t_img window_minimap;
 
-	create_minimap_window(&window_minimap, data);
+	window_minimap = init_img(data, MINI_W, MINI_H);
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
 		deg_to_rad(fix_ang(data->player.direction +90)));
-	// mlx_put_image_to_window(data->win.mlx_ptr,data->win_ptr,window_minimap.img,0,0);
 	put_img_to_img(data->main_img.view, window_minimap, 10, 10, MINI_W, MINI_H);
 	destroy_image(window_minimap, data);
 }

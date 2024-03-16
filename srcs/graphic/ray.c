@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 20:56:17 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/17 00:35:07 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int	create_rays(t_data *data)
 		ft_memset(&ray, 0, sizeof(t_ray));
 		find_next_wall(data, &ray, curr_ray * angle_ratio);
 		data->main_img.rays_len[curr_ray] = ray.len;
-		// display_rays(data, &ray);
+		display_rays(data, &ray);
 		curr_ray++;
 	}
 	return (0);

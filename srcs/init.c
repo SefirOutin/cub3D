@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/17 00:28:59 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/17 00:51:37 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	init_mlx_data(t_data *data)
 	init_minimap_textures(data);
 	init_asset(data->minimap.asset, data);
 	data->minimap.size = 50;
-	data->main_img.nb_rays = 640;
+	data->main_img.nb_rays = 320;
 	return (0);
 }
 

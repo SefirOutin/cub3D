@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/17 00:30:25 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/17 00:39:08 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
 	int	pixel_index;
 
-	pixel_index = y * img->line_l + x * (int)(img->bpp / 8);
-	((img->addr))[pixel_index / (int)(img->bpp / 8)] = color;
+	pixel_index = y * img->line_l + x * (int)(img->bpp * 0.125);
+	img->addr[pixel_index / (int)(img->bpp * 0.125)] = color;
 }
 
 int	view(t_data *data)
@@ -29,10 +29,10 @@ int	view(t_data *data)
 	int		half_height;
 	int		ratio;
 	int		i;
-	int		j;
+	int		curr_ray;
 
 	ratio = data->win.w / data->main_img.nb_rays;
-	j = data->main_img.nb_rays - 1;
+	curr_ray = data->main_img.nb_rays - 1;
 	half_height = data->win.h * 0.5;
 	data->main_img.view = init_img(data, data->win.w, data->win.h);
 	x = 0;
@@ -40,7 +40,7 @@ int	view(t_data *data)
 		return (1);
 	while (x < data->win.w)
 	{
-		wall_height = data->win.h / data->main_img.rays_len[j] * 3;
+		wall_height = data->win.h / data->main_img.rays_len[curr_ray] * 3;
 		y_bot = half_height;
 		y_top = half_height;
 		while (wall_height--)
@@ -68,7 +68,7 @@ int	view(t_data *data)
 			y_top--;
 		}
 		x += ratio;
-		j--;
+		curr_ray--;
 	}
 	return (0);
 }
