@@ -86,7 +86,7 @@ void	create_vertical_line(t_img *img, t_point start, int len, int color)
 	}
 }
 
-void	create_wall(t_data *data)
+void	create_wall(t_data *data,int coef_wall)
 {
 	int		color_wall;
 	int		len_wall;
@@ -98,13 +98,13 @@ void	create_wall(t_data *data)
 	while (start.x < 640 && len_wall < 1080)
 	{
 		len_wall = data->win.h / ((data->main_img.rays_len[(int)start.x]));
-		len_wall *= 15;
+		len_wall *= coef_wall;
 		start.y = (data->win.h / 2) - (len_wall / 2);
 		create_vertical_line(&data->main_img.view, start, len_wall, color_wall);
 		start.x++;
 	}
 }
-void	create_floor(t_data *data)
+void	create_floor(t_data *data,int coef_wall)
 {
 	int		len_wall;
 	int		len_floor;
@@ -114,7 +114,7 @@ void	create_floor(t_data *data)
 	while (start.x < 640)
 	{
 		len_wall = data->win.h / data->main_img.rays_len[(int)start.x];
-		len_wall *= 15;
+		len_wall *= coef_wall;
 		start.y = (data->win.h / 2) + (len_wall / 2);
 		len_floor = (data->win.h / 2) - (len_wall / 2);
 		create_vertical_line(&data->main_img.view, start, len_floor,
@@ -123,7 +123,7 @@ void	create_floor(t_data *data)
 	}
 }
 
-void	create_sky(t_data *data)
+void	create_sky(t_data *data,int coef_wall)
 {
 	int		len_wall;
 	int		len_sky;
@@ -134,7 +134,7 @@ void	create_sky(t_data *data)
 	{
 		len_wall = data->win.h / data->main_img.rays_len[(int)start.x];
 		start.y = 0;
-		len_wall *= 15;
+		len_wall *= coef_wall;
 		len_sky = (data->win.h / 2) - (len_wall / 2);
 		create_vertical_line(&data->main_img.view, start, len_sky,
 			data->main_img.ceilling_color);
@@ -144,10 +144,14 @@ void	create_sky(t_data *data)
 
 int	view(t_data *data)
 {
+	int coef_wall;
+
+	coef_wall = 10;
+	
 	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
 		return (-1);
-	create_wall(data);
-	create_floor(data);
-	create_sky(data);
+	create_wall(data,coef_wall);
+	create_floor(data,coef_wall);
+	create_sky(data,coef_wall);
 	return (0);
 }
