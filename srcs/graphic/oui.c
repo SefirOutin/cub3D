@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/17 00:39:08 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/18 15:06:39 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	view(t_data *data)
 		wall_height = data->win.h / data->main_img.rays_len[curr_ray] * 3;
 		y_bot = half_height;
 		y_top = half_height;
-		while (wall_height--)
+		while (wall_height-- && y_top >= 0 && y_bot < data->win.h)
 		{
 			i = 0;
 			while (i++ < ratio)

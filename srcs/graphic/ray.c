@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/17 00:35:07 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/18 15:02:37 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	check_angles(t_data *data, t_ray *ray)
 
 void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 {
-	ray->angle_deg = fix_ang(data->player.direction + curr_ray - FOV * 0.5);
+	ray->angle_deg = fix_ang(data->player.direction - FOV * 0.5 + curr_ray );
 	ray->angle_rad = deg_to_rad(ray->angle_deg);
 	ray->len_one_u.x = cos(ray->angle_rad);
 	ray->len_one_u.y = sin(ray->angle_rad);
@@ -154,13 +154,13 @@ int	create_rays(t_data *data)
 	double	angle_ratio;
 	
 	curr_ray = 0;
-	angle_ratio = 0.140625;
+	angle_ratio = 0.28125;
 	while (curr_ray < data->main_img.nb_rays)
 	{
 		ft_memset(&ray, 0, sizeof(t_ray));
 		find_next_wall(data, &ray, curr_ray * angle_ratio);
 		data->main_img.rays_len[curr_ray] = ray.len;
-		display_rays(data, &ray);
+		// display_rays(data, &ray);
 		curr_ray++;
 	}
 	return (0);
