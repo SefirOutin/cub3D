@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:56:36 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/14 17:25:44 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/18 19:19:46 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,7 @@ int	fill_colors(int *color, char *tmp)
 		j = i;
 		while (tmp[i] && ft_isdigit(tmp[i]))
 			i++;
-		if (i - j == 0)
-			return (1);
-		if (tmp[i] && !ft_strchr(",\n", tmp[i]))
+		if (i - j == 0 || (tmp[i] && !ft_strchr(",\n", tmp[i])))
 			return (1);
 		tmp[i] = 0;
 		colors[count] = ft_atoi(tmp + j);
@@ -108,7 +106,5 @@ int	fill_colors(int *color, char *tmp)
 	}
 	if (count != 3)
 		return (1);
-	*color = create_rgb(colors[0], colors[1], colors[2]);
-	// printf("color  :%d\n", *color);
-	return (0);
+	return (*color = create_rgb(colors[0], colors[1], colors[2]), 0);
 }

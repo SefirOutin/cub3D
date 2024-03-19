@@ -6,7 +6,7 @@
 #    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/03/18 15:35:56 by soutin           ###   ########.fr        #
+#    Updated: 2024/03/18 19:32:01 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC			=		srcs/main.c \
 					srcs/mlx_engine/init_img.c \
 					srcs/mlx_engine/put_img_to_img.c \
 					srcs/mlx_engine/put_pixel_img.c \
+					srcs/fixed_point_utils.c \
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)
 

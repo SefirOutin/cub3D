@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/17 00:42:58 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/19 17:36:47 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 			color = data->minimap.asset[2].addr[y * 15 + x];
 			if (color >= 0 && new_x >= 0 && new_x < 15 && new_y >= 0
 				&& new_y < 15)
-				put_pixel_img(*img, new_x + (MINI_W / 2) - 7.5 , new_y + (MINI_H / 2)- 7.5, color);
+				put_pixel_img(*img, new_x + (MINI_W / 2) - 7.5 , new_y
+					+ (MINI_H / 2)- 7.5, color);
 			x++;
 		}
 		y++;
@@ -118,10 +119,12 @@ void	setup_minimap(t_data *data)
 {
 	t_img window_minimap;
 
-	window_minimap = init_img(data, MINI_W, MINI_H);
+	if (init_img(data, &window_minimap, MINI_W, MINI_H))
+		return ;
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
-		deg_to_rad(fix_ang(data->player.direction +90)));
+		fixed_to_double(deg_to_rad(fix_ang(data->player.direction
+		+ (shift(90))))));
 	put_img_to_img(data->main_img.view, window_minimap, 10, 10, MINI_W, MINI_H);
 	destroy_image(window_minimap, data);
 }
