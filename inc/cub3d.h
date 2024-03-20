@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/16 15:54:22 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:34:52 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
+# define SHIFT_AMOUNT 16 // 2^16 = 65536
+# define SHIFT_MASK ((1 << SHIFT_AMOUNT) - 1)
 
 typedef struct s_point
 {

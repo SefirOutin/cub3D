@@ -1,5 +1,15 @@
-#include <stdio.h> // Pour printf (à des fins de débogage)
-#include <math.h> // Pour les fonctions trigonométriques et sqrt
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/20 16:49:48 by bmoudach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 double fix_ang(double a) {

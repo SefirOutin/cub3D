@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 16:22:42 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:49:59 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_minimap_textures(t_data *data)
 	}
 }
 
-void	get_player_data(t_data *data, int c, int i, int j)
+void	get_player_data(t_data *data, int c, int x, int y)
 {
 	if (c == 'N')
 	{
