@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 18:49:30 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/20 20:03:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
 	int	x;
 	int	y;
 
-	player_x = data->player_mini.pos.x;
-	player_y = data->player_mini.pos.y;
+	player_x = data->player.pos.x * 15;
+	player_y = data->player.pos.y * 15;
 	j = 0;
 	while (data->map[j])
 	{
