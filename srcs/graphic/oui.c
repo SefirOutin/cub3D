@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/19 17:14:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/20 19:00:02 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,17 @@ void	create_wall(t_data *data,int coef_wall)
 	start.x = 0;
 	len_wall = 0;
 	curr_ray = data->main_img.nb_rays - 1;
-	while (start.x < data->main_img.view.w && data->main_img.view.h)
+	while (start.x < 640)
 	{
-		len_wall = data->win.h / ((data->main_img.rays_len[curr_ray] >> SHIFT_AMOUNT));
+		len_wall = data->win.h / ((data->main_img.rays_len[curr_ray]));
 		len_wall *= coef_wall;
 		start.y = (data->win.h / 2) - (len_wall / 2);
 		create_vertical_line(&data->main_img.view, start, len_wall, color_wall);
 		curr_ray--;
 		start.x++;
+		curr_ray--;
 	}
+	
 }
 void	create_floor(t_data *data,int coef_wall)
 {
@@ -136,7 +138,7 @@ void	create_floor(t_data *data,int coef_wall)
 		start.y = (data->win.h / 2) + (len_wall / 2);
 		len_floor = (data->win.h / 2) - (len_wall / 2);
 		create_vertical_line(&data->main_img.view, start, len_floor,
-			data->main_img.floor_color);
+		data->main_img.floor_color);
 		start.x++;
 		curr_ray--;
 	}
@@ -151,7 +153,7 @@ void	create_sky(t_data *data,int coef_wall)
 
 	start.x = 0;
 	curr_ray = data->main_img.nb_rays - 1;
-	while (start.x < data->main_img.view.w)
+	while (start.x < 640)
 	{
 		len_wall = data->win.h / data->main_img.rays_len[curr_ray];
 		start.y = 0;
@@ -170,10 +172,11 @@ void	create_sky(t_data *data,int coef_wall)
 
 // 	coef_wall = 10;
 	
-// 	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
-// 		return (-1);
-// 	create_wall(data,coef_wall);
-// 	create_floor(data,coef_wall);
-// 	create_sky(data,coef_wall);
-// 	return (0);
-// }
+	printf("ok");
+	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
+		return (-1);
+	create_wall(data,coef_wall);
+	create_floor(data,coef_wall);
+	create_sky(data,coef_wall);
+	return (0);
+}
