@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 18:59:56 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/20 19:19:39 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,45 @@ void	get_player_data(t_data *data, int c, int x, int y)
 {
 	if (c == 'N')
 	{
-		data->player.direction = 90 << SHIFT_AMOUNT;
+		data->player.direction = 90;
 	}
 	if (c == 'S')
 	{
-		data->player.direction = 270 << SHIFT_AMOUNT;
+		data->player.direction = 270;
 	}
 	if (c == 'W')
 	{
-		data->player.direction = 180 << SHIFT_AMOUNT;
+		data->player.direction = 180;
 	}
 	if (c == 'E')
 	{
-		data->player.direction = 0 << SHIFT_AMOUNT;
+		data->player.direction = 0;
 	}
-	data->player.pos.x = i + 0.5;
-	data->player.pos.y = j + 0.5;
-	data->player_mini.pos.x = i * 15 + 7;
-	data->player_mini.pos.y = j * 15 + 7;
+	data->player.pos.x = x + 0.5;
+	data->player.pos.y = y + 0.5;
+	data->player_mini.pos.x = x * 15 + 7;
+	data->player_mini.pos.y = y * 15 + 7;
 }
 
 void	find_player(t_data *data)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 
-	j = 0;
-	while (data->map[j])
+	y = 0;
+	while (data->map[y])
 	{
-		i = 0;
-		while (data->map[j][i])
+		x = 0;
+		while (data->map[y][x])
 		{
-			if (ft_strchr("NWSE", data->map[j][i]))
+			if (ft_strchr("NWSE", data->map[y][x]))
 			{
-				get_player_data(data, data->map[j][i], i, j);
+				get_player_data(data, data->map[y][x], x, y);
 				return ;
 			}
-			i++;
+			x++;
 		}
-		j++;
+		y++;
 	}
 }
 

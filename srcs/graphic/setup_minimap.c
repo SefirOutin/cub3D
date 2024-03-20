@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/19 17:36:47 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/20 20:03:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ void	init_asset(t_img *asset, t_data *data)
 			&(asset[2].bpp), &(asset[2].line_l), &(asset[2].endian));
 }
 
+void	create_minimap_window(t_img *win_minimap, t_data *data)
+{
+	win_minimap->img = mlx_new_image(data->win.mlx_ptr, MINI_W, MINI_H);
+	win_minimap->addr = (int *)mlx_get_data_addr(win_minimap->img,
+			&(win_minimap->bpp), &(win_minimap->line_l),
+			&(win_minimap->endian));
+}
+
 void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
 {
 	int	i;
@@ -67,8 +75,8 @@ void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
 	int	x;
 	int	y;
 
-	player_x = data->player_mini.pos.x;
-	player_y = data->player_mini.pos.y;
+	player_x = data->player.pos.x * 15;
+	player_y = data->player.pos.y * 15;
 	j = 0;
 	while (data->map[j])
 	{
@@ -107,8 +115,7 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 			color = data->minimap.asset[2].addr[y * 15 + x];
 			if (color >= 0 && new_x >= 0 && new_x < 15 && new_y >= 0
 				&& new_y < 15)
-				put_pixel_img(*img, new_x + (MINI_W / 2) - 7.5 , new_y
-					+ (MINI_H / 2)- 7.5, color);
+				put_pixel_img(*img, new_x + (MINI_W / 2) - 7.5 , new_y + (MINI_H / 2)- 7.5, color);
 			x++;
 		}
 		y++;
@@ -119,12 +126,11 @@ void	setup_minimap(t_data *data)
 {
 	t_img window_minimap;
 
-	if (init_img(data, &window_minimap, MINI_W, MINI_H))
-		return ;
+	create_minimap_window(&window_minimap, data);
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
-		fixed_to_double(deg_to_rad(fix_ang(data->player.direction
-		+ (shift(90))))));
+		deg_to_rad(fix_ang(data->player.direction +90)));
+	// mlx_put_image_to_window(data->win.mlx_ptr,data->win_ptr,window_minimap.img,0,0);
 	put_img_to_img(data->main_img.view, window_minimap, 10, 10, MINI_W, MINI_H);
 	destroy_image(window_minimap, data);
 }

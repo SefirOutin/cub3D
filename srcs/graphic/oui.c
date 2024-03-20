@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 19:00:02 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/20 20:30:23 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ void	draw_wall(t_data *data, int x, int ys[2], int ratio, int curr_ray)
 	half_height = data->win.h * 0.5;
 	ys[0] = half_height;
 	ys[1] = half_height;
-	wall_height = data->win.h / (data->main_img.rays_len[curr_ray] >> SHIFT_AMOUNT) * 3;
-	while (wall_height-- && ys[0] >= 0 && ys[1] <= data->win.h)
+	wall_height = data->win.h / (data->main_img.rays_len[curr_ray] * 5);
+	while (wall_height-- && ys[1] >= 0 && ys[0] <= data->win.h)
 	{
+		// printf("x %d y :%d\n", x, ys[0]);
 		i = 0;
 		while (i < ratio)
 		{
@@ -85,6 +86,7 @@ int	view(t_data *data)
 
 	x = 0;
 	ratio = data->win.w / data->main_img.nb_rays;
+	// printf("nb %d\n", data->main_img.nb_rays);
 	curr_ray = data->main_img.nb_rays - 1;
 	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
 		return (1);
@@ -172,11 +174,11 @@ void	create_sky(t_data *data,int coef_wall)
 
 // 	coef_wall = 10;
 	
-	printf("ok");
-	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
-		return (-1);
-	create_wall(data,coef_wall);
-	create_floor(data,coef_wall);
-	create_sky(data,coef_wall);
-	return (0);
-}
+// 	printf("ok");
+// 	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
+// 		return (-1);
+// 	create_wall(data,coef_wall);
+// 	create_floor(data,coef_wall);
+// 	create_sky(data,coef_wall);
+// 	return (0);
+// }

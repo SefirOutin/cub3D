@@ -4,17 +4,17 @@
 int	on_keypress(t_data *data)
 {
 	if (data->player.inputs[W_KEY][1] == 1)
-		move(data, 0.2 * cos(fix_ang(deg_to_rad(unshift(data->player.direction)))),
-			0.2 * -sin(fix_ang(deg_to_rad(unshift(data->player.direction)))), 0);
+		move(data, cos(fix_ang(deg_to_rad(data->player.direction))),
+			-sin(fix_ang(deg_to_rad(data->player.direction))), 0);
 	if (data->player.inputs[S_KEY][1] == 1)
-		move(data, 0.2 * cos(fix_ang(deg_to_rad(unshift(data->player.direction) + 180))),
-			0.2 * -sin(fix_ang(deg_to_rad(unshift(data->player.direction + 180)))), 0);
+		move(data, cos(fix_ang(deg_to_rad(data->player.direction + 180))),
+			-sin(fix_ang(deg_to_rad(data->player.direction + 180))), 0);
 	if (data->player.inputs[A_KEY][1] == 1)
-		move(data, 0.2 * cos(fix_ang(deg_to_rad(unshift(data->player.direction) + 90))),
-			0.2 * -sin(fix_ang(deg_to_rad(unshift(data->player.direction) + 90))), 0);
+		move(data, cos(fix_ang(deg_to_rad(data->player.direction + 90))),
+			-sin(fix_ang(deg_to_rad(data->player.direction + 90))), 0);
 	if (data->player.inputs[D_KEY][1] == 1)
-		move(data, 0.2 * cos(fix_ang(deg_to_rad(unshift(data->player.direction) + 270))),
-			0.2 * -sin(fix_ang(deg_to_rad(unshift(data->player.direction) + 270))), 0);
+		move(data, cos(fix_ang(deg_to_rad(data->player.direction + 270))),
+			-sin(fix_ang(deg_to_rad(data->player.direction + 270))), 0);
 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
 		move(data, 0, 0, +0.3);
 	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
