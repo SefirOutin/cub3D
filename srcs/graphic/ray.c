@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/21 14:03:51 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:13:08by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,16 @@ double	deg_to_rad(double degrees)
 	return (degrees * PI / 180.0);
 }
 
-int	create_wall(t_data *data)
+double	fix_ang(double a)
+{
+	while (a > 359)
+		a -= 360;
+	while (a < 0)
+		a += 360;
+	return (a);
+}
+
+int	create_rays(t_data *data)
 {
 	t_point pos;
 	t_point dir;
@@ -30,19 +39,20 @@ int	create_wall(t_data *data)
 	t_point step;
 	int hit;
 	int side;
-	double prep_wall_dist;
+	double perp_wall_dist;
 	double angle;
 	double fov_ratio;
 	int x;
 
 	x = 0;
+	angle = deg_to_rad(data->player.direction);
 	fov_ratio = tan(angle / 2);
 	pos = data->player.pos;
-	angle = deg_to_rad(data->player.direction);
 	dir.x = cos(angle);
 	dir.y = sin(angle);
 	plane.x = dir.x * fov_ratio;
 	plane.y = -dir.y * fov_ratio;
+	printf("plane x %f plane y %f",plane.x,plane.y);
 	while (x++ < data->win.w)
 	{
 		camera.x = 2 * x / (double)data->win.w - 1;
@@ -98,6 +108,12 @@ int	create_wall(t_data *data)
 			if (data->map[(int)map.y][(int)map.x] == '1')
 				hit = 1;
 		}
+		if (side == 0)
+			perp_wall_dist = (side_dist.x - delta_dist.x);
+		else
+			perp_wall_dist = (side_dist.y - delta_dist.y);
+		data->main_img.rays_len[x - 1] = perp_wall_dist;
 	}
+
 	return (0);
 }

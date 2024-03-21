@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 20:30:23 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/21 18:24:57 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,6 @@ void	create_sky(t_data *data,int coef_wall)
 
 // 	coef_wall = 10;
 	
-// 	printf("ok");
 // 	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
 // 		return (-1);
 // 	create_wall(data,coef_wall);
