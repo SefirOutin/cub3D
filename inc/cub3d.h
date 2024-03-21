@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 19:50:23 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/21 13:55:47 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define FOV 90
+# define FOV 66
 # define MINI_W 240
 # define MINI_H 240
 # define WIN_W 1200

@@ -50,8 +50,8 @@ t_point	cool_rotate(t_point pixel, double angle)
 {
 	t_point	new;
 
-	new.x = round((pixel.x - 25) * cos(angle) + (pixel.y - 25) * sin(angle));
-	new.y = round((pixel.x - 25) * sin(angle) + (pixel.y - 25) * cos(angle));
+	new.x = round((pixel.x - 0.5) * cos(angle) + (pixel.y - 0.5) * sin(angle));
+	new.y = round((pixel.x - 0.5) * sin(angle) + (pixel.y - 0.5) * cos(angle));
 	return (new);
 }
 
@@ -62,8 +62,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	// erase_floors(data);
 	// display_map(data);
 	// printf("new x:%f y:%f\n\n", x, y);
-	data->player.pos.x += x * 0.02;
-	data->player.pos.y += y * 0.02;
+	data->player.pos.x += x * 0.01;
+	data->player.pos.y += y * 0.01;
 	data->player_mini.pos.x += x*0.3;
 	data->player_mini.pos.y += y*0.3;
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
