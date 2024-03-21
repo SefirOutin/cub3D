@@ -6,161 +6,98 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/21 13:01:56 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:03:51 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double fix_ang(double a)
+double	deg_to_rad(double degrees)
 {
-    while (a > 359)
-        a -= 360;
-    while (a < 0)
-        a += 360;
-    return a;
+	return (degrees * PI / 180.0);
 }
 
-double deg_to_rad(double degrees)
+int	create_wall(t_data *data)
 {
-    return degrees * PI / 180.0;
-}
-
-void find_point_on_section(t_ray *ray, double len)
-{
-    ray->len += len;
-    ray->end.x = round(ray->end.x + len * ray->len_one_u.x);
-    ray->end.y = round(ray->end.y - len * ray->len_one_u.y);
-}
-
-t_point check_next_edges(t_data *data, t_ray *ray)
-{
-    t_point delta;
+	t_point pos;
+	t_point dir;
+	t_point plane;
+	t_point camera;
+	t_point ray_dir;
+	t_point map;
+	t_point side_dist;
+	t_point delta_dist;
 	t_point step;
-	
-    if (ray->angle_deg > 0 && ray->angle_deg < 180)
+	int hit;
+	int side;
+	double prep_wall_dist;
+	double angle;
+	double fov_ratio;
+	int x;
+
+	x = 0;
+	fov_ratio = tan(angle / 2);
+	pos = data->player.pos;
+	angle = deg_to_rad(data->player.direction);
+	dir.x = cos(angle);
+	dir.y = sin(angle);
+	plane.x = dir.x * fov_ratio;
+	plane.y = -dir.y * fov_ratio;
+	while (x++ < data->win.w)
 	{
-		step.y = -1;
-        delta.y = ray->end.y - (floor(ray->end.y)) + 1;
-	}
-    else
-    {
-		step.y = 1;
-	    delta.y = ceil(ray->end.y) - ray->end.y  + 1;
-	}
-
-    if ((ray->angle_deg > 90 && ray->angle_deg < 270))
-    {
-		step.x = -1;
-	    delta.x = ray->end.x - (floor(ray->end.x)) + 1;
-	}
-    else
-    {
-		step.x = 1;
-	    delta.x = ceil(ray->end.x) - ray->end.x + 1;
-	}
-
-    ray->vlen.x = delta.x * ray->hypo_len_one_u.x;
-    ray->vlen.y = delta.y * ray->hypo_len_one_u.y;
-
-    if ((ray->vlen.x < ray->vlen.y))
-        return (find_point_on_section(ray, ray->vlen.x), step);
-    else
-        return (find_point_on_section(ray, ray->vlen.y), step);
-}
-
-
-
-int check_angles(t_data *data, t_ray *ray)
-{
-    t_point	first;
-	t_point	second;
-
-    first.x = (int)(ray->end.x);
-    first.y = (int)(ray->end.y);
-    second.x = (int)(ray->end.x);
-    second.y = (int)(ray->end.y);
-    if (ray->angle_deg > 180)
-        first.y--;
-    else
-        first.y++;
-
-    if (ray->end.x < data->player.pos.x)
-        second.x++;
-    else if (ray->end.x > data->player.pos.x)
-	{
-	    second.x--;
-
-	}
-	// printf("first x: %f Y:%f\n", first.x, first.y);
-    if (data->map[(int)first.y][(int)first.x] == '1'
-		&& data->map[(int)second.y][(int)second.x] == '1')
-        return 1;
-    return 0;
-}
-
-void find_next_wall(t_data *data, t_ray *ray, double curr_ray)
-{
-	// double cameraFraction;
-	t_point	step;
-
-    ray->angle_deg = fix_ang(data->player.direction + curr_ray - FOV * 0.5);
-    ray->angle_rad = deg_to_rad(ray->angle_deg);
-    ray->len_one_u.x = cos(ray->angle_rad);
-    ray->len_one_u.y = sin(ray->angle_rad);	
- 	// cameraFraction = curr_ray / data->win.w * 2 - 1;   
-	ray->end.x = data->player.pos.x;
-    ray->end.y = data->player.pos.y;
-	// ray->len_one_u.x += -sin(deg_to_rad(data->player.direction)) * cameraFraction;
-	// ray->len_one_u.y += cos(deg_to_rad(data->player.direction)) * cameraFraction;
-    ray->hypo_len_one_u.x = sqrt(1 + pow((ray->len_one_u.y) / (ray->len_one_u.x), 2));
-    ray->hypo_len_one_u.y = sqrt(1 + pow((ray->len_one_u.x) / (ray->len_one_u.y), 2));
-    while ((data->map[(int)(ray->end.y)][(int)(ray->end.x)] != '1'))
-	{
-		// printf("curr %f\n", curr_ray);
-		// if (curr_ray == 45)
-		// 	printf("x : %f y : %f\n", ray->end.x, ray->end.y);
-        step = check_next_edges(data, ray);
-		// if (data->map[(int)(ray->end.y) + 1 * (int)step.y][(int)(ray->end.x) + 1 * (int)step.x] == '1')
-		// 	return ;
-        if (check_angles(data, ray))
-            return;
-    }
-    // ray->len *= cos(ray->angle_rad - deg_to_rad(data->player.direction));
-}
-
-void display_rays(t_data *data, t_ray *ray) {
-    int i;
-    double ratio;
-    int num_points;
-
-    i = 0;
-    num_points = ray->len * 0.2;
-    while (i < num_points)
-	{
-        ratio = (double)i / (double)(num_points - 1);
-        mlx_pixel_put(data->win.mlx_ptr, data->win.win_ptr, data->player.pos.x + ratio * (ray->end.x - data->player.pos.x),
-                      data->player.pos.y + ratio * (ray->end.y - data->player.pos.y), 0x7FFF00);
-        i++;
-    }
-}
-
-int	create_rays(t_data *data)
-{
-	t_ray	ray;
-	int		curr_ray;
-	double	angle_ratio;
-
-	curr_ray = 0;
-	angle_ratio = 0.140625;
-	while (curr_ray < data->main_img.nb_rays)
-	{
-		ft_memset(&ray, 0, sizeof(t_ray));
-		find_next_wall(data, &ray, curr_ray * angle_ratio);
-		data->main_img.rays_len[curr_ray] = ray.len;
-		// printf("len %d i %d\n", data->main_img.rays_len[curr_ray], curr_ray);
-		// display_rays(data, &ray);
-		curr_ray++;
+		camera.x = 2 * x / (double)data->win.w - 1;
+		ray_dir.x = dir.x + plane.x * camera.x;
+		ray_dir.y = dir.y + plane.y * camera.x;
+		map.x = (int)pos.x;
+		map.y = (int)pos.y;
+		if (ray_dir.x == 0)
+			delta_dist.x = 1e30;
+		else
+			delta_dist.x = fabs(1 / ray_dir.x);
+		if (ray_dir.y == 0)
+			delta_dist.y = 1e30;
+		else
+			delta_dist.y = fabs(1 / ray_dir.y);
+		hit = 0;
+		if (ray_dir.x < 0)
+		{
+			step.x = -1;
+			side_dist.x = (pos.x - map.x) * delta_dist.x;
+		}
+		else
+		{
+			step.x = 1;
+			side_dist.x = (map.x + 1.0 - pos.x) * delta_dist.x;
+		}
+		if (ray_dir.y < 0)
+		{
+			step.y = -1;
+			side_dist.y = (pos.y - map.y) * delta_dist.y;
+		}
+		else
+		{
+			step.y = 1;
+			side_dist.y = (map.y + 1.0 - pos.y) * delta_dist.y;
+		}
+		while (hit == 0)
+		{
+			// jump to next map square, either in x-direction, or in y-direction
+			if (side_dist.x < side_dist.y)
+			{
+				side_dist.x += delta_dist.x;
+				map.x += step.x;
+				side = 0;
+			}
+			else
+			{
+				side_dist.y += delta_dist.y;
+				map.y += step.y;
+				side = 1;
+			}
+			// Check if ray has hit a wall
+			if (data->map[(int)map.y][(int)map.x] == '1')
+				hit = 1;
+		}
 	}
 	return (0);
 }
