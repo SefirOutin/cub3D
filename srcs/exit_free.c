@@ -1,10 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_free.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/15 17:30:08 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/15 18:26:21 by soutin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	mlx_destroy_image_if_exists(void *mlx_ptr, void *img)
-{
-	if (img)
-		mlx_destroy_image(mlx_ptr, img);
-}
+#include "cub3d.h"
 
 void	free_section(t_point **section, int size)
 {
@@ -24,19 +30,16 @@ int	exit_and_free(t_data *data)
 
 	// i = 0;
 	ft_free_tab(data->map);
-	free(data->img.textures[0]);
-	free(data->img.textures[1]);
-	free(data->img.textures[2]);
-	free(data->img.textures[3]);
-	free_section(data->player.section, 90);
-	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[0]);
-	mlx_destroy_image_if_exists(data->mlx_ptr, data->img.texture_map[1]);
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
+	// free(data->textures[0]);
+	// free(data->textures[1]);
+	// free(data->textures[2]);
+	// free(data->textures[3]);
+	if (data->win.win_ptr)
+		mlx_destroy_window(data->win.mlx_ptr, data->win.win_ptr);
+	if (data->win.mlx_ptr)
 	{
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
+		mlx_destroy_display(data->win.mlx_ptr);
+		free(data->win.mlx_ptr);
 	}
 	exit(EXIT_SUCCESS);
 }

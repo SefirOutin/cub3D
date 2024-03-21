@@ -6,7 +6,7 @@
 #    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/03/05 01:03:54 by soutin           ###   ########.fr        #
+#    Updated: 2024/03/18 19:32:01 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,16 @@ SRC			=		srcs/main.c \
 					srcs/graphic/mini_map.c \
 					srcs/move_event/hook.c\
 					srcs/graphic/ray.c \
-					srcs/graphic/pixel_collector.c \
-					srcs/graphic/draw_2d_player.c \
-					srcs/graphic/put_pixels.c \
-					srcs/init.c
+					srcs/graphic/setup_minimap.c \
+					srcs/graphic/oui.c \
+					srcs/init.c \
+					srcs/mlx_engine/destroy_image.c \
+					srcs/mlx_engine/draw_xpm_to_img.c \
+					srcs/mlx_engine/get_pixel_img.c \
+					srcs/mlx_engine/init_img.c \
+					srcs/mlx_engine/put_img_to_img.c \
+					srcs/mlx_engine/put_pixel_img.c \
+					srcs/fixed_point_utils.c \
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)
 
@@ -37,8 +43,7 @@ CC			=		clang
 CPPFLAGS	=		-I./inc -I./libft/inc
 MLX			=		-L./minilibx-linux
 MLXFLAGS	=		-lm -lmlx -lX11 -lXext 
-CFLAGS		=		-Wall -Werror -Werror -gdwarf-4 -o3
-
+CFLAGS		=		-Wall -Werror -Werror -gdwarf-4
 $(NAME):			$(OBJ) 
 						$(MAKE) -C minilibx-linux
 						$(MAKE) -C $(LIBFT_DIR)

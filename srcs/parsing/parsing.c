@@ -3,16 +3,8 @@
 
 int	parsing(t_data *data, char *path)
 {
-	// int	i;
-
-	// i = 0;
 	ft_memset(data, 0, sizeof(t_data));
 	ft_memset(&data->player, 0, sizeof(t_player));
-	// while (i < 6)
-	// {
-	// 	ft_memset(data->player.inputs[i], 0, 2);
-	// 	i++;
-	// }
 	if (get_map_data(data, path) < 0)
 		return (1);
 	if (check_map(data))
