@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   oui.c                                              :+:      :+:    :+:   */
+/*   view.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 20:30:23 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:08:51 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	draw_wall(t_data *data, int x, int ys[2], int ratio, int curr_ray)
 	half_height = data->win.h * 0.5;
 	ys[0] = half_height;
 	ys[1] = half_height;
-	wall_height = data->win.h / (data->main_img.rays_len[curr_ray] * 5);
+	wall_height = data->win.h / (data->main_img.rays[curr_ray].len * 5);
+	if (curr_ray == 320)
+		printf("wall h %d\n\n", wall_height);
 	while (wall_height-- && ys[1] >= 0 && ys[0] <= data->win.h)
 	{
 		// printf("x %d y :%d\n", x, ys[0]);
@@ -83,20 +85,28 @@ int	view(t_data *data)
 	int	ys[2];
 	int	ratio;
 	int	curr_ray;
+	int	i;
 
+	i = 0;
 	x = 0;
 	ratio = data->win.w / data->main_img.nb_rays;
 	// printf("nb %d\n", data->main_img.nb_rays);
 	curr_ray = data->main_img.nb_rays - 1;
 	if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
 		return (1);
-	while (x < data->main_img.nb_rays)
+	while (x < data->win.w)
 	{
 		draw_wall(data, x, ys, ratio, curr_ray);
 		draw_ceil_and_floor(data, x, ys, ratio);
-		x++;
+		x += ratio;
 		curr_ray--;
 	}
+	// while (i < 300)
+	// {
+	// 	put_pixel_to_image(&data->main_img.view, data->win.w / 2 - 1, i, 0x000000);
+	// 	put_pixel_to_image(&data->main_img.view, data->win.w / 2, i, 0x000000);
+	// 	put_pixel_to_image(&data->main_img.view, data->win.w / 2 + 1, i++, 0x000000);
+	// }
 	return (0);
 }
 
@@ -114,7 +124,7 @@ void	create_wall(t_data *data,int coef_wall)
 	curr_ray = data->main_img.nb_rays - 1;
 	while (start.x < 640)
 	{
-		len_wall = data->win.h / ((data->main_img.rays_len[curr_ray]));
+		len_wall = data->win.h / ((data->main_img.rays[curr_ray].len));
 		len_wall *= coef_wall;
 		start.y = (data->win.h / 2) - (len_wall / 2);
 		create_vertical_line(&data->main_img.view, start, len_wall, color_wall);
@@ -135,7 +145,7 @@ void	create_floor(t_data *data,int coef_wall)
 	curr_ray = data->main_img.nb_rays - 1;
 	while (start.x < 640)
 	{
-		len_wall = data->win.h / data->main_img.rays_len[curr_ray];
+		len_wall = data->win.h / data->main_img.rays[curr_ray].len * 3;
 		len_wall *= coef_wall;
 		start.y = (data->win.h / 2) + (len_wall / 2);
 		len_floor = (data->win.h / 2) - (len_wall / 2);
@@ -157,7 +167,7 @@ void	create_sky(t_data *data,int coef_wall)
 	curr_ray = data->main_img.nb_rays - 1;
 	while (start.x < 640)
 	{
-		len_wall = data->win.h / data->main_img.rays_len[curr_ray];
+		len_wall = data->win.h / data->main_img.rays[curr_ray].len;
 		start.y = 0;
 		len_wall *= coef_wall;
 		len_sky = (data->win.h / 2) - (len_wall / 2);

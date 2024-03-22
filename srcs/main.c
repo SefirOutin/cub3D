@@ -46,6 +46,11 @@ int	check_collision(t_data *data, double x, double y)
 	return (0);
 }
 
+// int	collision(t_data *data)
+// {
+
+// }
+
 t_point	cool_rotate(t_point pixel, double angle)
 {
 	t_point	new;

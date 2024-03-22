@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/21 13:55:47 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 14:44:58 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef struct s_main_img
 	int			floor_color;
 	int			ceilling_color;
 	int			nb_rays;
-	int			rays_len[640];
+	t_ray		rays[640];
 	int 		ray_len_norm[640];
 
 }				t_main_img;

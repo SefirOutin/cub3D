@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 20:03:40 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 14:56:38 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,31 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 	}
 }
 
+void	display_rays(t_data *data, t_img *img)
+{
+	int		i;
+	int		j;
+	double	ratio;
+	int		num_points;
+	
+	j = 0;
+	while (j < data->main_img.nb_rays)
+	{
+		i = 0;
+		num_points = data->main_img.rays[i].len * 0.2;
+		while (i  < num_points)
+		{
+			ratio = (double)i / (double)(num_points - 1);
+			put_pixel_to_image(img,
+				(MINI_W / 2) + ratio * (data->main_img.rays[i].end.x * 15 - (MINI_W / 2)),
+				(MINI_H / 2) +  ratio * (data->main_img.rays[i].end.y * 15 - (MINI_H / 2)), 0x7FFF00);
+			i++;
+		}
+		j++;
+		
+	}
+}
+
 void	setup_minimap(t_data *data)
 {
 	t_img window_minimap;
@@ -130,6 +155,7 @@ void	setup_minimap(t_data *data)
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
 		deg_to_rad(fix_ang(data->player.direction +90)));
+	// display_rays(data, &window_minimap);
 	// mlx_put_image_to_window(data->win.mlx_ptr,data->win_ptr,window_minimap.img,0,0);
 	put_img_to_img(data->main_img.view, window_minimap, 10, 10, MINI_W, MINI_H);
 	destroy_image(window_minimap, data);
