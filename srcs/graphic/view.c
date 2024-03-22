@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 17:08:51 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:10:57 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ int	view(t_data *data)
 		x += ratio;
 		curr_ray--;
 	}
-	// while (i < 300)
-	// {
-	// 	put_pixel_to_image(&data->main_img.view, data->win.w / 2 - 1, i, 0x000000);
-	// 	put_pixel_to_image(&data->main_img.view, data->win.w / 2, i, 0x000000);
-	// 	put_pixel_to_image(&data->main_img.view, data->win.w / 2 + 1, i++, 0x000000);
-	// }
+	while (i < 300)
+	{
+		put_pixel_to_image(&data->main_img.view, data->win.w / 2 - 1, i, 0x000000);
+		put_pixel_to_image(&data->main_img.view, data->win.w / 2, i, 0x000000);
+		put_pixel_to_image(&data->main_img.view, data->win.w / 2 + 1, i++, 0x000000);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 17:08:36 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 19:37:50 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ int	check_angles(t_data *data, t_ray *ray)
 	return (0);
 }
 
-void	first_cell(t_ray *ray, t_point *step)
+void	first_cell(t_ray *ray, t_point *step, double curr_ray)
 {
 	t_point	delta;
 	
-	if (ray->angle_deg > 0 && ray->angle_deg < 180)
+	if (ray->angle_rad < PI)
 	{
 		step->y = -1;
 		delta.y = ray->end.y - (int)ray->end.y;
@@ -100,7 +100,7 @@ void	first_cell(t_ray *ray, t_point *step)
 		step->y = 1;
 		delta.y = ceil(ray->end.y) - ray->end.y;
 	}
-	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
+	if ((ray->angle_rad > PI * 0.5 && 3 * PI * 0.5))
 	{
 		step->x = -1;
 		delta.x = ray->end.x - (int)ray->end.x;
@@ -112,13 +112,15 @@ void	first_cell(t_ray *ray, t_point *step)
 	}
 	ray->vlen.x = delta.x * ray->hypo_len_one_u.x;
 	ray->vlen.y = delta.y * ray->hypo_len_one_u.y;
+	if (curr_ray == 45)
+		printf("delta X:%f y:%f\n", delta.x, delta.y);
 }
 
-int	check_next_edges(t_data *data, t_ray *ray, int is_first, t_point *step, t_point map)
+int	check_next_edges(t_data *data, t_ray *ray, int is_first, t_point *step, t_point map, double curr_ray)
 {
 	// calcule la distance du joueur par rapport aux bords de la case que le joueur regarde (sert à vlen)
 	if (!is_first)
-		first_cell(ray, step);
+		first_cell(ray, step, curr_ray);
 	else
 	{
 		if (ray->vlen.x < ray->vlen.y)
@@ -127,7 +129,9 @@ int	check_next_edges(t_data *data, t_ray *ray, int is_first, t_point *step, t_po
 			ray->vlen.y += ray->hypo_len_one_u.y;
 	}
 	if ((ray->vlen.x < ray->vlen.y) && data->map[(int)map.y][(int)(map.x + step->x)] == '1')
+	{
 		return (find_point_on_section(ray, ray->vlen.x), 0);
+	}	
 	else if (data->map[(int)(map.y + step->y)][(int)map.x] == '1')
 	{
 		return (find_point_on_section(ray, ray->vlen.y), 1);
@@ -145,6 +149,7 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 	t_point step;
 	t_point	map;
 	int	i;
+	int	side;
 	
 	i = 0;
 	map.x = (int)data->player.pos.x;
@@ -159,26 +164,33 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 	ray->hypo_len_one_u.y = sqrt(1 + pow((ray->len_one_u.x) / (ray->len_one_u.y), 2));
 	while (1)
 	{
-		// if (curr_ray == 45)
-		// 	printf("end x:%f y:%f\n", ray->end.x, ray->end.y);	
-		if (check_next_edges(data, ray, i++, &step, map))
-			map.y += step.y;
-		else
+		if (curr_ray == 45)
+			printf("end x:%f y:%f\n", ray->end.x, ray->end.y);	
+		if (!check_next_edges(data, ray, i++, &step, map, curr_ray))
+		{
 			map.x += step.x;
+			side = 0;
+		}
+		else
+		{
+			map.y += step.y;
+			side = 1;
+		}
 		if (data->map[(int)map.y][(int)map.x] == '1')
 		{
+			if (curr_ray == 45)
+			{
+				printf("end x:%f y:%f\n", ray->end.x, ray->end.y);
+				printf("map x:%f y:%f char :%c\n", map.x, map.y, data->map[(int)map.y][(int)map.x]);		
+				printf("ray len :%f\n", ray->len);
+			}
 			break ;
 		}
-		// 	if (curr_ray == 45)
-		// 	{
-		// 		printf("end x:%f y:%f\n", ray->end.x, ray->end.y);
-		// 		printf("map x:%f y:%f char :%c\n", map.x, map.y, data->map[(int)map.y][(int)map.x]);		
-		// 		printf("ray len :%f\n", ray->len);
-		// 	}
-		
 		// if (check_angles(data, ray))
 		// 	return ;
 	}
+	// if (!side)
+	// 	ray->len = ray->vlen, 
 	ray->len *= cos(ray->angle_rad - deg_to_rad(data->player.direction));
 }
 
