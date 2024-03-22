@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 14:56:38 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 19:42:36 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,8 @@ void	setup_minimap(t_data *data)
 {
 	t_img window_minimap;
 
-	create_minimap_window(&window_minimap, data);
+	if (init_img(data, &window_minimap, MINI_W, MINI_H))
+		return ;
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
 		deg_to_rad(fix_ang(data->player.direction +90)));
