@@ -185,5 +185,7 @@ void			destroy_image(t_img img, t_data *data);
 void			put_img_to_img(t_img dst, t_img src, int x, int y, int width,
 					int height);
 unsigned int	get_pixel_img(t_img img, int x, int y);
+void	create_vertical_line(t_img *img, t_point start, int len, int color);
+void	verline(t_img *img, int x, int drawstart, int drawend, int color);
 
 #endif

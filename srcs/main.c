@@ -69,7 +69,7 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	data->player.direction = fix_ang(data->player.direction + rotation_angle);
 	// filled_circle_draw(data, 6);
 	create_rays(data);
-	view(data);
+	//view(data);
 	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	setup_minimap(data);
 	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,data->main_img.view.img, 0, 0);
@@ -97,7 +97,7 @@ void	first_display(t_data *data)
 	// printf("%f %f\n", fixed_to_double(deg_to_rad(90 << 16)), 90 * PI / 180);
 	// printf("cos fx :%u cos m:%u\n", fixed_cos(data, 90 << 16), double_to_fixed(cos(deg_to_rad(90))));
 	create_rays(data);
-	view(data);
+	//view(data);
 	setup_minimap(data);
 	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr, data->main_img.view.img, 0, 0);
 	mlx_destroy_image(data->win.mlx_ptr, data->main_img.view.img);

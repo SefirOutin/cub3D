@@ -12,11 +12,6 @@
 
 #include "cub3d.h"
 
-double	deg_to_rad(double degrees)
-{
-	return (degrees * PI / 180.0);
-}
-
 double	fix_ang(double a)
 {
 	while (a > 359)
@@ -25,34 +20,38 @@ double	fix_ang(double a)
 		a += 360;
 	return (a);
 }
+double	deg_to_rad(double degrees)
+{
+	return (degrees * PI / 180.0);
+}
 
 int	create_rays(t_data *data)
 {
-	t_point pos;
-	t_point dir;
-	t_point plane;
-	t_point camera;
-	t_point ray_dir;
-	t_point map;
-	t_point side_dist;
-	t_point delta_dist;
-	t_point step;
-	int hit;
-	int side;
-	double perp_wall_dist;
-	double angle;
-	double fov_ratio;
-	int x;
+	t_point	pos;
+	t_point	dir;
+	t_point	plane;
+	t_point	camera;
+	t_point	ray_dir;
+	t_point	map;
+	t_point	side_dist;
+	t_point	delta_dist;
+	t_point	step;
+	int		hit;
+	int		side;
+	double	perp_wall_dist;
+	int		x;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	t_point	draw;
+	int		len;
 
 	x = 0;
-	angle = deg_to_rad(data->player.direction);
-	fov_ratio = tan(angle / 2);
 	pos = data->player.pos;
-	dir.x = cos(angle);
-	dir.y = sin(angle);
-	plane.x = dir.x * fov_ratio;
-	plane.y = -dir.y * fov_ratio;
-	printf("plane x %f plane y %f",plane.x,plane.y);
+	dir.x = 0;
+	dir.y = -1;
+	plane.x = 0.66 * dir.y;
+	plane.y = 0.66 * (-1 * dir.x);
 	while (x++ < data->win.w)
 	{
 		camera.x = 2 * x / (double)data->win.w - 1;
@@ -61,11 +60,11 @@ int	create_rays(t_data *data)
 		map.x = (int)pos.x;
 		map.y = (int)pos.y;
 		if (ray_dir.x == 0)
-			delta_dist.x = 1e30;
+			delta_dist.x = fabs(1e30);
 		else
 			delta_dist.x = fabs(1 / ray_dir.x);
 		if (ray_dir.y == 0)
-			delta_dist.y = 1e30;
+			delta_dist.y = fabs(1e30);
 		else
 			delta_dist.y = fabs(1 / ray_dir.y);
 		hit = 0;
@@ -91,7 +90,6 @@ int	create_rays(t_data *data)
 		}
 		while (hit == 0)
 		{
-			// jump to next map square, either in x-direction, or in y-direction
 			if (side_dist.x < side_dist.y)
 			{
 				side_dist.x += delta_dist.x;
@@ -104,16 +102,27 @@ int	create_rays(t_data *data)
 				map.y += step.y;
 				side = 1;
 			}
-			// Check if ray has hit a wall
 			if (data->map[(int)map.y][(int)map.x] == '1')
 				hit = 1;
 		}
 		if (side == 0)
-			perp_wall_dist = (side_dist.x - delta_dist.x);
+			perp_wall_dist = (map.x - pos.x + (1 - step.x) / 2) / ray_dir.x;
 		else
-			perp_wall_dist = (side_dist.y - delta_dist.y);
-		data->main_img.rays_len[x - 1] = perp_wall_dist;
+			perp_wall_dist = (map.y - pos.y + (1 - step.y) / 2) / ray_dir.y;
+		lineHeight = (int)(data->win.h / perp_wall_dist);
+		drawStart = -lineHeight / 2 + data->win.h / 2;
+		if (drawStart < 0)
+			drawStart = 0;
+		drawEnd = lineHeight / 2 + data->win.h / 2;
+		if (drawEnd >= data->win.h)
+			drawEnd = data->win.h - 1;
+		draw.x = x;
+		draw.y = drawStart;
+		len = drawEnd - drawStart;
+		if (init_img(data, &data->main_img.view, data->win.w, data->win.h))
+			return (-1);
+		printf("start %d  end %d\n",drawStart,drawEnd);
+		verline(&data->main_img.view,x,drawStart,drawEnd,0x0000FF);
 	}
-
 	return (0);
 }
