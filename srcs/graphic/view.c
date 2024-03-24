@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 17:08:51 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/24 15:13:04 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	draw_wall(t_data *data, int x, int ys[2], int ratio, int curr_ray)
 	ys[0] = half_height;
 	ys[1] = half_height;
 	wall_height = data->win.h / (data->main_img.rays[curr_ray].len * 5);
-	if (curr_ray == 320)
-		printf("wall h %d\n\n", wall_height);
+	// if (curr_ray == 320)
+		// printf("wall h %d\n\n", wall_height);
 	while (wall_height-- && ys[1] >= 0 && ys[0] <= data->win.h)
 	{
 		// printf("x %d y :%d\n", x, ys[0]);
@@ -85,9 +85,9 @@ int	view(t_data *data)
 	int	ys[2];
 	int	ratio;
 	int	curr_ray;
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	x = 0;
 	ratio = data->win.w / data->main_img.nb_rays;
 	// printf("nb %d\n", data->main_img.nb_rays);

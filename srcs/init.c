@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 16:23:22 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/24 15:13:42 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	init_mlx_data(t_data *data)
 	if (!data->win.mlx_ptr)
 		return (1);
 	mlx_get_screen_size(data->win.mlx_ptr, &data->win.w, &data->win.h);
-	data->win.h = 640;
-	data->win.w = 640;
+	data->win.h = 650;
+	data->win.w = 1280;
 	data->win.win_ptr = mlx_new_window(data->win.mlx_ptr, data->win.w,
 			data->win.h, "MazeCub3D");
 	if (!data->win.win_ptr)

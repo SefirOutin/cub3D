@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 14:56:38 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/22 20:17:04 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,18 +128,22 @@ void	display_rays(t_data *data, t_img *img)
 	int		j;
 	double	ratio;
 	int		num_points;
+	t_point	player;
 	
 	j = 0;
+	player.x = data->player.pos.x * 15;
+	player.y = data->player.pos.y * 15;
 	while (j < data->main_img.nb_rays)
 	{
 		i = 0;
-		num_points = data->main_img.rays[i].len * 0.2;
+		num_points = data->main_img.rays[i].len;
+		printf("numpoints :%d\n", num_points);
 		while (i  < num_points)
 		{
 			ratio = (double)i / (double)(num_points - 1);
 			put_pixel_to_image(img,
-				(MINI_W / 2) + ratio * (data->main_img.rays[i].end.x * 15 - (MINI_W / 2)),
-				(MINI_H / 2) +  ratio * (data->main_img.rays[i].end.y * 15 - (MINI_H / 2)), 0x7FFF00);
+				(MINI_W / 2) + ratio * ((data->main_img.rays[i].end.x * 15) - (MINI_W / 2)),
+				(MINI_H / 2) +  ratio * ((data->main_img.rays[i].end.y * 15) - (MINI_H / 2)), 0x7FFF00);
 			i++;
 		}
 		j++;
@@ -151,7 +155,8 @@ void	setup_minimap(t_data *data)
 {
 	t_img window_minimap;
 
-	create_minimap_window(&window_minimap, data);
+	if (init_img(data, &window_minimap, MINI_W, MINI_H))
+		return ;
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
 		deg_to_rad(fix_ang(data->player.direction +90)));
