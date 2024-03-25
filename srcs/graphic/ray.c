@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/24 15:45:09 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:43:28 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,11 +162,11 @@ int	create_rays(t_data *data)
 	double	angle_ratio;
 	
 	curr_ray = 0;
-	angle_ratio = (double)FOV / (double)data->main_img.nb_rays;
-	data->main_img.rays = ft_calloc(data->main_img.nb_rays, sizeof(t_ray));
-	while (curr_ray < data->main_img.nb_rays)
+	angle_ratio = (double)FOV / (double)data->main.nb_rays;
+	data->main.rays = ft_calloc(data->main.nb_rays, sizeof(t_ray));
+	while (curr_ray < data->main.nb_rays)
 	{
-		find_next_wall(data, &data->main_img.rays[curr_ray], curr_ray * angle_ratio);
+		find_next_wall(data, &data->main.rays[curr_ray], curr_ray * angle_ratio);
 		curr_ray++;
 	}
 	return (0);

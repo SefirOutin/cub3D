@@ -76,9 +76,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	create_rays(data);
 	view(data);
 	setup_minimap(data);
-	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,
-		data->main_img.view.img, 0, 0);
-	mlx_destroy_image(data->win.mlx_ptr, data->main_img.view.img);
+	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,data->main.view.img, 0, 0);
+	mlx_destroy_image(data->win.mlx_ptr, data->main.view.img);
 	return ;
 }
 
@@ -87,10 +86,58 @@ void	first_display(t_data *data)
 	create_rays(data);
 	view(data);
 	setup_minimap(data);
-	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,
-		data->main_img.view.img, 0, 0);
-	mlx_destroy_image(data->win.mlx_ptr, data->main_img.view.img);
+	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr, data->main.view.img, 0, 0);
+	mlx_destroy_image(data->win.mlx_ptr, data->main.view.img);
+	// init_img(data);
+	// mid_point_circle_draw(data, 8);
 }
+
+
+// fxpoint fixed_sin(t_data *data, fxpoint angle)
+// {
+// 	int	i;
+// 	double	step_size;
+
+// 	step_size = 0.28125;
+//     // Normalize the angle to [0, 360) degrees
+//     while (angle < 0)
+// 		angle += SHIFT_MASK * data->array_size;
+//     angle %= SHIFT_MASK * data->array_size;
+
+//     // Calculate the index in the lookup table
+//     i = angle / (SHIFT_MASK * step_size);
+
+//     // Lookup the value in the cosine table
+//     return data->sin_table[i];
+// }
+
+// void	create_table(t_data *data)
+// {
+// 	int	i;
+// 	double	var;
+
+// 	data->array_size = (double)(360 / 0.28125);
+//     data->cos_table = ft_calloc(data->array_size, sizeof(fxpoint));
+//     data->sin_table = ft_calloc(data->array_size, sizeof(fxpoint));
+// 	var = PI / 180;
+// 	i = 0;
+// 	while (i < data->array_size)
+// 	{
+//         double angle = i * 0.28125 * var;
+//         data->cos_table[i] = double_to_fixed(cos(angle));
+// 		if (i == 320)
+// 			printf("cos %u angle:%f\n", data->cos_table[i], i * 0.28125);
+//         data->sin_table[i] = double_to_fixed(sin(angle));
+// 		i++;
+// 	}
+// 	// i = 0;
+// 	// while (i < data->array_size)
+// 	// {
+// 	// 	// printf("cos :%u x:%d\n", data->cos_table[i] >> SHIFT_AMOUNT, i);
+// 	// 	i++;
+// 	// }
+// }
+
 int	main(int argc, char **argv)
 {
 	t_data	data;

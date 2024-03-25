@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/24 15:45:58 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:16:10 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,11 @@ typedef struct s_win
 typedef struct s_main_img
 {
 	t_img		view;
-	char		*textures[5];
+	char		*textures_path[5];
 	int			floor_color;
 	int			ceilling_color;
 	int			nb_rays;
+	t_img		textures[5];
 	t_ray		*rays;
 
 }				t_main_img;
@@ -112,7 +113,7 @@ typedef struct s_data
 {
 	t_win		win;
 	char		**map;
-	t_main_img	main_img;
+	t_main_img	main;
 	t_mnmap		minimap;
 	t_player	player;
 	t_player	player_mini;
@@ -121,7 +122,8 @@ typedef struct s_data
 void			init_hook_and_loop(t_data *data);
 int				init_mlx_data(t_data *data);
 void			init_minimap_textures(t_data *data);
-int			init_img(t_data *data, t_img *img,int width, int height);
+int				init_img(t_data *data, t_img *img, int width, int height);
+void			init_textures(t_data *data);
 
 int				get_inputs(int keysym, t_data *data);
 int				release_inputs(int keysym, t_data *data);
@@ -149,9 +151,8 @@ void			display_map(t_data *data);
 
 void			put_square(int x, int y, t_data *data);
 void			erase_square(t_data *data, int x, int y);
-void			filled_circle_draw(t_data *data, int radius);
-void			put_circle_pixels(int radius, t_img *img, int point, int xx,
-					int color);
+void	filled_circle_draw(t_data *data, t_img *img, int x, int y);
+void	put_circle_pixels(t_data *data, t_img *img, int point, int xx, int color);
 void			filled_circle_erase(t_data *data, int radius);
 void			mid_point_circle_draw(t_data *data, int r);
 void			mid_point_put_pixels(t_data *data, t_point current, int color);
@@ -176,12 +177,12 @@ void			setup_minimap(t_data *data);
 void			draw_xpm(t_data *data, double angle);
 int				view(t_data *data);
 
-void			put_pixel_img(t_img img, int x, int y, int color);
+void			put_pixel_img(t_img *img, int x, int y, int color);
 // void			put_img_to_img(t_img dst, t_img src, int x, int y);
 void			destroy_image(t_img img, t_data *data);
 // void			draw_xpm_to_img(t_data *data, t_img *img,
 // 					t_point (*mouv_point)(t_point, double), double angle);
-void			put_img_to_img(t_img dst, t_img src, int x, int y, int width,
+void			put_img_to_img(t_img *dst, t_img src, int x, int y, int width,
 					int height);
 unsigned int	get_pixel_img(t_img img, int x, int y);
 
