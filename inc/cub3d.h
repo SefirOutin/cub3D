@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 14:14:53 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:16:10 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,8 @@ void			display_map(t_data *data);
 
 void			put_square(int x, int y, t_data *data);
 void			erase_square(t_data *data, int x, int y);
-void			filled_circle_draw(t_data *data, int radius);
-void			put_circle_pixels(int radius, t_img *img, int point, int xx,
-					int color);
+void	filled_circle_draw(t_data *data, t_img *img, int x, int y);
+void	put_circle_pixels(t_data *data, t_img *img, int point, int xx, int color);
 void			filled_circle_erase(t_data *data, int radius);
 void			mid_point_circle_draw(t_data *data, int r);
 void			mid_point_put_pixels(t_data *data, t_point current, int color);

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 16:08:11 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:57:09 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ void	put_pixel_img(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (color == (int)0xFF000000)
-		return ;
-	if (x >= 0 && y >= 0 && x < WIN_W && y <WIN_H)
+	// if (color == (int)0xFF000000)
+	// 	return ;
+	if (x >= 0 && y >= 0 && x < WIN_W && x >= 0 && y >= 0 && y < WIN_H)
 	{
 		dst = (char *)img->addr + (y * img->line_l + x * (img->bpp / 8));
 		*(unsigned int *)dst = color;
 	}
 }
 
-void	put_img_to_img(t_img *dst, t_img src, int x, int y, int width,
+void	put_img_to_mini_img(t_img *dst, t_img src, int x, int y, int width,
 		int height)
 {
 	int	i;
@@ -51,7 +51,7 @@ void	put_img_to_img(t_img *dst, t_img src, int x, int y, int width,
 		j = 0;
 		while (j < height)
 		{
-			put_pixel_img(dst, x + i, y + j, get_pixel_img(src, i, j));
+			put_pixel_mini_img(dst, x + i, y + j, get_pixel_img(src, i, j));
 			j++;
 		}
 		i++;
@@ -118,36 +118,42 @@ void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
 			x = (i * 15) - (player_x - MINI_H / 2);
 			y = (j * 15) - (player_y - MINI_W / 2); // Inversion de l'axe y
 			if (ft_strchr("1", data->map[j][i]))
-				put_img_to_img(win_minimap, asset[0], x, y, 15, 15);
+				put_img_to_mini_img(win_minimap, asset[0], x, y, 15, 15);
 			if (ft_strchr("0NSWE", data->map[j][i]))
-				put_img_to_img(win_minimap, asset[1], x, y, 15, 15);
+				put_img_to_mini_img(win_minimap, asset[1], x, y, 15, 15);
 			i++;
 		}
 		j++;
 	}
 }
 
-void	filled_circle_draw(t_data *data, int x, int y, int radius)
+void	put_circle_pixels(t_data *data, t_img *img, int point, int xx, int color)
+{
+    put_pixel_to_image(img, xx, MINI_H * 0.5 - point, color);
+    put_pixel_to_image(img, xx, MINI_H * 0.5 + point, color);
+}
+
+void	filled_circle_draw(t_data *data, t_img *img, int x, int y)
 {
 	t_point	current;
 	int		m;
 	int		xx;
 
 	current.x = 0;
-	current.y = radius;
-	m = 3 - 4 * radius;
+	current.y = 2;
+	m = 3 - 4 * 2;
 	xx = 0;
 	// printf("circle player x:%f y:%f\n", data->player.px, data->player.py);
 	while (current.x <= current.y)
 	{
-		xx = data->player.px - current.y;
-		while (xx <= data->player.px + current.y)
-			put_circle_pixels(data, current.x, xx++, 0xFF0000);
+		xx = x - current.y;
+		while (xx <= x + current.y)
+			put_circle_pixels(data, img, current.x, xx++, 0xFF0000);
 		if (m > 0)
 		{
-			xx = data->player.px - current.x;
-			while (xx <= data->player.px + current.x)
-				put_circle_pixels(data, current.y, xx++, 0xFF0000);
+			xx = x- current.x;
+			while (xx <= x + current.x)
+				put_circle_pixels(data, img, current.y, xx++, 0xFF0000);
 			current.y--;
 			m -= 8 * current.y;
 		}
@@ -155,6 +161,7 @@ void	filled_circle_draw(t_data *data, int x, int y, int radius)
 		m += 8 * current.x + 4;
 	}
 }
+
 void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 {
 	int	color;
@@ -176,7 +183,8 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 			color = data->minimap.asset[2].addr[y * 15 + x];
 			if (color >= 0 && new_x >= 0 && new_x < 15 && new_y >= 0
 				&& new_y < 15)
-				put_pixel_img(img, new_x + (MINI_W / 2) - 7.5 , new_y + (MINI_H / 2)- 7.5, color);
+				put_pixel_img(img, new_x + (MINI_W / 2) - 7.5 , new_y +
+					(MINI_H / 2)- 7.5, color);
 			x++;
 		}
 		y++;
@@ -219,8 +227,9 @@ void	setup_minimap(t_data *data)
 	if (init_img(data, &window_minimap, MINI_W, MINI_H))
 		return ;
 	print_minimap(&window_minimap, data, data->minimap.asset);
-	draw_mini_xpm(data, &window_minimap,
-		deg_to_rad(fix_ang(data->player.direction +90)));
+	filled_circle_draw(data, &window_minimap, MINI_W  * 0.5, MINI_H * 0.5);
+	// draw_mini_xpm(data, &window_minimap,
+	// 	deg_to_rad(fix_ang(data->player.direction +90)));
 	// display_rays(data, &window_minimap);
 	// mlx_put_image_to_window(data->win.mlx_ptr,data->win_ptr,window_minimap.img,0,0);
 	put_img_to_img(&data->main.view, window_minimap, 10, 10, MINI_W, MINI_H);
