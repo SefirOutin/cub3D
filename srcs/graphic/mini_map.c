@@ -6,11 +6,35 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 19:19:39 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/25 14:07:19 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	init_textures(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (data->main.textures_path[i])
+	{
+		data->main.textures[i].img = mlx_xpm_file_to_image(data->win.mlx_ptr,
+			data->main.textures_path[i], &data->main.textures[i].w,
+			&data->main.textures[i].h);
+		if (!data->main.textures[i].img)
+		{
+			print_err("Image not initialised");
+			exit_and_free(data);
+		}
+		free(data->main.textures_path[i]);
+		data->main.textures[i].addr = 
+			(int *)mlx_get_data_addr(data->main.textures[i].img,
+			&data->main.textures[i].bpp, &data->main.textures[i].line_l,
+			&data->main.textures[i].endian);
+		i++;
+	}
+}
 
 void	init_minimap_textures(t_data *data)
 {
@@ -19,14 +43,11 @@ void	init_minimap_textures(t_data *data)
 
 	i = 0;
 	data->minimap.textures[0] = mlx_xpm_file_to_image(data->win.mlx_ptr,
-			"./asset/map_asset/wall.xpm", &(data->minimap.size),
-			&(data->minimap.size));
+			"./asset/map_asset/wall.xpm", &j, &j);
 	data->minimap.textures[1] = mlx_xpm_file_to_image(data->win.mlx_ptr,
-			"./asset/map_asset/floor.xpm", &(data->minimap.size),
-			&(data->minimap.size));
+			"./asset/map_asset/floor.xpm", &j, &j);
 	data->minimap.textures[2] = mlx_xpm_file_to_image(data->win.mlx_ptr,
-			"./asset/map_asset/player.xpm", &(data->minimap.size),
-			&(data->minimap.size));
+			"./asset/map_asset/player.xpm", &j,	&j);
 	data->minimap.textures[3] = mlx_xpm_file_to_image(data->win.mlx_ptr,
 			"./asset/map_asset/map_wall.xpm", &j, &j);
 	data->minimap.textures[4] = mlx_xpm_file_to_image(data->win.mlx_ptr,
@@ -37,7 +58,7 @@ void	init_minimap_textures(t_data *data)
 	{
 		if (data->minimap.textures[i] == NULL)
 		{
-			write(2, "Error\nImage no initialised", 26);
+			print_err("Image no initialised");
 			exit_and_free(data);
 		}
 		i++;

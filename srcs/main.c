@@ -77,8 +77,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 	view(data);
 	// draw_xpm(data, deg_to_rad(fix_ang(data->player.direction - 90)));
 	setup_minimap(data);
-	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,data->main_img.view.img, 0, 0);
-	mlx_destroy_image(data->win.mlx_ptr, data->main_img.view.img);
+	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,data->main.view.img, 0, 0);
+	mlx_destroy_image(data->win.mlx_ptr, data->main.view.img);
 	return ;
 }
 // fxpoint fixed_cos(t_data *data, fxpoint angle)
@@ -104,8 +104,8 @@ void	first_display(t_data *data)
 	create_rays(data);
 	view(data);
 	setup_minimap(data);
-	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr, data->main_img.view.img, 0, 0);
-	mlx_destroy_image(data->win.mlx_ptr, data->main_img.view.img);
+	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr, data->main.view.img, 0, 0);
+	mlx_destroy_image(data->win.mlx_ptr, data->main.view.img);
 	// init_img(data);
 	// mid_point_circle_draw(data, 8);
 }
