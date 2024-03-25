@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
+#    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/03/18 19:32:01 by soutin           ###   ########.fr        #
+#    Updated: 2024/03/23 16:24:34 by bmoudach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC			=		srcs/main.c \
 					srcs/move_event/hook.c\
 					srcs/graphic/ray.c \
 					srcs/graphic/setup_minimap.c \
-					srcs/graphic/oui.c \
+					srcs/graphic/create_2.5d.c \
 					srcs/init.c \
 					srcs/mlx_engine/destroy_image.c \
 					srcs/mlx_engine/draw_xpm_to_img.c \

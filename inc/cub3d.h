@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/20 19:50:23 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/23 17:04:09 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ typedef struct s_point
 	double		x;
 	double		y;
 }				t_point;
+typedef struct s_raycaster
+{
+	t_point pos;
+	t_point dir;
+	t_point plane;
+}	t_raycaster;
 
 typedef enum e_key
 {

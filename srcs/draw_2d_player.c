@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_2d_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:28:45 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/15 17:41:15 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/23 16:22:10 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,4 @@ void draw_xpm(t_data *data, double angle)
 		}
 		y++;
 	}
-    // mlx_destroy_image(win.mlx_ptr, img_ptr);
 }
