@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_minimap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/22 20:17:04 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:02:42 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,7 @@ void	setup_minimap(t_data *data)
 		return ;
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	draw_mini_xpm(data, &window_minimap,
-		deg_to_rad(fix_ang(data->player.direction +90)));
-	// display_rays(data, &window_minimap);
-	// mlx_put_image_to_window(data->win.mlx_ptr,data->win_ptr,window_minimap.img,0,0);
+	deg_to_rad(fix_ang(data->player.direction +90)));
 	put_img_to_img(data->main_img.view, window_minimap, 10, 10, MINI_W, MINI_H);
 	destroy_image(window_minimap, data);
 }
