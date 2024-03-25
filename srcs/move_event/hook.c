@@ -42,7 +42,6 @@ int	release_inputs(int keysym, t_data *data)
 
 int	get_inputs(int keysym, t_data *data)
 {
-	// printf("%d\n", keysym);
 	if (keysym == 65307)
 		exit_and_free(data);
 	if (keysym == 119)
@@ -59,14 +58,3 @@ int	get_inputs(int keysym, t_data *data)
 		data->player.inputs[RIGHT_ROTATE][1] = 1;
 	return (0);
 }
-
-// int	mouse(int x, int y, t_data *data)
-// {
-// 	// data->player.px + x;
-// 	// data->player.py + y;
-	
-// 	printf ("Ax:%d Ay:%d\n", (int)data->player.px, (int)data->player.py);
-// 	printf("Cx:%d Cy:%d\n", x, y);
-// 	// printf ("Bx:%d By:%d\n");
-// 	return (0);
-// }
