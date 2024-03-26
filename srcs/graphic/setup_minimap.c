@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 16:57:09 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/26 17:13:34 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	put_circle_pixels(t_data *data, t_img *img, int point, int xx, int color)
 
 void	filled_circle_draw(t_data *data, t_img *img, int x, int y)
 {
-	t_point	current;
+	t_dpoint	current;
 	int		m;
 	int		xx;
 
@@ -197,7 +197,7 @@ void	display_rays(t_data *data, t_img *img)
 	int		j;
 	double	ratio;
 	int		num_points;
-	t_point	player;
+	t_dpoint	player;
 	
 	j = 0;
 	player.x = data->player.pos.x * 15;

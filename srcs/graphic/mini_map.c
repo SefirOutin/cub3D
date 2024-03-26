@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 14:07:19 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/26 17:49:26 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_textures(t_data *data)
 		if (!data->main.textures[i].img)
 		{
 			print_err("Image not initialised");
+			free_imgs_error(data, data->main.textures, i);
 			exit_and_free(data);
 		}
 		free(data->main.textures_path[i]);

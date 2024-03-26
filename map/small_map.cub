@@ -1,14 +1,14 @@
 C 120,0120,120
-NO asset/3d_asset/wall.xpm
-SO ./asset/3d_asset/wall.xpm
+NO ./asset/3d_asset/eagle.xpm
+SO ./asset/3d_asset/eagle.xpm
 F 255,255,200
-WE ./asset/3d_asset/wall.xpm
-EA ./asset/3d_asset/wall.xpm
+WE ./asset/3d_asset/eagle.xpm
+EA ./asset/3d_asset/eagle.xpm
 
 11111111111111111111111
 100000000000000000000001
+100000000000S00000000001
 100000000000000000000001
-10000000000S000000000001
 110000000000000000000001
 111011111000000000000001
 100000010001000000000001   

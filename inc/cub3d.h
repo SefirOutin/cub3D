@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 16:16:10 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/26 17:48:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@
 # define SHIFT_AMOUNT 16 // 2^16 = 65536
 # define SHIFT_MASK ((1 << SHIFT_AMOUNT) - 1)
 
-typedef struct s_point
+typedef struct s_dpoint
 {
 	double		x;
 	double		y;
-}				t_point;
+}				t_dpoint;
+
+typedef struct s_ipoint
+{
+	double		x;
+	double		y;
+}				t_ipoint;
 
 typedef enum e_key
 {
@@ -50,17 +56,18 @@ typedef enum e_key
 typedef struct s_player
 {
 	int			inputs[6][2];
-	t_point		pos;
+	t_dpoint	pos;
 	double		direction;
 }				t_player;
 
 typedef struct s_ray
 {
-	t_point		end;
-	t_point		len_one_u;
-	t_point		hypo_len_one_u;
-	t_point		vlen;
-	t_point		v_camera;
+	t_dpoint	end;
+	t_dpoint	len_one_u;
+	t_dpoint	hypo_len_one_u;
+	t_dpoint	vlen;
+	t_dpoint	v_camera;
+	t_ipoint	step;
 	double		len;
 	double		angle_rad;
 	double		angle_deg;
@@ -151,12 +158,10 @@ void			display_map(t_data *data);
 
 void			put_square(int x, int y, t_data *data);
 void			erase_square(t_data *data, int x, int y);
-void	filled_circle_draw(t_data *data, t_img *img, int x, int y);
-void	put_circle_pixels(t_data *data, t_img *img, int point, int xx, int color);
+void			filled_circle_draw(t_data *data, t_img *img, int x, int y);
+void			put_circle_pixels(t_data *data, t_img *img, int point, int xx,
+					int color);
 void			filled_circle_erase(t_data *data, int radius);
-void			mid_point_circle_draw(t_data *data, int r);
-void			mid_point_put_pixels(t_data *data, t_point current, int color);
-void			mid_point_circle_erase(t_data *data, int r);
 
 void			move(t_data *data, double x, double y, double rotation_angle);
 int				put_direction(t_data *data, int curr_ray);
@@ -164,7 +169,7 @@ void			erase_direction(t_data *data, int len_ray);
 double			fix_ang(double a);
 int				create_rays(t_data *data);
 
-void			free_section(t_point **section, int size);
+void			free_section(t_dpoint **section, int size);
 int				e_direction(t_data *data, int len_ray, int curr_ray);
 void			erase_floors(t_data *data);
 
@@ -185,5 +190,7 @@ void			destroy_image(t_img img, t_data *data);
 void			put_img_to_img(t_img *dst, t_img src, int x, int y, int width,
 					int height);
 unsigned int	get_pixel_img(t_img img, int x, int y);
+
+void			free_imgs_error(t_data *data, t_img *imgs, int size);
 
 #endif
