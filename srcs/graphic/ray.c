@@ -6,11 +6,33 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 13:43:28 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/26 17:17:39 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	find_point_on_section(t_ray *ray, double len);
+void	check_first_cell(t_ray *ray);
+int		check_next_edges(t_data *data, t_ray *ray, int is_first, t_dpoint map);
+void	find_next_wall(t_data *data, t_ray *ray, double curr_ray);
+
+
+int	create_rays(t_data *data)
+{
+	int		curr_ray;
+	double	angle_ratio;
+	
+	curr_ray = 0;
+	angle_ratio = (double)FOV / (double)data->main.nb_rays;
+	data->main.rays = ft_calloc(data->main.nb_rays, sizeof(t_ray));
+	while (curr_ray < data->main.nb_rays)
+	{
+		find_next_wall(data, &data->main.rays[curr_ray], curr_ray * angle_ratio);
+		curr_ray++;
+	}
+	return (0);
+}
 
 double	fix_ang(double a)
 {
@@ -34,64 +56,38 @@ void	find_point_on_section(t_ray *ray, double len)
 	ray->end.y = ray->end.y - len * ray->len_one_u.y;
 }
 
-int diff_nearest_50x(int x)
+void	check_first_cell(t_ray *ray)
 {
-    // Calcul du multiple de 50 le plus proche
-    int nearestMultiple = 50 * (x / 50);
-    // Calcul de la différence
-    int difference = x - nearestMultiple;
-	
-	if (difference > 25)
-		return (50 - difference);
-    return (difference);
-}
-
-
-int	get_quadrant(int angle)
-{
-	if (angle >= 0 && angle < 89)
-		return (0);
-	if (angle >=90  && angle < 180)
-		return (1);
-	if (angle >= 180 && angle < 270)
-		return (2);
-	if (angle >= 270 && angle < 360)
-		return (3);
-	return (-1);
-}
-
-void	check_first_cell(t_ray *ray, t_point *step)
-{
-	t_point	delta;
+	t_dpoint	delta;
 	
 	if (ray->angle_deg < 180)
 	{
-		step->y = -1;
+		ray->step.y = -1;
 		delta.y = ray->end.y - (int)ray->end.y;
 	}
 	else
 	{
-		step->y = 1;
+		ray->step.y = 1;
 		delta.y = ceil(ray->end.y) - ray->end.y;
 	}
 	if ((ray->angle_deg > 90 && ray->angle_deg < 270))
 	{
-		step->x = -1;
+		ray->step.x = -1;
 		delta.x = ray->end.x - (int)ray->end.x;
 	}
 	else
 	{
-		step->x = 1;
+		ray->step.x = 1;
 		delta.x = ceil(ray->end.x) - ray->end.x;
 	}
 	ray->vlen.x = delta.x * ray->hypo_len_one_u.x;
 	ray->vlen.y = delta.y * ray->hypo_len_one_u.y;
 }
 
-int	check_next_edges(t_data *data, t_ray *ray, int is_first, t_point *step, t_point map)
+int	check_next_edges(t_data *data, t_ray *ray, int is_first, t_dpoint map)
 {
 	if (!is_first)
-		check_first_cell(ray, step);
+		check_first_cell(ray);
 	else
 	{
 		if (ray->vlen.x < ray->vlen.y)
@@ -101,13 +97,13 @@ int	check_next_edges(t_data *data, t_ray *ray, int is_first, t_point *step, t_po
 	}
 	if (ray->vlen.x < ray->vlen.y)
 	{
-		if (data->map[(int)map.y][(int)(map.x + step->x)] == '1')
+		if (data->map[(int)map.y][(int)(map.x + ray->step.x)] == '1')
 			find_point_on_section(ray, ray->vlen.x);
 		return (0);
 	}	
 	else
 	{
-		if (data->map[(int)(map.y + step->y)][(int)map.x] == '1')
+		if (data->map[(int)(map.y + ray->step.y)][(int)map.x] == '1')
 			find_point_on_section(ray, ray->vlen.y);
 		return (1);
 	}
@@ -127,8 +123,7 @@ void	init_ray(t_data *data, t_ray *ray, double curr_ray)
 
 void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 {
-	t_point step;
-	t_point	map;
+	t_dpoint	map;
 	int	i;
 	// int	side;
 	
@@ -138,14 +133,14 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 	init_ray(data, ray, curr_ray);
 	while (1)
 	{
-		if (!check_next_edges(data, ray, i++, &step, map))
+		if (!check_next_edges(data, ray, i++, map))
 		{
-			map.x += step.x;
+			map.x += ray->step.x;
 			// side = 0;
 		}
 		else
 		{
-			map.y += step.y;
+			map.y += ray->step.y;
 			// side = 1;
 		}
 		if (data->map[(int)map.y][(int)map.x] == '1')
@@ -154,20 +149,3 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 	ray->len *= cos(ray->angle_rad - deg_to_rad(data->player.direction));
 }
 
-
-
-int	create_rays(t_data *data)
-{
-	int		curr_ray;
-	double	angle_ratio;
-	
-	curr_ray = 0;
-	angle_ratio = (double)FOV / (double)data->main.nb_rays;
-	data->main.rays = ft_calloc(data->main.nb_rays, sizeof(t_ray));
-	while (curr_ray < data->main.nb_rays)
-	{
-		find_next_wall(data, &data->main.rays[curr_ray], curr_ray * angle_ratio);
-		curr_ray++;
-	}
-	return (0);
-}

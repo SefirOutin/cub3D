@@ -46,14 +46,15 @@ int	check_collision(t_data *data, double x, double y)
 	return (0);
 }
 
-t_point	cool_rotate(t_point pixel, double angle)
-{
-	t_point	new;
+// t_point	cool_rotate(t_point pixel, double angle)
+// {
+// 	t_point	new;
 
-	new.x = round((pixel.x - 0.5) * cos(angle) + (pixel.y - 0.5) * sin(angle));
-	new.y = round((pixel.x - 0.5) * sin(angle) + (pixel.y - 0.5) * cos(angle));
-	return (new);
-}
+// 	new.x = round((pixel.x - 0.5) * cos(angle) + (pixel.y - 0.5) * sin(angle));
+// 	new.y = round((pixel.x - 0.5) * sin(angle) + (pixel.y - 0.5) * cos(angle));
+// 	return (new);
+// }
+
 int	can_move(t_data *data, double x, double y, double rotation_angle)
 {
 	if (data->map[+(int)floor(data->player.pos.y + y 
@@ -62,6 +63,7 @@ int	can_move(t_data *data, double x, double y, double rotation_angle)
 	else
 		return (1);
 }
+
 void	move(t_data *data, double x, double y, double rotation_angle)
 {
 	if (can_move(data, x, y, rotation_angle))
