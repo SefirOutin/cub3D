@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/26 17:48:54 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/28 19:48:40 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_dpoint
 
 typedef struct s_ipoint
 {
-	double		x;
-	double		y;
+	int		x;
+	int		y;
 }				t_ipoint;
 
 typedef enum e_key
@@ -68,6 +68,7 @@ typedef struct s_ray
 	t_dpoint	vlen;
 	t_dpoint	v_camera;
 	t_ipoint	step;
+	int			side;
 	double		len;
 	double		angle_rad;
 	double		angle_deg;

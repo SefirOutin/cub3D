@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:48:27 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/26 17:17:39 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/28 19:49:46 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,12 @@ void	find_next_wall(t_data *data, t_ray *ray, double curr_ray)
 		if (!check_next_edges(data, ray, i++, map))
 		{
 			map.x += ray->step.x;
-			// side = 0;
+			ray->side = 0;
 		}
 		else
 		{
 			map.y += ray->step.y;
-			// side = 1;
+			ray->side = 1;
 		}
 		if (data->map[(int)map.y][(int)map.x] == '1')
 			break ;
