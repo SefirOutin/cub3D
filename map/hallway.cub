@@ -1,9 +1,9 @@
 C 120,120,120
-NO ./asset/3d_asset/eagle.xpm
+NO ./asset/3d_asset/purplestone.xpm
 SO ./asset/3d_asset/eagle.xpm
 F 120,10,120
-WE ./asset/3d_asset/eagle.xpm
-EA ./asset/3d_asset/eagle.xpm
+WE ./asset/3d_asset/bluestone.xpm
+EA ./asset/3d_asset/wood.xpm
 
 
 1111111
