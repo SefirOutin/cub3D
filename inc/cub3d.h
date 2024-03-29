@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 15:41:40 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:47:03 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,15 @@ void			draw_vertical_line(t_img *img, t_ipoint start, int len,
 					int color);
 void			put_img_to_img(t_img *dst, t_img src, int x, int y);
 unsigned int	get_pixel_img(t_img img, int x, int y);
-void	put_img_to_mini_img(t_img *dst, t_img src, int x, int y, int width,		int height);
-void	put_pixel_mini_img(t_img *img, int x, int y, int color);
-
+void			put_img_to_mini_img(t_img *dst, t_img src, t_ipoint point,
+					int size);
+void			put_pixel_mini_img(t_img *img, int x, int y, int color);
+void			draw_xpm(t_data *data, double angle);
 
 void			init_hook_and_loop(t_data *data);
 int				init_mlx_data(t_data *data);
 void			init_minimap_textures(t_data *data);
+void			init_asset(t_img *asset, t_data *data);
 void			init_textures(t_data *data);
 
 // Hook functions
@@ -166,24 +168,18 @@ long			get_map_size(int fd, int *error, int *skip);
 long			get_map_size_and_check_is_last(int fd, int *error, int *skip);
 int				check_map(t_data *data);
 void			find_player(t_data *data);
+char			*dup_line(char *tmp);
 
-void			print_err(char *err_message);
-
-void			display_map(t_data *data);
-
+int				create_rays(t_data *data);
+int				view(t_data *data);
+void			create_minimap(t_data *data);
 
 void			move(t_data *data, double x, double y, double rotation_angle);
-double			fix_ang(double a);
-int				create_rays(t_data *data);
+void			print_err(char *err_message);
 
+double			fix_ang(double a);
 double			deg_to_rad(double degrees);
-void			print_minimap(t_img *win_minimap, t_data *data, t_img *asset);
-void			init_asset(t_img *asset, t_data *data);
-void			setup_minimap(t_data *data);
-void			draw_xpm(t_data *data, double angle);
-int				view(t_data *data);
 
 void			free_imgs_error(t_data *data, t_img *imgs, int size);
-
 
 #endif

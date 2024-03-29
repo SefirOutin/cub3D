@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 18:27:45 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:51:49 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,13 @@ int	init_mlx_data(t_data *data)
 	return (0);
 }
 
-
 void	init_hook_and_loop(t_data *data)
 {
-	// mlx_hook(data->win.win_ptr, MotionNotify, PointerMotionMask, mouse, data),
-	mlx_hook(data->win.win_ptr, KeyRelease, KeyReleaseMask, release_inputs, data);
+	mlx_hook(data->win.win_ptr, KeyRelease, KeyReleaseMask, release_inputs,
+		data);
 	mlx_hook(data->win.win_ptr, KeyPress, KeyPressMask, get_inputs, data);
-	mlx_hook(data->win.win_ptr, DestroyNotify, StructureNotifyMask, &exit_and_free,
-			data);
+	mlx_hook(data->win.win_ptr, DestroyNotify, StructureNotifyMask,
+		&exit_and_free, data);
 	mlx_loop_hook(data->win.mlx_ptr, on_keypress, data);
 	mlx_loop(data->win.mlx_ptr);
-
 }
-

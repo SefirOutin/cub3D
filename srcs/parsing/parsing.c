@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:57:21 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 15:08:29 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 18:37:41 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdio.h>
 
 void	find_player(t_data *data);
-
 
 int	parsing(t_data *data, char *path)
 {
@@ -25,8 +24,6 @@ int	parsing(t_data *data, char *path)
 	if (check_map(data))
 		return (1);
 	find_player(data);
-	// if (data->img.x_max * 50 > 1200)
-	// 	return (print_err("Map too big"), 1);
 	return (0);
 }
 
@@ -77,53 +74,19 @@ int	check_map(t_data *vars)
 		y++;
 	}
 	if (player != 1)
-		return (print_err("too many players"), 1);
+		return (print_err("number of player"), 1);
 	vars->minimap.h = y;
 	return (0);
 }
 
-void	get_player_data(t_data *data, int c, int x, int y)
+char	*dup_line(char *tmp)
 {
-	if (c == 'N')
-	{
-		data->player.direction = 90;
-	}
-	if (c == 'S')
-	{
-		data->player.direction = 270;
-	}
-	if (c == 'W')
-	{
-		data->player.direction = 180;
-	}
-	if (c == 'E')
-	{
-		data->player.direction = 0;
-	}
-	data->player.pos.x = x + 0.5;
-	data->player.pos.y = y + 0.5;
-	data->player_mini.pos.x = x * 15 + 7;
-	data->player_mini.pos.y = y * 15 + 7;
-}
+	char	*str;
 
-void	find_player(t_data *data)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (data->map[y])
-	{
-		x = 0;
-		while (data->map[y][x])
-		{
-			if (ft_strchr("NWSE", data->map[y][x]))
-			{
-				get_player_data(data, data->map[y][x], x, y);
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
+	str = ft_strdup(tmp);
+	if (!str)
+		return (free(tmp), NULL);
+	if (str[ft_strlen(tmp) - 1] == '\n')
+		str[ft_strlen(tmp) - 1] = 0;
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:52:16 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/25 13:44:11 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 17:17:42 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,9 @@ int	fill_map(t_data *data, int fd, long size, int skip)
 			free(tmp);
 			break ;
 		}
-		data->map[i] = ft_strdup(tmp);
+		data->map[i] = dup_line(tmp);
 		if (!data->map[i])
-			return (free(tmp), -1);
-		if (data->map[i][ft_strlen(tmp) - 1] == '\n')
-			data->map[i][ft_strlen(tmp) - 1] = 0;
+			return (-1);
 		i++;
 		free(tmp);
 	}

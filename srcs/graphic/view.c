@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 15:33:02 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 16:41:03 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	view(t_data *data)
 	return (0);
 }
 
-void	put_vertical_line_img_to_img(t_data *data, t_img src, int x,
-		int offset, int height)
+void	put_vertical_line_img_to_img(t_data *data, t_img src,
+		int offset_and_x[2], int height)
 {
 	t_ipoint	wall_start_end;
 	double		i;
@@ -49,8 +49,8 @@ void	put_vertical_line_img_to_img(t_data *data, t_img src, int x,
 		wall_start_end.y = data->win.h - 1;
 	while (wall_start_end.x < wall_start_end.y)
 	{
-		put_pixel_to_image(&data->main.view, x, wall_start_end.x,
-			get_pixel_img(src, offset, i));
+		put_pixel_to_image(&data->main.view, offset_and_x[1], wall_start_end.x,
+			get_pixel_img(src, offset_and_x[0], i));
 		i += gap_px;
 		wall_start_end.x++;
 	}
@@ -58,16 +58,17 @@ void	put_vertical_line_img_to_img(t_data *data, t_img src, int x,
 
 void	apply_texture(t_data *data, t_ray curr_ray, int wall_height, int x)
 {
-	int			offset;
-	t_img		texture;
+	int		offset_and_x[2];
+	t_img	texture;
 
+	offset_and_x[1] = x;
 	if (!curr_ray.side)
 	{
 		if (curr_ray.end.x < data->player.pos.x)
 			texture = data->main.textures[3];
 		else
 			texture = data->main.textures[1];
-		offset = (curr_ray.end.y - (int)curr_ray.end.y) * 64;
+		offset_and_x[0] = (curr_ray.end.y - (int)curr_ray.end.y) * 64;
 	}
 	else
 	{
@@ -75,10 +76,9 @@ void	apply_texture(t_data *data, t_ray curr_ray, int wall_height, int x)
 			texture = data->main.textures[0];
 		else
 			texture = data->main.textures[2];
-		offset = (curr_ray.end.x - (int)curr_ray.end.x) * 64;
+		offset_and_x[0] = (curr_ray.end.x - (int)curr_ray.end.x) * 64;
 	}
-	put_vertical_line_img_to_img(data, texture,
-		x, offset, wall_height);
+	put_vertical_line_img_to_img(data, texture, offset_and_x, wall_height);
 }
 
 void	create_wall(t_data *data, int coef_wall)

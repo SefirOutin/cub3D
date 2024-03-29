@@ -6,7 +6,7 @@
 #    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/03/29 15:14:24 by soutin           ###   ########.fr        #
+#    Updated: 2024/03/29 17:18:24 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,11 @@ LIBFT_DIR	=		libft
 
 NAME		=		cub3D
 SRC			=		srcs/main.c \
+					srcs/parsing/get_player_data.c \
 					srcs/parsing/get_map_data.c \
 					srcs/parsing/get_map_data_utils.c \
-					srcs/exit_free.c \
 					srcs/parsing/parsing.c \
+					srcs/exit_free.c \
 					srcs/graphic/init_textures.c \
 					srcs/move_event/hook.c\
 					srcs/graphic/ray.c \
@@ -28,12 +29,13 @@ SRC			=		srcs/main.c \
 					srcs/graphic/view.c \
 					srcs/init.c \
 					srcs/mlx_engine/destroy_image.c \
-					srcs/mlx_engine/draw_xpm_to_img.c \
 					srcs/mlx_engine/get_pixel_img.c \
 					srcs/mlx_engine/draw_vertical_line.c \
 					srcs/mlx_engine/init_img.c \
 					srcs/mlx_engine/put_img_to_img.c \
+					srcs/mlx_engine/put_img_to_mini_img.c \
 					srcs/mlx_engine/put_pixel_img.c \
+					srcs/mlx_engine/put_pixel_mini_img.c \
 					srcs/mlx_engine/filled_circle_draw.c \
 
 OBJ			=		$(SRC:$(SRC)/%.c=$(OBJ_DIR)/%.o)

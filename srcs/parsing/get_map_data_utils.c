@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:56:36 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/18 19:19:46 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:59:11 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
-
 
 int	fill_colors(int *color, char *tmp)
 {
