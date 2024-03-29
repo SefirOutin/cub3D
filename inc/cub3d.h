@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 15:07:47 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:41:40 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ void			draw_vertical_line(t_img *img, t_ipoint start, int len,
 					int color);
 void			put_img_to_img(t_img *dst, t_img src, int x, int y);
 unsigned int	get_pixel_img(t_img img, int x, int y);
+void	put_img_to_mini_img(t_img *dst, t_img src, int x, int y, int width,		int height);
+void	put_pixel_mini_img(t_img *img, int x, int y, int color);
 
 
 void			init_hook_and_loop(t_data *data);
@@ -182,5 +184,6 @@ void			draw_xpm(t_data *data, double angle);
 int				view(t_data *data);
 
 void			free_imgs_error(t_data *data, t_img *imgs, int size);
+
 
 #endif

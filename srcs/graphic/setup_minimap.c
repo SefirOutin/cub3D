@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   setup_minimap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 15:11:35 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:40:13 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
-void	put_pixel_mini_img(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (color == (int)0xFF000000)
-		return ;
-	if (x >= 0 && y >= 0 && x < MINI_W && y <MINI_H)
-	{
-		dst = (char *)img->addr + (y * img->line_l + x * (img->bpp / 8));
-		*(unsigned int *)dst = color;
-	}
-}
-
-void	put_img_to_mini_img(t_img *dst, t_img src, int x, int y, int width,
-		int height)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < width)
-	{
-		j = 0;
-		while (j < height)
-		{
-			put_pixel_mini_img(dst, x + i, y + j, get_pixel_img(src, i, j));
-			j++;
-		}
-		i++;
-	}
-}
-
 
 
 void	init_asset(t_img *asset, t_data *data)
@@ -97,8 +63,6 @@ void	print_minimap(t_img *win_minimap, t_data *data, t_img *asset)
 	}
 }
 
-
-
 void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 {
 	int	color;
@@ -120,8 +84,8 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 			color = data->minimap.asset[2].addr[y * 15 + x];
 			if (color >= 0 && new_x >= 0 && new_x < 15 && new_y >= 0
 				&& new_y < 15)
-				put_pixel_to_image(img, new_x + (MINI_W / 2) - 7.5 , new_y +
-					(MINI_H / 2)- 7.5, color);
+				put_pixel_to_image(img, new_x + (MINI_W / 2) - 7.5, new_y
+					+ (MINI_H / 2) - 7.5, color);
 			x++;
 		}
 		y++;
@@ -135,7 +99,7 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 // 	double	ratio;
 // 	int		num_points;
 // 	t_dpoint	player;
-	
+
 // 	j = 0;
 // 	player.x = data->player.pos.x * 15;
 // 	player.y = data->player.pos.y * 15;
@@ -149,24 +113,24 @@ void	draw_mini_xpm(t_data *data, t_img *img, double angle)
 // 			ratio = (double)i / (double)(num_points - 1);
 // 			put_pixel_to_image(img,
 // 				(MINI_W / 2) + ratio * ((data->main.rays[i].end.x * 15)
-					// - (MINI_W / 2)),
+// - (MINI_W / 2)),
 // 				(MINI_H / 2) +  ratio * ((data->main.rays[i].end.y * 15)
-					// - (MINI_H / 2)), 0x7FFF00);
+// - (MINI_H / 2)), 0x7FFF00);
 // 			i++;
 // 		}
 // 		j++;
-		
+
 // 	}
 // }
 
 void	setup_minimap(t_data *data)
 {
-	t_img window_minimap;
+	t_img	window_minimap;
 
 	if (init_img(data, &window_minimap, MINI_W, MINI_H))
 		return ;
 	print_minimap(&window_minimap, data, data->minimap.asset);
-	filled_circle_draw(&window_minimap, MINI_W  * 0.5, MINI_H * 0.5, 2);
+	filled_circle_draw(&window_minimap, MINI_W * 0.5, MINI_H * 0.5, 2);
 	put_img_to_img(&data->main.view, window_minimap, 10, 10);
 	destroy_image(window_minimap, data);
 }
