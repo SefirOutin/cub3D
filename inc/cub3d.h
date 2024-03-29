@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/28 19:48:40 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:07:47 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_dpoint
 
 typedef struct s_ipoint
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 }				t_ipoint;
 
 typedef enum e_key
@@ -127,18 +127,32 @@ typedef struct s_data
 	t_player	player_mini;
 }				t_data;
 
+// MLX engine
+int				init_img(t_data *data, t_img *img, int width, int height);
+void			put_pixel_to_image(t_img *img, int x, int y, int color);
+void			filled_circle_draw(t_img *img, int x, int y, int radius);
+void			destroy_image(t_img img, t_data *data);
+void			put_pixel_img(t_img *img, int x, int y, int color);
+void			draw_vertical_line(t_img *img, t_ipoint start, int len,
+					int color);
+void			put_img_to_img(t_img *dst, t_img src, int x, int y);
+unsigned int	get_pixel_img(t_img img, int x, int y);
+
+
 void			init_hook_and_loop(t_data *data);
 int				init_mlx_data(t_data *data);
 void			init_minimap_textures(t_data *data);
-int				init_img(t_data *data, t_img *img, int width, int height);
 void			init_textures(t_data *data);
 
+// Hook functions
 int				get_inputs(int keysym, t_data *data);
 int				release_inputs(int keysym, t_data *data);
 int				on_keypress(t_data *data);
 int				mouse(int x, int y, t_data *data);
 int				exit_and_free(t_data *data);
 
+// Parsing
+int				parsing(t_data *data, char *path);
 int				get_map_data(t_data *data, char *path);
 int				get_textures(t_data *data, int fd, int *error);
 int				fill_textures_data(t_data *data, char *tmp, int *nb_textures);
@@ -149,48 +163,23 @@ int				skip_map_header(int fd, int *error, int skip);
 long			get_map_size(int fd, int *error, int *skip);
 long			get_map_size_and_check_is_last(int fd, int *error, int *skip);
 int				check_map(t_data *data);
-int				parsing(t_data *data, char *path);
+void			find_player(t_data *data);
 
 void			print_err(char *err_message);
 
-int				convert_map_to_pixel(char **map, int x, int y);
-void			find_player(t_data *data);
 void			display_map(t_data *data);
 
-void			put_square(int x, int y, t_data *data);
-void			erase_square(t_data *data, int x, int y);
-void			filled_circle_draw(t_data *data, t_img *img, int x, int y);
-void			put_circle_pixels(t_data *data, t_img *img, int point, int xx,
-					int color);
-void			filled_circle_erase(t_data *data, int radius);
 
 void			move(t_data *data, double x, double y, double rotation_angle);
-int				put_direction(t_data *data, int curr_ray);
-void			erase_direction(t_data *data, int len_ray);
 double			fix_ang(double a);
 int				create_rays(t_data *data);
 
-void			free_section(t_dpoint **section, int size);
-int				e_direction(t_data *data, int len_ray, int curr_ray);
-void			erase_floors(t_data *data);
-
-void			put_pixel_to_image(t_img *img, int x, int y, int color);
 double			deg_to_rad(double degrees);
-void			background_img(t_img *img, int size, int color);
 void			print_minimap(t_img *win_minimap, t_data *data, t_img *asset);
 void			init_asset(t_img *asset, t_data *data);
 void			setup_minimap(t_data *data);
 void			draw_xpm(t_data *data, double angle);
 int				view(t_data *data);
-
-void			put_pixel_img(t_img *img, int x, int y, int color);
-// void			put_img_to_img(t_img dst, t_img src, int x, int y);
-void			destroy_image(t_img img, t_data *data);
-// void			draw_xpm_to_img(t_data *data, t_img *img,
-// 					t_point (*mouv_point)(t_point, double), double angle);
-void			put_img_to_img(t_img *dst, t_img src, int x, int y, int width,
-					int height);
-unsigned int	get_pixel_img(t_img img, int x, int y);
 
 void			free_imgs_error(t_data *data, t_img *imgs, int size);
 

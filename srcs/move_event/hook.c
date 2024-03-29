@@ -16,9 +16,9 @@ int	on_keypress(t_data *data)
 		move(data, cos(fix_ang(deg_to_rad(data->player.direction + 270))),
 			-sin(fix_ang(deg_to_rad(data->player.direction + 270))), 0);
 	if (data->player.inputs[LEFT_ROTATE][1] == 1)
-		move(data, 0, 0, +0.3);
+		move(data, 0, 0, +0.5);
 	if (data->player.inputs[RIGHT_ROTATE][1] == 1)
-		move(data, 0, 0, -0.3);
+		move(data, 0, 0, -0.5);
 	return (0);
 }
 

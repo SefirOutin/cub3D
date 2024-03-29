@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_map.c                                         :+:      :+:    :+:   */
+/*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/26 17:49:26 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:23:35 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	init_textures(t_data *data)
 			exit_and_free(data);
 		}
 		free(data->main.textures_path[i]);
+		if (data->main.textures[i].h != 64 || data->main.textures[i].w != 64)
+		{
+			print_err("Image not good");
+			exit_and_free(data);
+		}
 		data->main.textures[i].addr = 
 			(int *)mlx_get_data_addr(data->main.textures[i].img,
 			&data->main.textures[i].bpp, &data->main.textures[i].line_l,
@@ -66,52 +71,6 @@ void	init_minimap_textures(t_data *data)
 	}
 }
 
-void	get_player_data(t_data *data, int c, int x, int y)
-{
-	if (c == 'N')
-	{
-		data->player.direction = 90;
-	}
-	if (c == 'S')
-	{
-		data->player.direction = 270;
-	}
-	if (c == 'W')
-	{
-		data->player.direction = 180;
-	}
-	if (c == 'E')
-	{
-		data->player.direction = 0;
-	}
-	data->player.pos.x = x + 0.5;
-	data->player.pos.y = y + 0.5;
-	data->player_mini.pos.x = x * 15 + 7;
-	data->player_mini.pos.y = y * 15 + 7;
-}
-
-void	find_player(t_data *data)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (data->map[y])
-	{
-		x = 0;
-		while (data->map[y][x])
-		{
-			if (ft_strchr("NWSE", data->map[y][x]))
-			{
-				get_player_data(data, data->map[y][x], x, y);
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
 void	display_map(t_data *data)
 {
 	int	i;
@@ -127,27 +86,6 @@ void	display_map(t_data *data)
 				mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,
 					data->minimap.textures[0], (i * data->minimap.size), (j
 						* data->minimap.size));
-			if (ft_strchr("0NSWE", data->map[j][i]))
-				mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,
-					data->minimap.textures[1], (i * data->minimap.size), (j
-						* data->minimap.size));
-			i++;
-		}
-		j++;
-	}
-}
-
-void	erase_floors(t_data *data)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (data->map[j])
-	{
-		i = 0;
-		while (data->map[j][i])
-		{
 			if (ft_strchr("0NSWE", data->map[j][i]))
 				mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,
 					data->minimap.textures[1], (i * data->minimap.size), (j
