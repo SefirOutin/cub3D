@@ -68,8 +68,8 @@ void	move(t_data *data, double x, double y, double rotation_angle)
 {
 	if (can_move(data, x, y, rotation_angle))
 	{
-		data->player.pos.x += x * 0.01;
-		data->player.pos.y += y * 0.01;
+		data->player.pos.x += x * 0.02;
+		data->player.pos.y += y * 0.02;
 		data->player_mini.pos.x += x * 0.3;
 		data->player_mini.pos.y += y * 0.3;
 		data->player.direction = fix_ang(data->player.direction

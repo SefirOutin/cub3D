@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_img_to_img.c                                   :+:      :+:    :+:   */
+/*   draw_vertical_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 18:07:55 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 14:51:48 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/29 15:04:03 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/29 15:04:11 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_img_to_img(t_img *dst, t_img src, int x, int y)
+void	draw_vertical_line(t_img *img, t_ipoint start, int len, int color)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < src.w)
+	while (len--)
 	{
-		j = 0;
-		while (j < src.h)
-		{
-			put_pixel_to_image(dst, x + i, y + j, get_pixel_img(src, i, j));
-			j++;
-		}
-		i++;
+		put_pixel_to_image(img, start.x, start.y, color);
+		start.y++;
 	}
 }
