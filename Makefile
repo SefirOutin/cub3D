@@ -6,7 +6,7 @@
 #    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/03/29 17:18:24 by soutin           ###   ########.fr        #
+#    Updated: 2024/03/30 15:50:58 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC			=		srcs/main.c \
 					srcs/exit_free.c \
 					srcs/graphic/init_textures.c \
 					srcs/move_event/hook.c\
+					srcs/move_event/event.c \
 					srcs/graphic/ray.c \
 					srcs/graphic/math_utils.c \
 					srcs/graphic/setup_minimap.c \

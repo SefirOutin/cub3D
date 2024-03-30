@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 18:47:03 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/30 15:54:10 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int				init_mlx_data(t_data *data);
 void			init_minimap_textures(t_data *data);
 void			init_asset(t_img *asset, t_data *data);
 void			init_textures(t_data *data);
+void			first_display(t_data *data);
 
 // Hook functions
 int				get_inputs(int keysym, t_data *data);

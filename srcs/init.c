@@ -6,11 +6,21 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 15:51:49 by soutin           ###   ########.fr       */
+/*   Updated: 2024/03/30 15:47:00 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	first_display(t_data *data)
+{
+	create_rays(data);
+	view(data);
+	create_minimap(data);
+	mlx_put_image_to_window(data->win.mlx_ptr, data->win.win_ptr,
+		data->main.view.img, 0, 0);
+	mlx_destroy_image(data->win.mlx_ptr, data->main.view.img);
+}
 
 int	init_mlx_data(t_data *data)
 {
