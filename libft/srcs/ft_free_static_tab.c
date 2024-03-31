@@ -6,9 +6,11 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/03/31 18:59:06 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:11:44 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../inc/libft.h"
 
 int	ft_free_static_tab(char **tab)
 {
