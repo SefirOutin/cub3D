@@ -182,5 +182,7 @@ double			fix_ang(double a);
 double			deg_to_rad(double degrees);
 
 void			free_imgs_error(t_data *data, t_img *imgs, int size);
+int	check_type(char *path, char *type);
+int	check_path_img(char **array);
 
 #endif

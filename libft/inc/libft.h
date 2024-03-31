@@ -115,5 +115,6 @@ char				**ft_ad_case_to_array(char **array);
 char				**ft_del_string_array(int i_of_del_str, char **array);
 
 void				*ft_collector(void *ptr, bool clean);
+int	ft_free_static_tab(char **tab);
 
 #endif

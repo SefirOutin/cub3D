@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   check_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 20:17:38 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/03/31 15:13:33 by bmoudach         ###   ########.fr       */
+/*   Created: 2024/03/31 19:09:01 by bmoudach          #+#    #+#             */
+/*   Updated: 2024/03/31 19:09:07 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_tab(char **tab)
+int	check_type(char *path, char *type)
 {
 	int	i;
+	int	size;
 
 	i = 0;
-	while (tab[i])
+	while (path[i])
 	{
-		free(tab[i]);
+		if (path[i] == '.')
+		{
+			size = ft_strlen(path + i);
+			if (size < ft_strlen(type))
+				size = ft_strlen(type);
+			return (ft_strncmp(path + i + 1, type, size));
+		}
 		i++;
 	}
-	free(tab);
-	return (0);
+	return (1);
 }

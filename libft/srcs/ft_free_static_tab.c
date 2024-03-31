@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 20:17:38 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/03/31 15:13:33 by bmoudach         ###   ########.fr       */
+/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
+/*   Updated: 2024/03/31 18:59:06 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
-
-int	ft_free_tab(char **tab)
+int	ft_free_static_tab(char **tab)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (tab[i])
+	while (i < 4)
 	{
-		free(tab[i]);
+		if (tab[i])
+			free(tab[i]);
 		i++;
 	}
-	free(tab);
 	return (0);
 }

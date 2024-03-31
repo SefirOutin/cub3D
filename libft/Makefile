@@ -19,7 +19,7 @@ SRCS		=	srcs/ft_isalnum.c srcs/ft_isprint.c srcs/ft_memcmp.c  srcs/ft_putchar_fd
 					srcs/ft_arraydup.c srcs/ft_arraylen.c srcs/ft_strlen_to_char.c \
 					srcs/ft_ad_case_to_array.c srcs/ft_del_string_array.c srcs/ft_lstnew.c srcs/ft_lstadd_back.c \
 					srcs/ft_lstadd_front.c srcs/ft_lstclear.c srcs/ft_lstdelone.c srcs/ft_lstiter.c srcs/ft_lstlast.c \
-					srcs/ft_lstmap.c srcs/ft_lstsize.c srcs/ft_garbage_collector.c \
+					srcs/ft_lstmap.c srcs/ft_lstsize.c srcs/ft_garbage_collector.c srcs/ft_free_static_tab.c \
 
 OBJS		=	$(SRCS:.c=.o)
 

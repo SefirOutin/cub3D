@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
+#    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/03/30 15:50:58 by soutin           ###   ########.fr        #
+#    Updated: 2024/03/31 16:54:46 by bmoudach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRC			=		srcs/main.c \
 					srcs/parsing/get_map_data.c \
 					srcs/parsing/get_map_data_utils.c \
 					srcs/parsing/parsing.c \
+					srcs/parsing/check_type.c \
+					srcs/parsing/check_img.c \
 					srcs/exit_free.c \
 					srcs/graphic/init_textures.c \
 					srcs/move_event/hook.c\

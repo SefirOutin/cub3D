@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 15:52:16 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 17:17:42 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/31 19:07:28 by bmoudach          #+#    #+#             */
+/*   Updated: 2024/03/31 19:07:59 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_map_data(t_data *data, char *path)
 		return (-1);
 	size = get_map_size_and_check_is_last(fd, &error, &skip);
 	if (size < 0)
-		return (-1);
+		return (ft_free_static_tab(data->main.textures_path), -1);
 	data->map = ft_calloc(size + 1, sizeof(char *));
 	if (!data->map)
 		return (-1);
@@ -56,10 +56,13 @@ int	get_textures(t_data *data, int fd, int *error)
 		if (!tmp)
 			break ;
 		if (fill_textures_data(data, tmp, &nb_textures) < 0)
-			return (free(tmp), -1);
+			return (free(tmp), ft_free_static_tab(data->main.textures_path),
+				-1);
 		free(tmp);
 		skip++;
 	}
+	if (check_path_img(data->main.textures_path))
+		return (-1);
 	if (nb_textures != 6)
 		return (print_err("missing information"), -1);
 	data->main.textures_path[4] = NULL;
@@ -68,7 +71,8 @@ int	get_textures(t_data *data, int fd, int *error)
 
 int	fill_textures_data2(t_data *data, char *tmp, int *nb_textures)
 {
-	if (!ft_strncmp("WE ", tmp, 3) && ++(*nb_textures))
+	if (!data->main.textures_path[3] && !ft_strncmp("WE ", tmp, 3)
+		&& ++(*nb_textures))
 	{
 		data->main.textures_path[3] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
 		if (!data->main.textures_path[3])
@@ -93,19 +97,22 @@ int	fill_textures_data2(t_data *data, char *tmp, int *nb_textures)
 
 int	fill_textures_data(t_data *data, char *tmp, int *nb_textures)
 {
-	if (!ft_strncmp("NO ", tmp, 3) && ++(*nb_textures))
+	if (!data->main.textures_path[0] && !ft_strncmp("NO ", tmp, 3)
+		&& ++(*nb_textures))
 	{
 		data->main.textures_path[0] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
 		if (!data->main.textures_path[0])
 			return (-1);
 	}
-	else if (!ft_strncmp("EA ", tmp, 3) && ++(*nb_textures))
+	else if (!data->main.textures_path[1] && !ft_strncmp("EA ", tmp, 3)
+		&& ++(*nb_textures))
 	{
 		data->main.textures_path[1] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
 		if (!data->main.textures_path[1])
 			return (-1);
 	}
-	else if (!ft_strncmp("SO ", tmp, 3) && ++(*nb_textures))
+	else if (!data->main.textures_path[2] && !ft_strncmp("SO ", tmp, 3)
+		&& ++(*nb_textures))
 	{
 		data->main.textures_path[2] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
 		if (!data->main.textures_path[2])
