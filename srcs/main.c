@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:09:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/30 15:46:51 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/01 12:00:16 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	print_err(char *err_message)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-
+	if (argc != 2)
+		return (print_err("Error No map"),0);
 	if (parsing(&data, argv[1]))
 		return (1);
 	if (init_mlx_data(&data))

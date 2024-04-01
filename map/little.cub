@@ -1,0 +1,10 @@
+C 120,120,120
+NO ./asset/3d_asset/purplestone.xpm
+SO ./asset/3d_asset/eagle.xpm
+F 120,10,120
+WE ./asset/3d_asset/bluestone.xpm
+EA ./asset/3d_asset/wood.xpm
+
+111
+1S1
+111
