@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 03:46:19 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/13 16:27:50 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/25 18:20:45 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_print_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		ft_printf("tab[%d]: %s\n", i, tab[i]);
+		ft_printf("%s\n", tab[i]);
 		i++;
 	}
 	return (0);

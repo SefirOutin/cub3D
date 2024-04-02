@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:26:29 by soutin            #+#    #+#             */
-/*   Updated: 2024/01/12 17:34:23 by soutin           ###   ########.fr       */
+/*   Updated: 2024/02/25 15:11:01 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*ft_collector(void *ptr, bool clean)
 		if (ft_lstadd_back(&lst, ft_lstnew(ptr)) < 0)
 		{
 			ft_collector(NULL, true);
-			exit(1);
+			return (NULL);
 		}
 		return (ptr);
 	}

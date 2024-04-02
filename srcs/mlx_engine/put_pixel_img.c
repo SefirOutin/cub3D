@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_change_string_array.c                           :+:      :+:    :+:   */
+/*   put_pixel_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 10:16:52 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/09 18:04:48 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/15 18:07:58 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/29 15:37:28 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_change_string_array(int str_to_change, char *str, char **array)
+void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
-	ft_collector(array[str_to_change], true);
-	array[str_to_change] = ft_collector(ft_strdup(str), false);
-	return (0);
+	int	pixel_index;
+
+	pixel_index = y * img->line_l + x * (int)(img->bpp * 0.125);
+	img->addr[pixel_index / (int)(img->bpp * 0.125)] = color;
 }

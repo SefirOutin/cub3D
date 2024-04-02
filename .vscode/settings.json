@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "math.h": "c",
+        "cmath": "c",
+        "cub3d.h": "c"
+    }
+}
