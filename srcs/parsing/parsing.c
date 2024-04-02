@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:57:21 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/01 11:59:02 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:40:20 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int	check_char(char **map, int y, int x)
 	if (!y || y == ft_arraylen(map) - 1)
 	{
 		if (!ft_strchr(" 1", map[y][x]))
-			return (print_err("unclosed map"), printf("x:%d y:%d", x, y), 1);
+			return (print_err("unclosed map"), 1);
 	}
 	else if (!x || x == ft_strlen(map[y]) - 1)
 	{
 		if (ft_strchr("0NSWE", map[y][x]))
-			return (print_err("unclosed map"), printf("x:%d y:%d", x, y), 1);
+			return (print_err("unclosed map"), 1);
 	}
 	else if (ft_strchr("0NSWE", map[y][x]) && ((map[y][x + 1] == ' ' || map[y][x
 				- 1] == ' ') || (x > ft_strlen(map[y - 1]) - 1
 				|| x > ft_strlen(map[y + 1]) - 1) || (x <= ft_strlen(map[y - 1])
 				- 1 && map[y - 1][x] == ' ') || (x <= ft_strlen(map[y + 1]) - 1
 				&& map[y + 1][x] == ' ')))
-		return (print_err("unclosed map"), printf("x:%d y:%d", x, y), 1);
+		return (print_err("unclosed map"), 1);
 	return (0);
 }
 

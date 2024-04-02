@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:46:00 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/31 14:41:53 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:30:01 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ bool	check_collision(t_data *data, int futureX, int futureY)
 	t_ipoint	end;
 	int			curr_y;
 
-	start.x = futureX - 3;
-	start.y = futureY - 3;
-	end.x = futureX + 3;
-	end.y = futureY + 3;
+	start.x = futureX - 2;
+	start.y = futureY - 2;
+	end.x = futureX + 2;
+	end.y = futureY + 2;
 	while (start.x <= end.x)
 	{
 		curr_y = start.y;
 		while (curr_y < end.y)
 		{
 			if (data->map[curr_y / 15][start.x / 15] == '1')
-				if (distance(futureX, futureY, start.x, curr_y) <= 3)
+				if (distance(futureX, futureY, start.x, curr_y) <= 2)
 					return (true);
 			curr_y++;
 		}
