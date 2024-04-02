@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
+/*   put_pixel_mini_img.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:25 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/29 15:41:05 by bmoudach          #+#    #+#             */
+/*   Updated: 2024/03/29 16:05:35 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_static_tab(char **tab)
+void	put_pixel_mini_img(t_img *img, int x, int y, int color)
 {
-	int	i;
+	char	*dst;
 
-	i = 0;
-	while (i < 4)
+	if (color == (int)0xFF000000)
+		return ;
+	if (x >= 0 && y >= 0 && x < MINI_W && y < MINI_H)
 	{
-		if (tab[i])
-			free(tab[i]);
-		i++;
+		dst = (char *)img->addr + (y * img->line_l + x * (img->bpp / 8));
+		*(unsigned int *)dst = color;
 	}
-	return (0);
 }

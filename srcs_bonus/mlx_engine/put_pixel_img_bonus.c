@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
+/*   put_pixel_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:25 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/15 18:07:58 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/29 15:37:28 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_static_tab(char **tab)
+void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
-	int	i;
+	int	pixel_index;
 
-	i = 0;
-	while (i < 4)
-	{
-		if (tab[i])
-			free(tab[i]);
-		i++;
-	}
-	return (0);
+	pixel_index = y * img->line_l + x * (int)(img->bpp * 0.125);
+	img->addr[pixel_index / (int)(img->bpp * 0.125)] = color;
 }

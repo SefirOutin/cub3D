@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
+/*   get_pixel_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:25 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/15 18:07:47 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/29 16:06:08 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_static_tab(char **tab)
+unsigned int	get_pixel_img(t_img img, int x, int y)
 {
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (tab[i])
-			free(tab[i]);
-		i++;
-	}
-	return (0);
+	return (*(unsigned int *)(((char *)img.addr + (y * img.line_l) + (x
+				* img.bpp / 8))));
 }

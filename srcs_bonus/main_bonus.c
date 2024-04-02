@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:25 by soutin           ###   ########.fr       */
+/*   Created: 2024/02/21 19:09:51 by soutin            #+#    #+#             */
+/*   Updated: 2024/04/02 17:57:24 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_static_tab(char **tab)
+void	print_err(char *err_message)
 {
-	int	i;
+	ft_printf("Error\n%s\n", err_message);
+}
 
-	i = 0;
-	while (i < 4)
-	{
-		if (tab[i])
-			free(tab[i]);
-		i++;
-	}
+int	main(int argc, char **argv)
+{
+	t_data	data;
+
+	if (argc != 2)
+		return (print_err("Error No map"), 0);
+	if (parsing(&data, argv[1]))
+		return (1);
+	if (init_mlx_data(&data))
+		return (exit_and_free(&data), 1);
+	first_display(&data);
+	init_hook_and_loop(&data);
 	return (0);
 }

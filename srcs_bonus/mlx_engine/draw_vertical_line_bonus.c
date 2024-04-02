@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
+/*   draw_vertical_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:25 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/29 15:04:03 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/29 15:37:16 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_static_tab(char **tab)
+void	draw_vertical_line(t_img *img, t_ipoint start, int len, int color)
 {
-	int	i;
-
-	i = 0;
-	while (i < 4)
+	while (len--)
 	{
-		if (tab[i])
-			free(tab[i]);
-		i++;
+		put_pixel_to_image(img, start.x, start.y, color);
+		start.y++;
 	}
-	return (0);
 }

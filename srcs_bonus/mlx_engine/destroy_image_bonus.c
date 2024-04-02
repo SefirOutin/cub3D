@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_static_tab.c                               :+:      :+:    :+:   */
+/*   destroy_image.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 15:14:44 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:25 by soutin           ###   ########.fr       */
+/*   Created: 2024/03/15 18:07:19 by soutin            #+#    #+#             */
+/*   Updated: 2024/03/29 18:39:09 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "cub3d.h"
 
-int	ft_free_static_tab(char **tab)
+void	destroy_image(t_img img, t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (tab[i])
-			free(tab[i]);
-		i++;
-	}
-	return (0);
+	if (img.img)
+		mlx_destroy_image(data->win.mlx_ptr, img.img);
 }
