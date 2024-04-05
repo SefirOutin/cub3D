@@ -1,5 +1,5 @@
 C 120,120,120
-NO ./asset/3d_asset/purplestone.xpm
+NO test.xpm
 SO ./asset/3d_asset/eagle.xpm
 F 120,10,120
 WE ./asset/3d_asset/bluestone.xpm

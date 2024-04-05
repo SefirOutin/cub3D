@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:46:39 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/02/22 20:09:26 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/05 17:58:17 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_next_line(int fd, int *err)
 
 	byte = 1;
 	if (fd < 0 || read(fd, buf, 0))
-		return (NULL);
+		return (*err = 1, NULL);
 	line = (char *)ft_strjoin_gnl(NULL, buf);
 	if (!line)
 		return (*err = 1, NULL);

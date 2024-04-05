@@ -6,7 +6,7 @@
 #    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/04/02 18:19:39 by soutin           ###   ########.fr        #
+#    Updated: 2024/04/02 20:14:39 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,8 +80,8 @@ LIBFT		=		libft/libft.a
 CC			=		clang
 CPPFLAGS	=		-I./inc -I./libft/inc
 MLX			=		-L./minilibx-linux
-MLXFLAGS	=		-lm -lmlx -lX11 -lXext 
-CFLAGS		=		-Wall -Werror -Werror -gdwarf-4
+MLXFLAGS	=		-lm -lmlx -lX11 -lXext
+CFLAGS		=		-Wall -Werror -Werror -g3
 
 $(NAME):			$(OBJ) 
 						$(MAKE) -C minilibx-linux

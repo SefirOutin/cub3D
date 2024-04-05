@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/30 15:54:10 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:12:01 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ typedef struct s_data
 int				init_img(t_data *data, t_img *img, int width, int height);
 void			put_pixel_to_image(t_img *img, int x, int y, int color);
 void			filled_circle_draw(t_img *img, int x, int y, int radius);
-void			destroy_image(t_img img, t_data *data);
+void			destroy_image(void *ptr, t_data *data);
 void			put_pixel_img(t_img *img, int x, int y, int color);
 void			draw_vertical_line(t_img *img, t_ipoint start, int len,
 					int color);

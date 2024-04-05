@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_minimap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:26:33 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/31 14:40:42 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/02 20:12:47 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	create_minimap(t_data *data)
 	print_minimap(&window_minimap, data, data->minimap.asset);
 	filled_circle_draw(&window_minimap, MINI_W * 0.5, MINI_H * 0.5, 2);
 	put_img_to_img(&data->main.view, window_minimap, 10, 10);
-	destroy_image(window_minimap, data);
+	destroy_image(window_minimap.img, data);
 }
 
 void	create_minimap_window(t_img *win_minimap, t_data *data)
