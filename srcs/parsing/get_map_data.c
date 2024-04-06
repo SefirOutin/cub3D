@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 19:07:28 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/03/31 19:07:59 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:26:55 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	fill_textures_data2(t_data *data, char *tmp, int *nb_textures)
 	if (!data->main.textures_path[3] && !ft_strncmp("WE ", tmp, 3)
 		&& ++(*nb_textures))
 	{
-		data->main.textures_path[3] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		data->main.textures_path[3] = ft_substr(tmp, g_s(tmp + 2), ft_strlen(tmp
+					+ g_s(tmp + 2)) - 1);
 		if (!data->main.textures_path[3])
 			return (-1);
 	}
@@ -100,21 +101,24 @@ int	fill_textures_data(t_data *data, char *tmp, int *nb_textures)
 	if (!data->main.textures_path[0] && !ft_strncmp("NO ", tmp, 3)
 		&& ++(*nb_textures))
 	{
-		data->main.textures_path[0] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		data->main.textures_path[0] = ft_substr(tmp, g_s(tmp + 2), ft_strlen(tmp
+					+ g_s(tmp + 2)) - 1);
 		if (!data->main.textures_path[0])
 			return (-1);
 	}
 	else if (!data->main.textures_path[1] && !ft_strncmp("EA ", tmp, 3)
 		&& ++(*nb_textures))
 	{
-		data->main.textures_path[1] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		data->main.textures_path[1] = ft_substr(tmp, g_s(tmp + 2), ft_strlen(tmp
+					+ g_s(tmp + 2)) - 1);
 		if (!data->main.textures_path[1])
 			return (-1);
 	}
 	else if (!data->main.textures_path[2] && !ft_strncmp("SO ", tmp, 3)
 		&& ++(*nb_textures))
 	{
-		data->main.textures_path[2] = ft_substr(tmp, 3, ft_strlen(tmp + 3) - 1);
+		data->main.textures_path[2] = ft_substr(tmp, g_s(tmp + 2), ft_strlen(tmp
+					+ g_s(tmp + 2)) - 1);
 		if (!data->main.textures_path[2])
 			return (-1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/02 20:12:01 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/06 15:16:38 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,8 @@ double			fix_ang(double a);
 double			deg_to_rad(double degrees);
 
 void			free_imgs_error(t_data *data, t_img *imgs, int size);
-int	check_type(char *path, char *type);
-int	check_path_img(char **array);
+int				check_type(char *path, char *type);
+int				check_path_img(char **array);
+int				g_s(char *str);
 
 #endif
