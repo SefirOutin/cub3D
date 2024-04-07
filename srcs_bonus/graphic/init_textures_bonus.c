@@ -6,11 +6,20 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 16:26:49 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:42:05 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	str_error(char **tab, int i)
+{
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+}
 
 void	init_textures(t_data *data)
 {
@@ -26,7 +35,7 @@ void	init_textures(t_data *data)
 		{
 			print_err("Image not initialised");
 			free_imgs_error(data, data->main.textures, i);
-			exit_and_free(data);
+			(str_error(data->main.textures_path, i), exit_and_free(data));
 		}
 		free(data->main.textures_path[i]);
 		if (data->main.textures[i].h != 64 || data->main.textures[i].w != 64)

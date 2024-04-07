@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:57:21 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/06 16:10:07 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/07 17:50:37 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,16 @@ int	check_map(t_data *vars)
 			if (check_char(vars->map, y, x))
 				return (ft_free_static_tab(vars->main.textures_path),
 					ft_free_tab(vars->map), 1);
-			if (ft_strchr("NSWE", vars->map[y][x]))
+			if (ft_strchr("NSWE", vars->map[y][x++]))
 				player++;
-			x++;
 		}
 		if (x > vars->minimap.w)
 			vars->minimap.w = x;
 		y++;
 	}
 	if (player != 1)
-		return (ft_free_static_tab(vars->main.textures_path),ft_free_tab(vars->map),print_err("number of player"), 1);
+		return (ft_free_static_tab(vars->main.textures_path),
+			ft_free_tab(vars->map), print_err("number of player"), 1);
 	return (vars->minimap.h = y, 0);
 }
 

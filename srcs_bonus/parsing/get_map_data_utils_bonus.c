@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map_data_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:56:36 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/31 19:05:32 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/07 17:38:05 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ long	get_map_size_and_check_is_last(int fd, int *error, int *skip)
 		if (ft_strncmp(tmp, "\n", 2))
 		{
 			free(tmp);
-			close(fd);
 			return (print_err("something after the map"), -1);
 		}
 		free(tmp);

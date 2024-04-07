@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
+#    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/04/06 15:17:27 by bmoudach         ###   ########.fr        #
+#    Updated: 2024/04/07 18:05:00 by soutin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC			=		srcs/main.c \
 					srcs/parsing/get_player_data.c \
 					srcs/parsing/get_map_data.c \
 					srcs/parsing/get_map_data_utils.c \
+					srcs/parsing/get_and_check_textures.c \
 					srcs/parsing/parsing.c \
 					srcs/parsing/check_type.c \
 					srcs/parsing/check_img.c \
@@ -50,9 +51,11 @@ SRC_BONUS	=		srcs_bonus/main_bonus.c \
 					srcs_bonus/parsing/get_player_data_bonus.c \
 					srcs_bonus/parsing/get_map_data_bonus.c \
 					srcs_bonus/parsing/get_map_data_utils_bonus.c \
+					srcs_bonus/parsing/get_and_check_textures_bonus.c \
 					srcs_bonus/parsing/parsing_bonus.c \
 					srcs_bonus/parsing/check_type_bonus.c \
 					srcs_bonus/parsing/check_img_bonus.c \
+					srcs_bonus/parsing/get_space_bonus.c \
 					srcs_bonus/exit_free_bonus.c \
 					srcs_bonus/graphic/init_textures_bonus.c \
 					srcs_bonus/move_event/hook_bonus.c\
@@ -82,7 +85,7 @@ CC			=		clang
 CPPFLAGS	=		-I./inc -I./libft/inc
 MLX			=		-L./minilibx-linux
 MLXFLAGS	=		-lm -lmlx -lX11 -lXext
-CFLAGS		=		-Wall -Werror -Werror -g3
+CFLAGS		=		-Wall -Werror -Werror 
 
 $(NAME):			$(OBJ) 
 						$(MAKE) -C minilibx-linux
