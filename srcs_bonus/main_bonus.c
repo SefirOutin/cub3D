@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:09:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/02 20:26:36 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:40:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	if (parsing(&data, argv[1]))
 		return (1);
 	if (init_mlx_data(&data))
-		return (ft_free_static_tab(data.main.textures_path),
+		return (free_static_tab(data.main.textures_path),
 			exit_and_free(&data), 1);
 	first_display(&data);
 	init_hook_and_loop(&data);

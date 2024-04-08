@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:04 by soutin            #+#    #+#             */
-/*   Updated: 2024/03/29 16:41:03 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 21:10:16 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	put_vertical_line_img_to_img(t_data *data, t_img src,
 	double		gap_px;
 
 	i = 0;
-	gap_px = (double)64 * ((double)1 / (double)height);
+	gap_px = (double)64 / (double)height;
 	wall_start_end.x = (data->win.h * 0.5) - (height * 0.5);
 	if (wall_start_end.x < 0)
 	{
@@ -78,6 +78,9 @@ void	apply_texture(t_data *data, t_ray curr_ray, int wall_height, int x)
 			texture = data->main.textures[2];
 		offset_and_x[0] = (curr_ray.end.x - (int)curr_ray.end.x) * 64;
 	}
+	if ((!curr_ray.side && curr_ray.end.x < data->player.pos.x)
+		|| (curr_ray.side && curr_ray.end.y > data->player.pos.y))
+		offset_and_x[0] = 64 - offset_and_x[0];
 	put_vertical_line_img_to_img(data, texture, offset_and_x, wall_height);
 }
 

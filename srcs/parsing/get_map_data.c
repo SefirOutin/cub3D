@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 19:07:28 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/07 17:53:01 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:40:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	get_map_data(t_data *data, char *path)
 		return (close(fd), -1);
 	size = get_map_size_and_check_is_last(fd, &error, &skip);
 	if (size < 0)
-		return (ft_free_static_tab(data->main.textures_path), close(fd), -1);
+		return (free_static_tab(data->main.textures_path), close(fd), -1);
 	data->map = ft_calloc(size + 1, sizeof(char *));
 	if (!data->map)
 		return (-1);
@@ -56,7 +56,7 @@ int	get_textures(t_data *data, int fd, int *error)
 		if (!tmp)
 			break ;
 		if (fill_textures_data(data, tmp, &nb_textures) < 0)
-			return (free(tmp), ft_free_static_tab(data->main.textures_path),
+			return (free(tmp), free_static_tab(data->main.textures_path),
 				-1);
 		free(tmp);
 		skip++;

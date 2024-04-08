@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:10:44 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/07 17:53:19 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 20:50:03 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 # define FOV 66
-# define MINI_W 240
-# define MINI_H 240
+# define MINI_W 180
+# define MINI_H 180
 # define WIN_W 1200
 # define WIN_H 900
 # define PI 3.14159265359
@@ -183,5 +183,6 @@ void			free_imgs_error(t_data *data, t_img *imgs, int size);
 int				check_type(char *path, char *type);
 int				check_path_img(char **array);
 int				g_s(char *str);
+int				g_s_color(char *str);
 
 #endif

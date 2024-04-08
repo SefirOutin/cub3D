@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:52:51 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/02 17:59:31 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:40:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,6 @@ char				**ft_ad_case_to_array(char **array);
 char				**ft_del_string_array(int i_of_del_str, char **array);
 
 void				*ft_collector(void *ptr, bool clean);
-int					ft_free_static_tab(char **tab);
+int					free_static_tab(char **tab);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 17:51:46 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/08 14:48:22 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 20:43:02 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	fill_textures_data3(t_data *data, char *tmp, int *nb_textures)
 {
 	if (!ft_strncmp("C ", tmp, 2) && ++(*nb_textures))
 	{
-		if (fill_colors(&data->main.ceilling_color, tmp + g_s(tmp + 1)))
+		if (fill_colors(&data->main.ceilling_color, tmp + g_s_color(tmp + 1)))
 			return (print_err("invalid color"), -1);
 	}
 	else if (!ft_strncmp(tmp, "\n", 2))
@@ -46,7 +46,7 @@ int	fill_textures_data2(t_data *data, char *tmp, int *nb_textures)
 	}
 	else if (!ft_strncmp("F ", tmp, 2) && ++(*nb_textures))
 	{
-		if (fill_colors(&data->main.floor_color, tmp + g_s(tmp + 1)))
+		if (fill_colors(&data->main.floor_color, tmp + g_s_color(tmp + 1)))
 			return (print_err("invalid color"), -1);
 	}
 	else if (fill_textures_data3(data, tmp, nb_textures) < 0)

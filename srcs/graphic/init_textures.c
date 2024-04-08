@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/08 15:28:51 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:48:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ void	init_minimap_textures(t_data *data)
 		if (data->minimap.textures[i] == NULL)
 		{
 			print_err("Image no initialised");
-			ft_free_static_tab(data->main.textures_path);
-			exit_and_free(data);
+			(free_static_tab(data->main.textures_path), exit_and_free(data));
 		}
 		i++;
 	}

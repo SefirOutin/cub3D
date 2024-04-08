@@ -6,7 +6,7 @@
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:47:18 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/07 17:46:42 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 20:45:13 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,19 @@ int	g_s(char *str)
 		i++;
 	}
 	i += 2;
+	return (i);
+}
+
+int	g_s_color(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*str == ' ')
+	{
+		str++;
+		i++;
+	}
+	i++;
 	return (i);
 }

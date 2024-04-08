@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_img.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 18:12:59 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/03/31 19:06:55 by bmoudach         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:40:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	check_path_img(char **array)
 		{
 			fd = open(array[i], O_RDONLY);
 			if (fd < 0)
-				return (ft_free_static_tab(array), print_err("Bad path img"),
+				return (free_static_tab(array), print_err("Bad path img"),
 					1);
 			close(fd);
 		}
 		i++;
 	}
 	if (check_if_same(array))
-		return (ft_free_static_tab(array), print_err("Double key"), 1);
+		return (free_static_tab(array), print_err("Double key"), 1);
 	return (0);
 }
