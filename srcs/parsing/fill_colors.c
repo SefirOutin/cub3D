@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 09:17:41 by bmoudach          #+#    #+#             */
-/*   Updated: 2024/04/12 09:17:43 by bmoudach         ###   ########.fr       */
+/*   Created: 2024/04/12 14:55:43 by bmoudach          #+#    #+#             */
+/*   Updated: 2024/04/12 15:04:05 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@ int	check_format_rgb(char *rgb)
 {
 	int	i;
 	int	nb_cma;
+	int	nb_per_part[3];
 
 	i = 0;
 	nb_cma = 0;
-	while (rgb[i] != '\n')
+	ft_bzero(nb_per_part, sizeof(nb_per_part));
+	while (rgb[i] && rgb[i] != '\n')
 	{
 		if (ft_isdigit(rgb[i]))
-			i++;
-		else if (rgb[i] == ',' || rgb[i] == ' ')
-		{
-			if (rgb[i] == ',')
-				nb_cma++;
-			i++;
-		}
+			nb_per_part[nb_cma]++;
+		else if ((rgb[i] == ',' && ++nb_cma) || rgb[i] == ' ' || rgb[i] == '\t')
+			;
 		else
 			return (1);
+		i++;
 	}
-	if (nb_cma != 2)
+	if (nb_cma != 2 || nb_per_part[0] < 1 || nb_per_part[1] < 1
+		|| nb_per_part[2] < 1)
 		return (1);
 	return (0);
 }
@@ -56,6 +56,22 @@ void	del_char(char *address, char char_to_del)
 	}
 }
 
+int	err_spc_rgbpart(char *rgb_part)
+{
+	int	i;
+
+	i = 0;
+	while (rgb_part[i] == ' ' || rgb_part[i] == '\t')
+		i++;
+	while (ft_isdigit(rgb_part[i]))
+		i++;
+	while (rgb_part[i] == ' ' || rgb_part[i] == '\t')
+		i++;
+	if (rgb_part[i] && rgb_part[i] != '\n')
+		return (1);
+	return (0);
+}
+
 int	fill_colors(int *color, char *tmp)
 {
 	int		colors[3];
@@ -72,8 +88,9 @@ int	fill_colors(int *color, char *tmp)
 		return (ft_free_tab(colors_split), 1);
 	while (++i < 3)
 	{
-		del_char((char *)colors_split[i], ' ');
 		colors[i] = ft_atoi(colors_split[i]);
+		if (err_spc_rgbpart(colors_split[i]))
+			return (ft_free_tab(colors_split), 1);
 		if (colors[i] < 0 || colors[i] > 255)
 			return (ft_free_tab(colors_split), 1);
 	}

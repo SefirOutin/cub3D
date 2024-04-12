@@ -1,7 +1,7 @@
-C                         0 , 255 ,25 3  
+C                    0,       0 ,    1 
 NO ./asset/3d_asset/eagle.xpm
 SO  ./asset/3d_asset/eagle.xpm
-F                 1,        1,         1
+F                   1    ,  256 , 1524
 WE                      ./asset/3d_asset/eagle.xpm
 EA  ./asset/3d_asset/eagle.xpm
 
