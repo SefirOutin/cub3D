@@ -57,6 +57,7 @@ SRC_BONUS	=		srcs_bonus/main_bonus.c \
 					srcs_bonus/parsing/check_type_bonus.c \
 					srcs_bonus/parsing/check_img_bonus.c \
 					srcs_bonus/parsing/get_space_bonus.c \
+					srcs_bonus/parsing/fill_colors_bonus.c \
 					srcs_bonus/exit_free_bonus.c \
 					srcs_bonus/graphic/init_textures_bonus.c \
 					srcs_bonus/move_event/hook_bonus.c\

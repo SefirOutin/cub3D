@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_textures.c                                    :+:      :+:    :+:   */
+/*   init_textures_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soutin <soutin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 01:18:42 by soutin            #+#    #+#             */
-/*   Updated: 2024/04/02 20:42:05 by soutin           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:48:54 by soutin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	init_textures(t_data *data)
 			free_imgs_error(data, data->main.textures, i);
 			(str_error(data->main.textures_path, i), exit_and_free(data));
 		}
-		free(data->main.textures_path[i]);
 		if (data->main.textures[i].h != 64 || data->main.textures[i].w != 64)
 		{
-			print_err("Image not good");
-			exit_and_free(data);
+			print_err("Image size not good");
+			(str_error(data->main.textures_path, i), exit_and_free(data));
 		}
+		free(data->main.textures_path[i]);
 		data->main.textures[i].addr
 			= (int *)mlx_get_data_addr(data->main.textures[i].img,
 				&data->main.textures[i].bpp, &data->main.textures[i].line_l,
@@ -73,7 +73,7 @@ void	init_minimap_textures(t_data *data)
 		if (data->minimap.textures[i] == NULL)
 		{
 			print_err("Image no initialised");
-			exit_and_free(data);
+			(free_static_tab(data->main.textures_path), exit_and_free(data));
 		}
 		i++;
 	}
