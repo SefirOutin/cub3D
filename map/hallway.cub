@@ -1,7 +1,7 @@
-C 120,120,120
+C                         0 , 255 ,25 3  
 NO ./asset/3d_asset/eagle.xpm
 SO  ./asset/3d_asset/eagle.xpm
-F 120,10,120
+F                 1,        1,         1
 WE                      ./asset/3d_asset/eagle.xpm
 EA  ./asset/3d_asset/eagle.xpm
 

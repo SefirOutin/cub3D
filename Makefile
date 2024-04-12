@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: soutin <soutin@student.42.fr>              +#+  +:+       +#+         #
+#    By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 04:10:09 by soutin            #+#    #+#              #
-#    Updated: 2024/04/07 18:05:00 by soutin           ###   ########.fr        #
+#    Updated: 2024/04/12 08:10:47 by bmoudach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC			=		srcs/main.c \
 					srcs/parsing/check_type.c \
 					srcs/parsing/check_img.c \
 					srcs/parsing/get_space.c \
+					srcs/parsing/fill_colors.c \
 					srcs/exit_free.c \
 					srcs/graphic/init_textures.c \
 					srcs/move_event/hook.c\
